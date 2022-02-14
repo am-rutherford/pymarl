@@ -8,7 +8,7 @@ from functools import partial
 #from components.episode_buffer import EpisodeBatch
 from src.components.episode_buffer import EpisodeBatch
 import numpy as np
-from src.utils.zoo_utils import batch_update_creation
+from src.utils.zoo_utils import update_batch_pre
 
 
 class AsyncEpisodeRunner:
@@ -61,70 +61,81 @@ class AsyncEpisodeRunner:
         episode_return = 0
         self.mac.init_hidden(batch_size=self.batch_size)  # NOTE not sure what this is
 
-        while not terminated:
-            obs, reward, done, info = self.env.last()
-            pre_transition_data = batch_update_creation(self.batch, self.env)
+        obs, reward, done, info = self.env.last()
+        k = 0
+        all_done = False
+        while not terminated:            
+            print(f'-- step {k}, agent {self.env.agent_selection}, obs {obs}')
             
-            print('pre tran data', pre_transition_data)
-            self.batch.update(pre_transition_data, ts=self.t)
-
-            # Pass the entire batch of experiences up till now to the agents
-            # Receive the actions for each agent at this timestep in a batch of size 1
-            if done: raise Exception('Agent should not already be done')
-            actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
-            action = actions[0][self.env.agent_idx()].item()
-            print('mac actions', actions, 'aidx', self.env.agent_idx(), 'tsize', actions.size(), 'chosen action', action)
-            self.env.step(action)
-            #reward, terminated, env_info = self.env.step(actions[0])
-            obs, reward, done, info = self.env.last()
-            episode_return += reward
-            while done: # TODO finish this loop
+            if done: # faux transition to update env correctly
                 self.env.step(None)
-                obs, reward, done, info = self.env.last()
+                if not self.env.agents: 
+                    terminated = True
+                else:
+                    obs, reward, done, env_info = self.env.last()
+                
+            else: # normal transition
+                #self.batch.update(pre_transition_data, ts=self.t)
+                update_batch_pre(self.batch, self.t, self.env)
+                
+                # Pass the entire batch of experiences up till now to the agents
+                # Receive the actions for each agent at this timestep in a batch of size 1
+                actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+                action = actions[0][self.env.agent_idx()].item()
+                print('mac actions', actions, 'aidx', self.env.agent_idx(), 'tsize', actions.size(), 'chosen action', action)
+                self.env.step(action)
+                #reward, terminated, env_info = self.env.step(actions[0])
+                obs, reward, done, env_info = self.env.last()
                 episode_return += reward
 
-            if not self.evn.agents: terminated = True
+                #if not self.env.agents: terminated = True
+                if done and len(self.env.agents) == 1:
+                    all_done = True # NOTE A bit hacky
 
-            post_transition_data = {
-                "actions": actions, 
-                "reward": [(reward,)],
-                "terminated": terminated,  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)]
-            }
+                post_transition_data = {
+                    "actions": actions, 
+                    "reward": [(reward,)],
+                    "terminated": [[(all_done),]],  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)] # env info here is info from step()
+                }
+                print('post trans data', post_transition_data)
+                self.batch.update(post_transition_data, ts=self.t)
 
-            self.batch.update(post_transition_data, ts=self.t)
+                self.t += 1
+            k += 1
 
-            self.t += 1
-
-        last_data = {
+        update_batch_pre(self.batch, self.t, self.env)
+        '''last_data = {
             "state": [self.env.state()],
             "avail_actions": [observation["action_mask"]],
-                "obs": [observation["observation"]]
+                "obs": [obs["observation"]]
         }
-        self.batch.update(last_data, ts=self.t)
+        self.batch.update(last_data, ts=self.t)'''
 
         # Select actions in the last stored state
         actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+        print(f'final actions: {actions}')
         self.batch.update({"actions": actions}, ts=self.t)
 
         cur_stats = self.test_stats if test_mode else self.train_stats
+        print('cur stats', cur_stats)
         cur_returns = self.test_returns if test_mode else self.train_returns
         log_prefix = "test_" if test_mode else ""
         cur_stats.update({k: cur_stats.get(k, 0) + env_info.get(k, 0) for k in set(cur_stats) | set(env_info)})
         cur_stats["n_episodes"] = 1 + cur_stats.get("n_episodes", 0)
         cur_stats["ep_length"] = self.t + cur_stats.get("ep_length", 0)
-
+        print('cur stats afer', cur_stats)
         if not test_mode:
             self.t_env += self.t
 
         cur_returns.append(episode_return)
 
-        if test_mode and (len(self.test_returns) == self.args.test_nepisode):
+        '''if test_mode and (len(self.test_returns) == self.args.test_nepisode):  -- can't rectify log_stat 
             self._log(cur_returns, cur_stats, log_prefix)
         elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:
             self._log(cur_returns, cur_stats, log_prefix)
             if hasattr(self.mac.action_selector, "epsilon"):
                 self.logger.log_stat("epsilon", self.mac.action_selector.epsilon, self.t_env)
-            self.log_train_stats_t = self.t_env
+            self.log_train_stats_t = self.t_env'''
 
         return self.batch
 

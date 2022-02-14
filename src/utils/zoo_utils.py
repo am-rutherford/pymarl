@@ -1,15 +1,15 @@
-from camas_gym.envs.camas_zoo_masking import MOVES
+from camas_gym.envs.camas_zoo_masking import MOVES, CamasZooEnv
 import numpy as np
+    
 
-def batch_update_creation(buffer, env):
+def update_batch_pre(buffer, time, env): # buffer may not be the right term
     
     agent_idx = env.agent_idx()
     
-    obs, avail_acts = np.array([]), np.array([])  # NEED TO DO THIS WITH NUMPY
+    obs, avail_acts = np.array([]), np.array([])  
     for agent in env.possible_agents:
         observation = env.observe(agent)
         obs = np.append(obs, observation["observation"] )
-        #obs.append(observation["observation"])  # WRONG NEEDS TO BE 2D -- or can reshape
         
         if agent == env.agent_selection:
             avail_acts = np.append(avail_acts, observation["action_mask"])
@@ -38,4 +38,5 @@ def batch_update_creation(buffer, env):
                 "avail_actions": [avail_acts]
     }
     print('pre tran', pre_transition_data)
-    return pre_transition_data
+    
+    buffer.update(pre_transition_data, ts=time)
