@@ -1,10 +1,10 @@
-from modules.agents import REGISTRY as agent_REGISTRY
-from components.action_selectors import REGISTRY as action_REGISTRY
+from src.modules.agents import REGISTRY as agent_REGISTRY
+from src.components.action_selectors import REGISTRY as action_REGISTRY
 import torch as th
 
 
 # This multi-agent controller shares parameters between agents
-class BasicMAC:
+class ZooMAC:
     def __init__(self, scheme, groups, args):
         self.n_agents = args.n_agents
         self.args = args
@@ -99,7 +99,9 @@ class BasicMAC:
     def _get_input_shape(self, scheme):
         input_shape = scheme["obs"]["vshape"]
         if self.args.obs_last_action:
+            print('conact', scheme["actions_onehot"]["vshape"][0])
             input_shape += scheme["actions_onehot"]["vshape"][0]
+            print('input shape', input_shape)
         if self.args.obs_agent_id:
             input_shape += self.n_agents
 

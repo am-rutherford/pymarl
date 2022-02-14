@@ -1,10 +1,17 @@
-from envs import REGISTRY as env_REGISTRY
+""" Episode runner refactored to work with petting zoo api
+https://www.pettingzoo.ml/api
+"""
+
+#from envs import REGISTRY as env_REGISTRY
+from src.envs import REGISTRY as env_REGISTRY
 from functools import partial
-from components.episode_buffer import EpisodeBatch
+#from components.episode_buffer import EpisodeBatch
+from src.components.episode_buffer import EpisodeBatch
 import numpy as np
+from src.utils.zoo_utils import batch_update_creation
 
 
-class EpisodeRunner:
+class AsyncEpisodeRunner:
 
     def __init__(self, args, logger):
         self.args = args
@@ -13,10 +20,7 @@ class EpisodeRunner:
         assert self.batch_size == 1
 
         self.env = env_REGISTRY[self.args.env](**self.args.env_args)
-        if self.args.env == "sc2":
-            self.episode_limit = self.env.episode_limit
-        else:
-            self.episode_limit = self.args.episode_limit
+        self.episode_limit = self.args.episode_limit
         self.t = 0
 
         self.t_env = 0
@@ -35,8 +39,10 @@ class EpisodeRunner:
         self.mac = mac
 
     def get_env_info(self):
-        return self.env.get_env_info()
-
+        info = self.env.get_env_info()
+        info["n_actions"] = 5 # NOTE to add None action
+        return info
+    
     def save_replay(self):
         self.env.save_replay()
 
@@ -53,29 +59,36 @@ class EpisodeRunner:
 
         terminated = False
         episode_return = 0
-        self.mac.init_hidden(batch_size=self.batch_size)
+        self.mac.init_hidden(batch_size=self.batch_size)  # NOTE not sure what this is
 
         while not terminated:
-
-            pre_transition_data = {
-                "state": [self.env.get_state()],
-                "avail_actions": [self.env.get_avail_actions()],
-                "obs": [self.env.get_obs()]
-            }
-
+            obs, reward, done, info = self.env.last()
+            pre_transition_data = batch_update_creation(self.batch, self.env)
+            
+            print('pre tran data', pre_transition_data)
             self.batch.update(pre_transition_data, ts=self.t)
 
             # Pass the entire batch of experiences up till now to the agents
             # Receive the actions for each agent at this timestep in a batch of size 1
+            if done: raise Exception('Agent should not already be done')
             actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
-
-            reward, terminated, env_info = self.env.step(actions[0])
+            action = actions[0][self.env.agent_idx()].item()
+            print('mac actions', actions, 'aidx', self.env.agent_idx(), 'tsize', actions.size(), 'chosen action', action)
+            self.env.step(action)
+            #reward, terminated, env_info = self.env.step(actions[0])
+            obs, reward, done, info = self.env.last()
             episode_return += reward
+            while done: # TODO finish this loop
+                self.env.step(None)
+                obs, reward, done, info = self.env.last()
+                episode_return += reward
+
+            if not self.evn.agents: terminated = True
 
             post_transition_data = {
-                "actions": actions,
+                "actions": actions, 
                 "reward": [(reward,)],
-                "terminated": [(terminated != env_info.get("episode_limit", False),)],
+                "terminated": terminated,  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)]
             }
 
             self.batch.update(post_transition_data, ts=self.t)
@@ -83,9 +96,9 @@ class EpisodeRunner:
             self.t += 1
 
         last_data = {
-            "state": [self.env.get_state()],
-            "avail_actions": [self.env.get_avail_actions()],
-            "obs": [self.env.get_obs()]
+            "state": [self.env.state()],
+            "avail_actions": [observation["action_mask"]],
+                "obs": [observation["observation"]]
         }
         self.batch.update(last_data, ts=self.t)
 

@@ -11,7 +11,7 @@ class Transform:
 
 class OneHot(Transform):
     def __init__(self, out_dim):
-        self.out_dim = out_dim
+        self.out_dim = out_dim  # for smac this is 11
 
     def transform(self, tensor):
         y_onehot = tensor.new(*tensor.shape[:-1], self.out_dim).zero_()
