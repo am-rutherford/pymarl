@@ -20,7 +20,7 @@ class AsyncEpisodeRunner:
         assert self.batch_size == 1
 
         self.env = env_REGISTRY[self.args.env](**self.args.env_args)
-        self.episode_limit = self.args.episode_limit
+        self.episode_limit = self.env.episode_limit
         self.t = 0
 
         self.t_env = 0
@@ -65,7 +65,7 @@ class AsyncEpisodeRunner:
         k = 0
         all_done = False
         while not terminated:            
-            print(f'-- step {k}, agent {self.env.agent_selection}, obs {obs}')
+            #print(f'-- step {k}, agent {self.env.agent_selection}, obs {obs}')
             
             if done: # faux transition to update env correctly
                 self.env.step(None)
@@ -82,7 +82,7 @@ class AsyncEpisodeRunner:
                 # Receive the actions for each agent at this timestep in a batch of size 1
                 actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
                 action = actions[0][self.env.agent_idx()].item()
-                print('mac actions', actions, 'aidx', self.env.agent_idx(), 'tsize', actions.size(), 'chosen action', action)
+                #print('mac actions', actions, 'aidx', self.env.agent_idx(), 'tsize', actions.size(), 'chosen action', action)
                 self.env.step(action)
                 #reward, terminated, env_info = self.env.step(actions[0])
                 obs, reward, done, env_info = self.env.last()
@@ -97,33 +97,34 @@ class AsyncEpisodeRunner:
                     "reward": [(reward,)],
                     "terminated": [[(all_done),]],  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)] # env info here is info from step()
                 }
-                print('post trans data', post_transition_data)
+                #print('post trans data', post_transition_data)
                 self.batch.update(post_transition_data, ts=self.t)
-
+                
                 self.t += 1
+            if self.t == self.episode_limit-1: # NOTE hard coded
+                terminated = True
             k += 1
-
+            
         update_batch_pre(self.batch, self.t, self.env)
         '''last_data = {
             "state": [self.env.state()],
-            "avail_actions": [observation["action_mask"]],
+            "avail_actions": [obs["action_mask"]],
                 "obs": [obs["observation"]]
         }
         self.batch.update(last_data, ts=self.t)'''
 
         # Select actions in the last stored state
         actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
-        print(f'final actions: {actions}')
+        #print(f'final actions: {actions}')
         self.batch.update({"actions": actions}, ts=self.t)
 
+        #print('train stats', self.train_stats, 'test mode', test_mode, 'train stats', self.train_stats)
         cur_stats = self.test_stats if test_mode else self.train_stats
-        print('cur stats', cur_stats)
         cur_returns = self.test_returns if test_mode else self.train_returns
         log_prefix = "test_" if test_mode else ""
         cur_stats.update({k: cur_stats.get(k, 0) + env_info.get(k, 0) for k in set(cur_stats) | set(env_info)})
         cur_stats["n_episodes"] = 1 + cur_stats.get("n_episodes", 0)
         cur_stats["ep_length"] = self.t + cur_stats.get("ep_length", 0)
-        print('cur stats afer', cur_stats)
         if not test_mode:
             self.t_env += self.t
 

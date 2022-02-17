@@ -2,10 +2,12 @@ import numpy as np
 import torch as th
 import os
 import yaml
+import time
 from main import config_copy
 from run import run, args_sanity_check
 from utils.logging import get_logger
 from types import SimpleNamespace as SN
+from src.utils.timehelper import time_left, time_str
 
 from main import recursive_dict_update
 from runners import REGISTRY as r_REGISTRY
@@ -34,13 +36,15 @@ def load_configs():
 
 if __name__ == '__main__':
     
-    logger = get_logger()
+    logger = get_logger()  # THIS causes issues
     
     config = load_configs()
+    
+    print('config', config)
     config['env'] = 'camas'
-    config["episode_limit"] = 100  # Use in creation of buffer
+    #config["episode_limit"] = 250  # Use in creation of buffer - how many transistions can be stored
     config["runner"] = "async"
-    config["mac"] = "zoo_mac"
+    config["mac"] = "basic_mac" #"zoo_mac"
     
     _config = args_sanity_check(config, logger)
 
@@ -88,4 +92,64 @@ if __name__ == '__main__':
     # Learner
     learner = le_REGISTRY[args.learner](mac, buffer.scheme, logger, args)
     
-    runner.run()
+    # Traning variables
+    episode = 0
+    last_test_T = -args.test_interval - 1
+    last_log_T = 0
+    model_save_time = 0
+    
+    start_time = time.time()
+    last_time = start_time
+    
+    while runner.t_env <= args.t_max:
+        
+        episode_batch = runner.run()
+        
+        print('episode complete')
+        
+        buffer.insert_episode_batch(episode_batch)
+
+        if buffer.can_sample(args.batch_size):
+            print('sampling from buffer')
+            episode_sample = buffer.sample(args.batch_size)
+
+            # Truncate batch to only filled timesteps
+            max_ep_t = episode_sample.max_t_filled()
+            episode_sample = episode_sample[:, :max_ep_t]
+
+            if episode_sample.device != args.device:
+                episode_sample.to(args.device)
+
+            learner.train(episode_sample, runner.t_env, episode)
+
+        # Execute test runs once in a while
+        n_test_runs = max(1, args.test_nepisode // runner.batch_size)
+        print('n_test runs', n_test_runs)
+        if (runner.t_env - last_test_T) / args.test_interval >= 1.0:
+
+            #logger.console_logger.info("t_env: {} / {}".format(runner.t_env, args.t_max))
+            #logger.console_logger.info("Estimated time left: {}. Time passed: {}".format(
+            #    time_left(last_time, last_test_T, runner.t_env, args.t_max), time_str(time.time() - start_time)))
+            last_time = time.time()
+            print('testing')
+            last_test_T = runner.t_env
+            for _ in range(n_test_runs):
+                runner.run(test_mode=True)
+
+        if args.save_model and (runner.t_env - model_save_time >= args.save_model_interval or model_save_time == 0):
+            model_save_time = runner.t_env
+            save_path = os.path.join(args.local_results_path, "models", args.unique_token, str(runner.t_env))
+            #"results/models/{}".format(unique_token)
+            os.makedirs(save_path, exist_ok=True)
+            #logger.console_logger.info("Saving models to {}".format(save_path))
+
+            # learner should handle saving/loading -- delegate actor save/load to mac,
+            # use appropriate filenames to do critics, optimizer states
+            learner.save_models(save_path)
+
+        episode += args.batch_size_run
+
+        if (runner.t_env - last_log_T) >= args.log_interval:
+            #logger.log_stat("episode", episode, runner.t_env)
+            #logger.print_recent_stats()
+            last_log_T = runner.t_env
