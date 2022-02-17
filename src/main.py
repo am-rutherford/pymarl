@@ -85,12 +85,13 @@ if __name__ == '__main__':
     alg_config = _get_config(params, "--config", "algs")
     # config_dict = {**config_dict, **env_config, **alg_config}
     print(env_config, config_dict)
-    config_dict = recursive_dict_update(config_dict, env_config)
+    
     config_dict = recursive_dict_update(config_dict, alg_config)
-
+    config_dict = recursive_dict_update(config_dict, env_config)
+    print('** config **', config_dict)
     # now add all the config to sacred
     ex.add_config(config_dict)
-
+    
     # Save to disk by default for sacred
     logger.info("Saving to FileStorageObserver in results/sacred.")
     file_obs_path = os.path.join(results_path, "sacred")

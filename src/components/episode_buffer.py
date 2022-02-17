@@ -4,6 +4,7 @@ from types import SimpleNamespace as SN
 
 
 class EpisodeBatch:
+
     def __init__(self,
                  scheme,
                  groups,
@@ -12,6 +13,20 @@ class EpisodeBatch:
                  data=None,
                  preprocess=None,
                  device="cpu"):
+        """_summary_
+
+        Args:
+            scheme (_type_): _description_
+            groups (_type_): _description_
+            batch_size (_type_): _description_
+            max_seq_length (_type_): _description_
+            data (_type_, optional): _description_. Defaults to None.
+            preprocess (_type_, optional): _description_. Defaults to None.
+            device (str, optional): _description_. Defaults to "cpu".
+            
+        Attributes:
+            data.transition_data = all transistions so far
+        """
         self.scheme = scheme.copy()
         self.groups = groups
         self.batch_size = batch_size
@@ -99,6 +114,7 @@ class EpisodeBatch:
             else:
                 raise KeyError("{} not found in transition or episode data".format(k))
 
+            # print(f'k: {k}, v: {v}, ts {ts}, target: {target[k][_slices]}')
             dtype = self.scheme[k].get("dtype", th.float32)
             v = th.tensor(v, dtype=dtype, device=self.device)
             self._check_safe_view(v, target[k][_slices])

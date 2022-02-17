@@ -13,12 +13,9 @@ class EpisodeRunner:
         assert self.batch_size == 1
 
         self.env = env_REGISTRY[self.args.env](**self.args.env_args)
-        if self.args.env == "sc2":
-            self.episode_limit = self.env.episode_limit
-        else:
-            self.episode_limit = self.args.episode_limit
+        
+        self.episode_limit = self.env.episode_limit
         self.t = 0
-
         self.t_env = 0
 
         self.train_returns = []

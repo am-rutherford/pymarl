@@ -1,6 +1,11 @@
 env: camas
 
 env_args:
+  map_name: "bruno"
   debug: False
+  seed: Null
 
-test_greedy: True
+test_greedy: True  # What does this do lol
+
+runner: "async"
+t_max: 100000
