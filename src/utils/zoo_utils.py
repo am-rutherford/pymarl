@@ -3,6 +3,16 @@ import numpy as np
     
 
 def update_batch_pre(buffer, time, env): # buffer may not be the right term
+    """Creates pre transition buffer data
+    
+    Only one agent may act a time, other agents either carry out their current action again
+    or choose None (idx = num_actions) if they are at their goal 
+
+    Args:
+        buffer (_type_): _description_
+        time (_type_): _description_
+        env (_type_): _description_
+    """
         
     obs, avail_acts = np.array([]), np.array([])  
     for agent in env.possible_agents:
@@ -26,7 +36,6 @@ def update_batch_pre(buffer, time, env): # buffer may not be the right term
 
     obs.resize((3,3))
     avail_acts.resize((3, 5))
-            
     pre_transition_data = {
                 "state": [env.state()],
                 "obs": [obs],

@@ -62,6 +62,7 @@ class AsyncEpisodeRunner:
         self.mac.init_hidden(batch_size=self.batch_size)  # NOTE not sure what this is
 
         obs, reward, done, info = self.env.last()
+        last_time = self.env.sim_time()
         k = 0
         all_done = False
         while not terminated:            
@@ -73,6 +74,9 @@ class AsyncEpisodeRunner:
                     terminated = True
                 else:
                     obs, reward, done, env_info = self.env.last()
+                    reward = self.env.sim_time() - last_time
+                    last_time = self.env.sim_time()
+                    
                 
             else: # normal transition
                 #self.batch.update(pre_transition_data, ts=self.t)
@@ -82,12 +86,11 @@ class AsyncEpisodeRunner:
                 # Receive the actions for each agent at this timestep in a batch of size 1
                 actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
                 action = actions[0][self.env.agent_idx()].item()
-                #print('mac actions', actions, 'aidx', self.env.agent_idx(), 'tsize', actions.size(), 'chosen action', action)
                 self.env.step(action)
-                #reward, terminated, env_info = self.env.step(actions[0])
                 obs, reward, done, env_info = self.env.last()
+                reward = self.env.sim_time() - last_time
+                last_time = self.env.sim_time()
                 episode_return += reward
-
                 #if not self.env.agents: terminated = True
                 if done and len(self.env.agents) == 1:
                     all_done = True # NOTE A bit hacky
@@ -106,19 +109,18 @@ class AsyncEpisodeRunner:
             k += 1
             
         update_batch_pre(self.batch, self.t, self.env)
-        '''last_data = {
+        last_data = {
             "state": [self.env.state()],
             "avail_actions": [obs["action_mask"]],
-                "obs": [obs["observation"]]
+            "obs": [obs["observation"]]
         }
-        self.batch.update(last_data, ts=self.t)'''
+        print('last data', last_data)
+        self.batch.update(last_data, ts=self.t)
 
         # Select actions in the last stored state
         actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
-        #print(f'final actions: {actions}')
         self.batch.update({"actions": actions}, ts=self.t)
 
-        #print('train stats', self.train_stats, 'test mode', test_mode, 'train stats', self.train_stats)
         cur_stats = self.test_stats if test_mode else self.train_stats
         cur_returns = self.test_returns if test_mode else self.train_returns
         log_prefix = "test_" if test_mode else ""
@@ -130,13 +132,16 @@ class AsyncEpisodeRunner:
 
         cur_returns.append(episode_return)
 
-        '''if test_mode and (len(self.test_returns) == self.args.test_nepisode):  -- can't rectify log_stat 
+        if test_mode and (len(self.test_returns) == self.args.test_nepisode):  #-- can't rectify log_stat 
             self._log(cur_returns, cur_stats, log_prefix)
         elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:
             self._log(cur_returns, cur_stats, log_prefix)
             if hasattr(self.mac.action_selector, "epsilon"):
                 self.logger.log_stat("epsilon", self.mac.action_selector.epsilon, self.t_env)
-            self.log_train_stats_t = self.t_env'''
+            self.log_train_stats_t = self.t_env
+
+        if test_mode:
+            print('step count', self.env.step_count())
 
         return self.batch
 
