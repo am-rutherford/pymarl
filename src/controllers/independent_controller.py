@@ -1,10 +1,10 @@
-from src.modules.agents import REGISTRY as agent_REGISTRY
-from src.components.action_selectors import REGISTRY as action_REGISTRY
+from modules.agents import REGISTRY as agent_REGISTRY
+from components.action_selectors import REGISTRY as action_REGISTRY
 import torch as th
 
 
-# This multi-agent controller shares parameters between agents
-class ZooMAC:
+# This multi-agent controller DOES NOT share parameters between agents
+class IndieMAC:
     def __init__(self, scheme, groups, args):
         self.n_agents = args.n_agents
         self.args = args
@@ -27,7 +27,6 @@ class ZooMAC:
         agent_inputs = self._build_inputs(ep_batch, t)
         avail_actions = ep_batch["avail_actions"][:, t]
         agent_outs, self.hidden_states = self.agent(agent_inputs, self.hidden_states)
-
         # Softmax the agent outputs if they're policy logits
         if self.agent_output_type == "pi_logits":
 
@@ -78,6 +77,7 @@ class ZooMAC:
             input_shape ([type]): [description]
         """
         self.agent = agent_REGISTRY[self.args.agent](input_shape, self.args)
+        self.agents = {i: agent_REGISTRY[self.args.agent](input_shape, self.args) for i in range(self.n_agents)}
 
     def _build_inputs(self, batch, t):
         # Assumes homogenous agents with flat observations.
@@ -87,7 +87,7 @@ class ZooMAC:
         inputs.append(batch["obs"][:, t])  # b1av
         if self.args.obs_last_action:
             if t == 0:
-                inputs.append(th.zeros_like(batch["actions_onehot"][:, t]))
+                inputs.append(th.zeros_like(batch["actions_onehot"][:, t]))  # Why? -- no last actions
             else:
                 inputs.append(batch["actions_onehot"][:, t-1])
         if self.args.obs_agent_id:
@@ -99,9 +99,7 @@ class ZooMAC:
     def _get_input_shape(self, scheme):
         input_shape = scheme["obs"]["vshape"]
         if self.args.obs_last_action:
-            print('conact', scheme["actions_onehot"]["vshape"][0])
             input_shape += scheme["actions_onehot"]["vshape"][0]
-            print('input shape', input_shape)
         if self.args.obs_agent_id:
             input_shape += self.n_agents
 
