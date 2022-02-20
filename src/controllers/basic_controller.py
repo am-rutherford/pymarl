@@ -8,7 +8,6 @@ class BasicMAC:
     def __init__(self, scheme, groups, args):
         self.n_agents = args.n_agents
         self.args = args
-        print('** scheme', scheme)
         input_shape = self._get_input_shape(scheme)
         self._build_agents(input_shape)
         self.agent_output_type = args.agent_output_type
@@ -28,7 +27,6 @@ class BasicMAC:
         agent_inputs = self._build_inputs(ep_batch, t)
         avail_actions = ep_batch["avail_actions"][:, t]
         agent_outs, self.hidden_states = self.agent(agent_inputs, self.hidden_states)
-
         # Softmax the agent outputs if they're policy logits
         if self.agent_output_type == "pi_logits":
 
@@ -88,7 +86,7 @@ class BasicMAC:
         inputs.append(batch["obs"][:, t])  # b1av
         if self.args.obs_last_action:
             if t == 0:
-                inputs.append(th.zeros_like(batch["actions_onehot"][:, t]))
+                inputs.append(th.zeros_like(batch["actions_onehot"][:, t]))  # Why? -- no last actions
             else:
                 inputs.append(batch["actions_onehot"][:, t-1])
         if self.args.obs_agent_id:
