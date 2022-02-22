@@ -5,7 +5,7 @@ from modules.mixers.qmix import QMixer
 import torch as th
 from torch.optim import RMSprop
 
-
+import numpy as np
 class QLearner:
     def __init__(self, mac, scheme, logger, args):
         self.args = args
@@ -43,6 +43,10 @@ class QLearner:
         mask[:, 1:] = mask[:, 1:] * (1 - terminated[:, :-1])
         avail_actions = batch["avail_actions"]
 
+        '''print(f'rewards shape {np.shape(rewards)}, shape 2 {np.shape(rewards[0])} {rewards[0]}\
+            \nactions shape {np.shape(actions)} shape 2 {np.shape(actions[0])}  {actions[0]} \
+            \n mask shape {np.shape(mask)} shape 2 {np.shape(mask[0])}  {mask[0]}')'''
+
         # Calculate estimated Q-Values
         mac_out = []
         self.mac.init_hidden(batch.batch_size)
@@ -50,10 +54,10 @@ class QLearner:
             agent_outs = self.mac.forward(batch, t=t)
             mac_out.append(agent_outs)
         mac_out = th.stack(mac_out, dim=1)  # Concat over time
-
+        
         # Pick the Q-Values for the actions taken by each agent
         chosen_action_qvals = th.gather(mac_out[:, :-1], dim=3, index=actions).squeeze(3)  # Remove the last dim
-
+        #print('chosen act qvals shape', np.shape(chosen_action_qvals), 'shape 2', np.shape(chosen_action_qvals[0]), chosen_action_qvals[0])
         # Calculate the Q-Values necessary for the target
         target_mac_out = []
         self.target_mac.init_hidden(batch.batch_size)
@@ -65,7 +69,10 @@ class QLearner:
         target_mac_out = th.stack(target_mac_out[1:], dim=1)  # Concat across time
 
         # Mask out unavailable actions
+        #print('target_mac_out pre ', np.shape(target_mac_out), 'shape 2', np.shape(target_mac_out[0]), target_mac_out[0]) # only 50 not 51
+        #print('avial actions shape', np.shape(avail_actions), 'shape 2', np.shape(avail_actions[0]), avail_actions[0])
         target_mac_out[avail_actions[:, 1:] == 0] = -9999999
+        #print('target_mac_out post ', target_mac_out[0])
 
         # Max over target Q-Values
         if self.args.double_q:
@@ -73,28 +80,33 @@ class QLearner:
             mac_out_detach = mac_out.clone().detach()
             mac_out_detach[avail_actions == 0] = -9999999
             cur_max_actions = mac_out_detach[:, 1:].max(dim=3, keepdim=True)[1]
+            #print('cur max actions', cur_max_actions[0])
             target_max_qvals = th.gather(target_mac_out, 3, cur_max_actions).squeeze(3)
+            #print('target max qvals', target_max_qvals[0])
         else:
             target_max_qvals = target_mac_out.max(dim=3)[0]
 
         # Mix
         if self.mixer is not None:
+            #print(f'state shape {np.shape(batch["state"])}, {batch["state"][0]}')
             chosen_action_qvals = self.mixer(chosen_action_qvals, batch["state"][:, :-1])
+            #print(f'chosen_action_qvals shape {np.shape(chosen_action_qvals)} , {chosen_action_qvals[0]}')
             target_max_qvals = self.target_mixer(target_max_qvals, batch["state"][:, 1:])
 
+        #print(f'target_max_qvals shape {np.shape(target_max_qvals)} , {target_max_qvals[0]}')
         # Calculate 1-step Q-Learning targets
         targets = rewards + self.args.gamma * (1 - terminated) * target_max_qvals
-
+        #print('targets - shape', np.shape(targets), 'shape 2', np.shape(targets[0]), targets[0])
         # Td-error
         td_error = (chosen_action_qvals - targets.detach())
-
+        #print('error', (td_error[0]))
         mask = mask.expand_as(td_error)
 
         # 0-out the targets that came from padded data
         masked_td_error = td_error * mask
-
         # Normal L2 loss, take mean over actual data
         loss = (masked_td_error ** 2).sum() / mask.sum()
+        #print('loss', loss)
 
         # Optimise
         self.optimiser.zero_grad()

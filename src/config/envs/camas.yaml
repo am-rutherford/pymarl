@@ -5,8 +5,19 @@ env_args:
   debug: False
   seed: Null
 
-test_greedy: True  # What does this do lol
 
 runner: "async"
-t_max: 500000
 gamma: 1.00
+epsilon_anneal_time: 100000
+
+test_greedy: True
+test_nepisode: 32
+test_interval: 10000
+log_interval: 10000
+runner_log_interval: 10000
+learner_log_interval: 10000
+
+t_max: 500000
+
+save_model: True
+save_model_interval: 250000
