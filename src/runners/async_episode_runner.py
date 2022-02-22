@@ -3,12 +3,13 @@ https://www.pettingzoo.ml/api
 """
 
 #from envs import REGISTRY as env_REGISTRY
+from shutil import ExecError
 from src.envs import REGISTRY as env_REGISTRY
 from functools import partial
 #from components.episode_buffer import EpisodeBatch
 from src.components.episode_buffer import EpisodeBatch
 import numpy as np
-from src.utils.zoo_utils import update_batch_pre
+from src.utils.zoo_utils import update_batch_pre, quadratic_makespan_reward
 
 
 class AsyncEpisodeRunner:
@@ -55,6 +56,7 @@ class AsyncEpisodeRunner:
         self.t = 0
 
     def run(self, test_mode=False):
+        #print('*** reset ***')
         self.reset()
 
         terminated = False
@@ -65,61 +67,62 @@ class AsyncEpisodeRunner:
         last_time = self.env.sim_time()
         k = 0
         all_done = False
-        while not terminated:            
-            #print(f'-- step {k}, agent {self.env.agent_selection}, obs {obs}')
+        while not terminated:  
+            k += 1          
+            #print(f'-- step {k}, agent: {self.env.agent_selection}, obs: {obs}, done: {done}')
             
-            if done: # faux transition to update env correctly
-                self.env.step(None)
-                if not self.env.agents: 
-                    terminated = True
-                else:
-                    obs, reward, done, env_info = self.env.last()
-                    reward = self.env.sim_time() - last_time
-                    last_time = self.env.sim_time()
-                    
-                
-            else: # normal transition
-                #self.batch.update(pre_transition_data, ts=self.t)
-                update_batch_pre(self.batch, self.t, self.env)
-                
-                # Pass the entire batch of experiences up till now to the agents
-                # Receive the actions for each agent at this timestep in a batch of size 1
-                actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
-                action = actions[0][self.env.agent_idx()].item()
-                self.env.step(action)
-                obs, reward, done, env_info = self.env.last()
-                reward = self.env.sim_time() - last_time
-                last_time = self.env.sim_time()
-                episode_return += reward
-                #if not self.env.agents: terminated = True
-                if done and len(self.env.agents) == 1:
-                    all_done = True # NOTE A bit hacky
+            #print("- pre transition data..")
+            pre_transition_data = update_batch_pre(self.env, done)
+            #print('pre transition:', pre_transition_data)
 
-                post_transition_data = {
+            self.batch.update(pre_transition_data, ts=self.t)
+            actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+            action = actions[0][self.env.agent_idx()].item()
+            #print('- pre step')
+            if action == 4:
+                self.env.step(None)  # terminated action to update env correctly
+            else:
+                self.env.step(action)
+            #print('- normal obs')
+            obs, _, done, env_info = self.env.last()
+            reward = -1*(self.env.sim_time() - last_time)
+            #reward = 0
+            if done: reward += 20
+            last_time = self.env.sim_time()
+            
+            if done and len(self.env.agents) == 1:
+                all_done = True 
+                terminated = True
+                reward += quadratic_makespan_reward(last_time)
+                #print('final reward', reward, 'time', last_time)
+            reward = reward/100 # NOTE scaled down
+            episode_return += reward
+            post_transition_data = {
                     "actions": actions, 
                     "reward": [(reward,)],
                     "terminated": [[(all_done),]],  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)] # env info here is info from step()
                 }
-                #print('post trans data', post_transition_data)
-                self.batch.update(post_transition_data, ts=self.t)
-                
-                self.t += 1
-            if self.t == self.episode_limit-1: # NOTE hard coded
-                terminated = True
-            k += 1
+            #print('post transition:', post_transition_data)
+            self.batch.update(post_transition_data, ts=self.t)
             
-        update_batch_pre(self.batch, self.t, self.env)
-        last_data = {
+            self.t += 1
+            if self.t == self.episode_limit:
+                terminated = True
+            
+            
+        pre_transition_data = update_batch_pre(self.env, done)
+        self.batch.update(pre_transition_data, ts=self.t)
+        '''last_data = {
             "state": [self.env.state()],
             "avail_actions": [obs["action_mask"]],
             "obs": [obs["observation"]]
         }
         print('last data', last_data)
-        self.batch.update(last_data, ts=self.t)
-
+        self.batch.update(last_data, ts=self.t) '''
         # Select actions in the last stored state
         actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
         self.batch.update({"actions": actions}, ts=self.t)
+        #print('last data', pre_transition_data, 'actions', actions)
 
         cur_stats = self.test_stats if test_mode else self.train_stats
         cur_returns = self.test_returns if test_mode else self.train_returns
@@ -139,9 +142,6 @@ class AsyncEpisodeRunner:
             if hasattr(self.mac.action_selector, "epsilon"):
                 self.logger.log_stat("epsilon", self.mac.action_selector.epsilon, self.t_env)
             self.log_train_stats_t = self.t_env
-
-        if test_mode:
-            print('step count', self.env.step_count())
 
         return self.batch
 

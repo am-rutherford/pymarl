@@ -2,7 +2,7 @@ from camas_gym.envs.camas_zoo_masking import MOVES, CamasZooEnv
 import numpy as np
     
 
-def update_batch_pre(buffer, time, env): # buffer may not be the right term
+def update_batch_pre(env, done): # buffer may not be the correct terminology
     """Creates pre transition buffer data
     
     Only one agent may act a time, other agents either carry out their current action again
@@ -19,9 +19,15 @@ def update_batch_pre(buffer, time, env): # buffer may not be the right term
         observation = env.observe(agent)
         obs = np.append(obs, observation["observation"] )
         
-        if agent == env.agent_selection:
+        if agent == env.agent_selection and done:
+            one_hot = np.zeros(5)
+            one_hot[-1] = 1
+            avail_acts = np.append(avail_acts, one_hot)
+            
+        elif agent == env.agent_selection:
             avail_acts = np.append(avail_acts, observation["action_mask"])
-            avail_acts = np.append(avail_acts, np.array([0.0]))            
+            avail_acts = np.append(avail_acts, np.array([0.0])) 
+                       
         else:
             one_hot = np.zeros(5)  # NOTE find a better way!
             if agent in env.agents:
@@ -33,14 +39,19 @@ def update_batch_pre(buffer, time, env): # buffer may not be the right term
             one_hot[agent_act] = 1
 
             avail_acts = np.append(avail_acts, one_hot)
-
+    #print('- pre tran created')
     obs.resize((3,3))
+    obs = obs/38
     avail_acts.resize((3, 5))
     pre_transition_data = {
-                "state": [env.state()],
+                "state": [env.state()/38],
                 "obs": [obs],
                 "avail_actions": [avail_acts]
     }
-    #print('pre tran', pre_transition_data)
     
-    buffer.update(pre_transition_data, ts=time)
+    return pre_transition_data
+
+
+def quadratic_makespan_reward(x):
+    
+    return ((x-100)**2)/100

@@ -87,7 +87,7 @@ class IndieMAC:
         inputs.append(batch["obs"][:, t])  # b1av
         if self.args.obs_last_action:
             if t == 0:
-                inputs.append(th.zeros_like(batch["actions_onehot"][:, t]))  # Why? -- no last actions
+                inputs.append(th.zeros_like(batch["actions_onehot"][:, t]))  
             else:
                 inputs.append(batch["actions_onehot"][:, t-1])
         if self.args.obs_agent_id:

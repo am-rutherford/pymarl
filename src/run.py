@@ -188,14 +188,15 @@ def run_sequential(args, logger):
 
             last_test_T = runner.t_env
             
-            tt = []
+            tt, sc = [], []
             for _ in range(n_test_runs):
                 runner.run(test_mode=True)
                 if args.env == "camas":
                     tt.append(runner.env.sim_time())
+                    sc.append(runner.env.step_count())
             
             if args.env == "camas":
-                print('av test time', np.mean(tt))
+                print(f'av test time: {np.mean(tt)} ({np.var(tt)}), av step count {np.mean(sc)} ({np.var(sc)}), {len(sc)} episodes')
 
         if args.save_model and (runner.t_env - model_save_time >= args.save_model_interval or model_save_time == 0):
             model_save_time = runner.t_env
