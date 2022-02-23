@@ -73,7 +73,7 @@ class AsyncEpisodeRunner:
             
             #print("- pre transition data..")
             pre_transition_data = update_batch_pre(self.env, done)
-            #print('pre transition:', pre_transition_data)
+            print('pre transition:', pre_transition_data)
             
             self.batch.update(pre_transition_data, ts=self.t)
             actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
@@ -141,7 +141,7 @@ class AsyncEpisodeRunner:
             if hasattr(self.mac.action_selector, "epsilon"):
                 self.logger.log_stat("epsilon", self.mac.action_selector.epsilon, self.t_env)
             self.log_train_stats_t = self.t_env
-        #raise Exception()
+        raise Exception()
         return self.batch
 
     def _log(self, returns, stats, prefix):
