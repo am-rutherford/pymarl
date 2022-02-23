@@ -40,11 +40,10 @@ def update_batch_pre(env, done): # buffer may not be the correct terminology
 
             avail_acts = np.append(avail_acts, one_hot)
     #print('- pre tran created')
-    obs.resize((3,3))
-    obs = obs/38
+    obs.resize((3,len(observation["observation"])))
     avail_acts.resize((3, 5))
     pre_transition_data = {
-                "state": [env.state()/38],
+                "state": [env.state()],
                 "obs": [obs],
                 "avail_actions": [avail_acts]
     }
