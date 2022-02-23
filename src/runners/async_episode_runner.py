@@ -13,6 +13,8 @@ from src.utils.zoo_utils import update_batch_pre, quadratic_makespan_reward
 
 
 class AsyncEpisodeRunner:
+    
+    debug = False
 
     def __init__(self, args, logger):
         self.args = args
@@ -56,7 +58,7 @@ class AsyncEpisodeRunner:
         self.t = 0
 
     def run(self, test_mode=False):
-        #print('*** reset ***')
+        if self.debug: print('*** reset environment ***')
         self.reset()
 
         terminated = False
@@ -69,21 +71,20 @@ class AsyncEpisodeRunner:
         all_done = False
         while not terminated:  
             k += 1          
-            #print(f'-- step {k}, agent: {self.env.agent_selection}, obs: {obs}, done: {done}')
+            if self.debug: print(f'-- step {k} \nState: {self.env.state()}, Agent: {self.env.agent_selection}, Time: {last_time}')
             
-            #print("- pre transition data..")
-            pre_transition_data = update_batch_pre(self.env, done)
-            print('pre transition:', pre_transition_data)
             
+            pre_transition_data = self.env.get_pretran_data()
+            if self.debug: print(f"Pre transition data: {pre_transition_data}")
             self.batch.update(pre_transition_data, ts=self.t)
             actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
             action = actions[0][self.env.agent_idx()].item()
-            #print('- pre step')
+            
             if action == 4:
                 self.env.step(None)  # terminated action to update env correctly
             else:
                 self.env.step(action)
-            #print('- normal obs')
+                
             obs, _, done, env_info = self.env.last()
             reward = -1*(self.env.sim_time() - last_time)
             #reward = 0
@@ -94,15 +95,16 @@ class AsyncEpisodeRunner:
                 all_done = True 
                 terminated = True
                 reward += quadratic_makespan_reward(last_time)
-            #print('reward', reward, 'time', last_time)
+            
             reward = reward/100 # NOTE scaled down
+            if self.debug: print(f'Actions: {actions}\nReward {reward}, Time {last_time}')
             episode_return += reward
             post_transition_data = {
                     "actions": actions, 
                     "reward": [(reward,)],
                     "terminated": [[(all_done),]],  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)] # env info here is info from step()
                 }
-            #print('post transition:', post_transition_data)
+
             self.batch.update(post_transition_data, ts=self.t)
             
             self.t += 1
@@ -141,7 +143,7 @@ class AsyncEpisodeRunner:
             if hasattr(self.mac.action_selector, "epsilon"):
                 self.logger.log_stat("epsilon", self.mac.action_selector.epsilon, self.t_env)
             self.log_train_stats_t = self.t_env
-        raise Exception()
+        if self.debug: raise Exception()
         return self.batch
 
     def _log(self, returns, stats, prefix):
