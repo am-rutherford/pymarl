@@ -10,17 +10,20 @@ from functools import partial
 from src.components.episode_buffer import EpisodeBatch
 import numpy as np
 from src.utils.zoo_utils import update_batch_pre, quadratic_makespan_reward
+from alex_4yp.camas_sim_vis import animate_des
+import matplotlib.pyplot as plt
 
-
-class AsyncEpisodeRunner:
+class RenderEpisodeRunner:
     
-    debug = False
+    debug = True
 
     def __init__(self, args, logger):
         self.args = args
         self.logger = logger
         self.batch_size = self.args.batch_size_run
         assert self.batch_size == 1
+        
+        self.logger.console_logger.debug('Rendering runner initialised')
 
         self.env = env_REGISTRY[self.args.env](**self.args.env_args)
         self.episode_limit = self.env.episode_limit
@@ -58,6 +61,7 @@ class AsyncEpisodeRunner:
         self.t = 0
 
     def run(self, test_mode=False):
+        test_mode = True 
         if self.debug: print('*** reset environment ***')
         self.reset()
 
@@ -88,15 +92,13 @@ class AsyncEpisodeRunner:
             obs, _, done, env_info = self.env.last()
             reward = -1*(self.env.sim_time() - last_time)
             #reward = 0
-            if done: reward += 50 # NOTE increased from 20
-            if done and self.debug: print(f'{self.env.agent_selection} done!')
+            if done: reward += 20
             last_time = self.env.sim_time()
             
             if done and len(self.env.agents) == 1:
                 all_done = True 
                 terminated = True
                 reward += quadratic_makespan_reward(last_time)
-                
             
             reward = reward/100 # NOTE scaled down
             if self.debug: print(f'Actions: {actions}\nReward {reward}, Time {last_time}')
@@ -126,6 +128,31 @@ class AsyncEpisodeRunner:
         actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
         self.batch.update({"actions": actions}, ts=self.t)
         #print('last data', pre_transition_data, 'actions', actions)
+        
+        rc = {'agent_0':'blue', 'agent_1':'green', 'agent_2':'yellow'}
+        rs = {'agent_'+str(i):'square' for i in range(3)}
+
+        print('events', self.env._events)
+        print('len', len(self.env._events))
+        aevents = {'agent_'+str(i):[] for i in range(3)}
+
+        for event in self.env._events:
+            for a in aevents.keys():
+                if event[2] == a:
+                    if event[0] == 'location':
+                        if event[3] != "Agent reached goal":
+                            aevents[a].append(('node', self.env._tm.nodes[event[3]],event[1]))
+                    else:
+                        aevents[a].append(event)
+                continue 
+        print('aevents', aevents)
+
+        animate_des(self.env._tm, aevents, rc, rs) # current starts from teh second node visited
+
+        #env._tm.draw()
+        plt.show()
+        
+        raise Exception()
 
         cur_stats = self.test_stats if test_mode else self.train_stats
         cur_returns = self.test_returns if test_mode else self.train_returns

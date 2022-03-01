@@ -8,3 +8,6 @@ REGISTRY["parallel"] = ParallelRunner
 
 from .async_episode_runner import AsyncEpisodeRunner
 REGISTRY["async"] = AsyncEpisodeRunner
+
+from .render_episode_runner import RenderEpisodeRunner
+REGISTRY["render"] = RenderEpisodeRunner

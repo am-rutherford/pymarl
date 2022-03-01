@@ -98,6 +98,7 @@ def run_sequential(args, logger):
     preprocess = {
         "actions": ("actions_onehot", [OneHot(out_dim=args.n_actions)])
     }
+    logger.console_logger.debug(f"Buffer scheme: {scheme}, groups: {groups}")
 
     buffer = ReplayBuffer(scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
                           preprocess=preprocess,
@@ -133,6 +134,7 @@ def run_sequential(args, logger):
 
         if args.load_step == 0:
             # choose the max timestep
+            print('timesteps', timesteps)
             timestep_to_load = max(timesteps)
         else:
             # choose the timestep closest to load_step
@@ -188,15 +190,18 @@ def run_sequential(args, logger):
 
             last_test_T = runner.t_env
             
-            tt, sc = [], []
+            tt, sc, gc = [], [], []
             for _ in range(n_test_runs):
                 runner.run(test_mode=True)
                 if args.env == "camas":
                     tt.append(runner.env.sim_time())
                     sc.append(runner.env.step_count())
+                    gc.append(runner.env.agents_at_goal())
             
             if args.env == "camas":
-                print(f'av test time: {np.mean(tt)} ({np.var(tt)}), av step count {np.mean(sc)} ({np.var(sc)}), {len(sc)} episodes')
+                print(f'av test time: {np.mean(tt)} ({np.var(tt)}), av step count {np.mean(sc)} ({np.var(sc)}), percentage at goal {np.mean(gc)} ({np.var(gc)}) {len(sc)} episodes')
+                logger.log_stat("test_reached_goal", np.mean(gc), runner.t_env)
+                logger.log_stat("test_sim_time", np.mean(tt), runner.t_env)
 
         if args.save_model and (runner.t_env - model_save_time >= args.save_model_interval or model_save_time == 0):
             model_save_time = runner.t_env
