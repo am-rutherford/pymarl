@@ -1,16 +1,13 @@
+### Config for loading and rendering trained camas models
 env: camas
 
 env_args:
   map_name: "grid-small"
-  # Number of agents to use in the environment
-  #     0: maximum number of agents
-  #     Will return an error if number specifed is more than the maximum for the given map.
-  agent_count: 0
   
   # Possible observation types: 
   #     global: [agent position, other agent positions.. ]
   #     context: [agent position, context of edges..  ]
-  observation_type: "global"
+  observation_type: "global" # needs to match model being loaded
 
   # Divide reward by this factor before outputting
   reward_scaling_factor: 100
@@ -29,7 +26,7 @@ env_args:
   seed: Null
 
 
-runner: "async"
+runner: "render"
 gamma: 0.99
 epsilon_anneal_time: 500000
 
@@ -40,8 +37,9 @@ log_interval: 10000
 runner_log_interval: 10000
 learner_log_interval: 10000
 
-t_max: 4100000
+t_max: 5100000  # This must be greater than the timestep being loaded
 
-save_model: True
-save_model_interval: 500000
-#checkpoint_path: "results/models/qmix__2022-02-27_15-03-52/2000446" # Load a checkpoint from this path
+use_tensorboard: False # Log results to tensorboard
+save_model: False
+checkpoint_path: "results/models/qmix__2022-02-28_00-02-36" # Load a checkpoint from this path
+load_step: 0 
