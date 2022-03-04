@@ -1,0 +1,168 @@
+[INFO 00:16:18] pymarl Running command 'my_main'
+[INFO 00:16:18] pymarl Started run with ID "2"
+[DEBUG 00:16:18] my_main Started
+[INFO 00:16:18] my_main Experiment Parameters:
+[INFO 00:16:18] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'debug': False,
+                    'goal_reward': 0,
+                    'map_name': 'grid-small',
+                    'observation_type': 'global',
+                    'ptd_mean': 1.0,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'seed': 695023606,
+                    'time_multiplier': 1},
+    'epsilon_anneal_time': 750000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'async',
+    'runner_log_interval': 10000,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 695023606,
+    't_max': 5100000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 32,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 500, 'max_agents': 10, 'initial': {'agent_0': ('(3, 4)', '(4, 2)'), 'agent_1': ('(4, 1)', '(4, 4)'), 'agent_2': ('(0, 4)', '(2, 0)'), 'agent_3': ('(1, 1)', '(2, 2)'), 'agent_4': ('(2, 1)', '(3, 3)'), 'agent_5': ('(3, 3)', '(0, 0)'), 'agent_6': ('(4, 2)', '(1, 2)'), 'agent_7': ('(0, 4)', '(4, 3)'), 'agent_8': ('(0, 1)', '(2, 4)'), 'agent_9': ('(4, 2)', '(1, 2)')}, 'generator': 'grid', 'size': (5, 5), 'anna_map': True}
+[DEBUG 00:16:18] root Connecting (0, 0) to (0, 1) with e_(0, 0)_(0, 1)
+[DEBUG 00:16:18] root Connecting (0, 0) to (1, 0) with e_(0, 0)_(1, 0)
+[DEBUG 00:16:18] root Connecting (0, 1) to (0, 0) with e_(0, 1)_(0, 0)
+[DEBUG 00:16:18] root Connecting (0, 1) to (0, 2) with e_(0, 1)_(0, 2)
+[DEBUG 00:16:18] root Connecting (0, 1) to (1, 1) with e_(0, 1)_(1, 1)
+[DEBUG 00:16:18] root Connecting (0, 2) to (0, 1) with e_(0, 2)_(0, 1)
+[DEBUG 00:16:18] root Connecting (0, 2) to (0, 3) with e_(0, 2)_(0, 3)
+[DEBUG 00:16:18] root Connecting (0, 2) to (1, 2) with e_(0, 2)_(1, 2)
+[DEBUG 00:16:18] root Connecting (0, 3) to (0, 2) with e_(0, 3)_(0, 2)
+[DEBUG 00:16:18] root Connecting (0, 3) to (0, 4) with e_(0, 3)_(0, 4)
+[DEBUG 00:16:18] root Connecting (0, 3) to (1, 3) with e_(0, 3)_(1, 3)
+[DEBUG 00:16:18] root Connecting (0, 4) to (0, 3) with e_(0, 4)_(0, 3)
+[DEBUG 00:16:18] root Connecting (0, 4) to (1, 4) with e_(0, 4)_(1, 4)
+[DEBUG 00:16:18] root Connecting (1, 0) to (0, 0) with e_(1, 0)_(0, 0)
+[DEBUG 00:16:18] root Connecting (1, 0) to (1, 1) with e_(1, 0)_(1, 1)
+[DEBUG 00:16:18] root Connecting (1, 0) to (2, 0) with e_(1, 0)_(2, 0)
+[DEBUG 00:16:18] root Connecting (1, 1) to (0, 1) with e_(1, 1)_(0, 1)
+[DEBUG 00:16:18] root Connecting (1, 1) to (1, 0) with e_(1, 1)_(1, 0)
+[DEBUG 00:16:18] root Connecting (1, 1) to (1, 2) with e_(1, 1)_(1, 2)
+[DEBUG 00:16:18] root Connecting (1, 1) to (2, 1) with e_(1, 1)_(2, 1)
+[DEBUG 00:16:18] root Connecting (1, 2) to (0, 2) with e_(1, 2)_(0, 2)
+[DEBUG 00:16:18] root Connecting (1, 2) to (1, 1) with e_(1, 2)_(1, 1)
+[DEBUG 00:16:18] root Connecting (1, 2) to (1, 3) with e_(1, 2)_(1, 3)
+[DEBUG 00:16:18] root Connecting (1, 2) to (2, 2) with e_(1, 2)_(2, 2)
+[DEBUG 00:16:18] root Connecting (1, 3) to (0, 3) with e_(1, 3)_(0, 3)
+[DEBUG 00:16:18] root Connecting (1, 3) to (1, 2) with e_(1, 3)_(1, 2)
+[DEBUG 00:16:18] root Connecting (1, 3) to (1, 4) with e_(1, 3)_(1, 4)
+[DEBUG 00:16:18] root Connecting (1, 3) to (2, 3) with e_(1, 3)_(2, 3)
+[DEBUG 00:16:18] root Connecting (1, 4) to (0, 4) with e_(1, 4)_(0, 4)
+[DEBUG 00:16:18] root Connecting (1, 4) to (1, 3) with e_(1, 4)_(1, 3)
+[DEBUG 00:16:18] root Connecting (1, 4) to (2, 4) with e_(1, 4)_(2, 4)
+[DEBUG 00:16:18] root Connecting (2, 0) to (1, 0) with e_(2, 0)_(1, 0)
+[DEBUG 00:16:18] root Connecting (2, 0) to (2, 1) with e_(2, 0)_(2, 1)
+[DEBUG 00:16:18] root Connecting (2, 0) to (3, 0) with e_(2, 0)_(3, 0)
+[DEBUG 00:16:18] root Connecting (2, 1) to (1, 1) with e_(2, 1)_(1, 1)
+[DEBUG 00:16:18] root Connecting (2, 1) to (2, 0) with e_(2, 1)_(2, 0)
+[DEBUG 00:16:18] root Connecting (2, 1) to (2, 2) with e_(2, 1)_(2, 2)
+[DEBUG 00:16:18] root Connecting (2, 1) to (3, 1) with e_(2, 1)_(3, 1)
+[DEBUG 00:16:18] root Connecting (2, 2) to (1, 2) with e_(2, 2)_(1, 2)
+[DEBUG 00:16:18] root Connecting (2, 2) to (2, 1) with e_(2, 2)_(2, 1)
+[DEBUG 00:16:18] root Connecting (2, 2) to (2, 3) with e_(2, 2)_(2, 3)
+[DEBUG 00:16:18] root Connecting (2, 2) to (3, 2) with e_(2, 2)_(3, 2)
+[DEBUG 00:16:18] root Connecting (2, 3) to (1, 3) with e_(2, 3)_(1, 3)
+[DEBUG 00:16:18] root Connecting (2, 3) to (2, 2) with e_(2, 3)_(2, 2)
+[DEBUG 00:16:18] root Connecting (2, 3) to (2, 4) with e_(2, 3)_(2, 4)
+[DEBUG 00:16:18] root Connecting (2, 3) to (3, 3) with e_(2, 3)_(3, 3)
+[DEBUG 00:16:18] root Connecting (2, 4) to (1, 4) with e_(2, 4)_(1, 4)
+[DEBUG 00:16:18] root Connecting (2, 4) to (2, 3) with e_(2, 4)_(2, 3)
+[DEBUG 00:16:18] root Connecting (2, 4) to (3, 4) with e_(2, 4)_(3, 4)
+[DEBUG 00:16:18] root Connecting (3, 0) to (2, 0) with e_(3, 0)_(2, 0)
+[DEBUG 00:16:18] root Connecting (3, 0) to (3, 1) with e_(3, 0)_(3, 1)
+[DEBUG 00:16:18] root Connecting (3, 0) to (4, 0) with e_(3, 0)_(4, 0)
+[DEBUG 00:16:18] root Connecting (3, 1) to (2, 1) with e_(3, 1)_(2, 1)
+[DEBUG 00:16:18] root Connecting (3, 1) to (3, 0) with e_(3, 1)_(3, 0)
+[DEBUG 00:16:18] root Connecting (3, 1) to (3, 2) with e_(3, 1)_(3, 2)
+[DEBUG 00:16:18] root Connecting (3, 1) to (4, 1) with e_(3, 1)_(4, 1)
+[DEBUG 00:16:18] root Connecting (3, 2) to (2, 2) with e_(3, 2)_(2, 2)
+[DEBUG 00:16:18] root Connecting (3, 2) to (3, 1) with e_(3, 2)_(3, 1)
+[DEBUG 00:16:18] root Connecting (3, 2) to (3, 3) with e_(3, 2)_(3, 3)
+[DEBUG 00:16:18] root Connecting (3, 2) to (4, 2) with e_(3, 2)_(4, 2)
+[DEBUG 00:16:18] root Connecting (3, 3) to (2, 3) with e_(3, 3)_(2, 3)
+[DEBUG 00:16:18] root Connecting (3, 3) to (3, 2) with e_(3, 3)_(3, 2)
+[DEBUG 00:16:18] root Connecting (3, 3) to (3, 4) with e_(3, 3)_(3, 4)
+[DEBUG 00:16:18] root Connecting (3, 3) to (4, 3) with e_(3, 3)_(4, 3)
+[DEBUG 00:16:18] root Connecting (3, 4) to (2, 4) with e_(3, 4)_(2, 4)
+[DEBUG 00:16:18] root Connecting (3, 4) to (3, 3) with e_(3, 4)_(3, 3)
+[DEBUG 00:16:18] root Connecting (3, 4) to (4, 4) with e_(3, 4)_(4, 4)
+[DEBUG 00:16:18] root Connecting (4, 0) to (3, 0) with e_(4, 0)_(3, 0)
+[DEBUG 00:16:18] root Connecting (4, 0) to (4, 1) with e_(4, 0)_(4, 1)
+[DEBUG 00:16:18] root Connecting (4, 1) to (3, 1) with e_(4, 1)_(3, 1)
+[DEBUG 00:16:18] root Connecting (4, 1) to (4, 0) with e_(4, 1)_(4, 0)
+[DEBUG 00:16:18] root Connecting (4, 1) to (4, 2) with e_(4, 1)_(4, 2)
+[DEBUG 00:16:18] root Connecting (4, 2) to (3, 2) with e_(4, 2)_(3, 2)
+[DEBUG 00:16:18] root Connecting (4, 2) to (4, 1) with e_(4, 2)_(4, 1)
+[DEBUG 00:16:18] root Connecting (4, 2) to (4, 3) with e_(4, 2)_(4, 3)
+[DEBUG 00:16:18] root Connecting (4, 3) to (3, 3) with e_(4, 3)_(3, 3)
+[DEBUG 00:16:18] root Connecting (4, 3) to (4, 2) with e_(4, 3)_(4, 2)
+[DEBUG 00:16:18] root Connecting (4, 3) to (4, 4) with e_(4, 3)_(4, 4)
+[DEBUG 00:16:18] root Connecting (4, 4) to (3, 4) with e_(4, 4)_(3, 4)
+[DEBUG 00:16:18] root Connecting (4, 4) to (4, 3) with e_(4, 4)_(4, 3)
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4', 'agent_5', 'agent_6', 'agent_7', 'agent_8', 'agent_9']
+Goal states {'agent_0': '(4, 2)', 'agent_1': '(4, 4)', 'agent_2': '(2, 0)', 'agent_3': '(2, 2)', 'agent_4': '(3, 3)', 'agent_5': '(0, 0)', 'agent_6': '(1, 2)', 'agent_7': '(4, 3)', 'agent_8': '(2, 4)', 'agent_9': '(1, 2)'} 
+Initial states {'agent_0': '(3, 4)', 'agent_1': '(4, 1)', 'agent_2': '(0, 4)', 'agent_3': '(1, 1)', 'agent_4': '(2, 1)', 'agent_5': '(3, 3)', 'agent_6': '(4, 2)', 'agent_7': '(0, 4)', 'agent_8': '(0, 1)', 'agent_9': '(4, 2)'}
+[DEBUG 00:16:18] my_main Buffer scheme: {'state': {'vshape': (10,)}, 'obs': {'vshape': 10, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 10}
+[INFO 00:16:19] my_main Beginning training for 5100000 timesteps
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:119: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:119: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 00:16:20] my_main t_env: 500 / 5100000
+[INFO 00:16:20] my_main Estimated time left: 8 minutes, 38 seconds. Time passed: 1 seconds
+av test time: 365.85767543872316 (1707.623574909059), av step count 500.0 (0.0), percentage at goal 10.3125 (9.27734375) 32 episodes
+[INFO 00:16:53] my_main Saving models to results/models/qmix__2022-03-03_00-16-18/500
+[INFO 00:17:11] my_main Recent Stats | t_env:      10236 | Episode:       23
+ep_length_mean:          500.0000	epsilon:                   1.0000	return_mean:              -3.3655	return_std:                0.0000
+test_ep_length_mean:     500.0000	test_reached_goal:        10.3125	test_return_mean:         -3.1430	test_return_std:           0.4009
+test_sim_time:           365.8577	
+[INFO 00:17:13] my_main t_env: 10964 / 5100000
+[INFO 00:17:13] my_main Estimated time left: 7 hours, 8 minutes, 6 seconds. Time passed: 53 seconds
+av test time: 368.129341617379 (2449.6178280952495), av step count 500.0 (0.0), percentage at goal 10.625 (5.859375) 32 episodes
