@@ -66,16 +66,16 @@ class AsyncEpisodeRunner:
         self.mac.init_hidden(batch_size=self.batch_size)  # NOTE not sure what this is
 
         obs, reward, done, info = self.env.last()
-        last_time = self.env.sim_time()
         k = 0
-        all_done = False
         while not terminated:  
-            k += 1          
-            if self.debug: print(f'-- step {k} \nState: {self.env.state()}, Agent: {self.env.agent_selection}, Time: {last_time}')
-            
-            
+            k += 1  
+                    
             pre_transition_data = self.env.get_pretran_data()
-            if self.debug: print(f"Pre transition data: {pre_transition_data}")
+            
+            if self.debug: 
+                print(f'-- step {k} \nState: {self.env.state()}, Agent: {self.env.agent_selection}, Time: {self.env.sim_time()}')
+                print(f"Pre transition data: {pre_transition_data}")
+
             self.batch.update(pre_transition_data, ts=self.t)
             actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
             action = actions[0][self.env.agent_idx()].item()
@@ -85,26 +85,19 @@ class AsyncEpisodeRunner:
             else:
                 self.env.step(action)
                 
-            obs, _, done, env_info = self.env.last()
-            reward = -1*(self.env.sim_time() - last_time)
-            #reward = 0
-            if done: reward += 50 # NOTE increased from 20
-            if done and self.debug: print(f'{self.env.agent_selection} done!')
-            last_time = self.env.sim_time()
+            obs, reward, done, env_info = self.env.last()
             
-            if done and len(self.env.agents) == 1:
-                all_done = True 
-                terminated = True
-                reward += quadratic_makespan_reward(last_time)
-                
+            if done:
+                if self.debug: print(f'{self.env.agent_selection} done!')
+                if len(self.env.agents) == 1: terminated = True
+   
+            if self.debug: print(f'Actions: {actions}\nReward {reward}, Time {self.env.sim_time()}')
             
-            reward = reward/100 # NOTE scaled down
-            if self.debug: print(f'Actions: {actions}\nReward {reward}, Time {last_time}')
             episode_return += reward
             post_transition_data = {
                     "actions": actions, 
                     "reward": [(reward,)],
-                    "terminated": [[(all_done),]],  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)] # env info here is info from step()
+                    "terminated": [[(terminated),]],  # NOTE used to be: [(terminated != env_info.get("episode_limit", False),)] # env info here is info from step()
                 }
 
             self.batch.update(post_transition_data, ts=self.t)
