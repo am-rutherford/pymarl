@@ -1,0 +1,1434 @@
+[INFO 14:56:45] pymarl Running command 'my_main'
+[INFO 14:56:45] pymarl Started run with ID "128"
+[DEBUG 14:56:45] pymarl Starting Heartbeat
+[DEBUG 14:56:45] my_main Started
+[WARNING 14:56:45] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 14:56:45] my_main Experiment Parameters:
+[INFO 14:56:45] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'sc2',
+    'env_args': {   'continuing_episode': False,
+                    'debug': False,
+                    'difficulty': '7',
+                    'game_version': None,
+                    'heuristic_ai': False,
+                    'heuristic_rest': False,
+                    'map_name': '2s3z',
+                    'move_amount': 2,
+                    'obs_all_health': True,
+                    'obs_instead_of_state': False,
+                    'obs_last_action': False,
+                    'obs_own_health': True,
+                    'obs_pathing_grid': False,
+                    'obs_terrain_height': False,
+                    'obs_timestep_number': False,
+                    'replay_dir': '',
+                    'replay_prefix': '',
+                    'reward_death_value': 10,
+                    'reward_defeat': 0,
+                    'reward_negative_scale': 0.5,
+                    'reward_only_positive': True,
+                    'reward_scale': True,
+                    'reward_scale_rate': 20,
+                    'reward_sparse': False,
+                    'reward_win': 200,
+                    'seed': 553739181,
+                    'state_last_action': True,
+                    'state_timestep_number': False,
+                    'step_mul': 8},
+    'epsilon_anneal_time': 50000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'episode',
+    'runner_log_interval': 10000,
+    'save_model': False,
+    'save_model_interval': 2000000,
+    'save_replay': False,
+    'seed': 553739181,
+    't_max': 2050000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 32,
+    'use_cuda': False,
+    'use_tensorboard': False}
+
+[INFO 14:56:46] my_main Beginning training for 2050000 timesteps
+[INFO 14:56:46] absl Launching SC2: /Applications/StarCraft II/Versions/Base86383/SC2.app/Contents/MacOS/SC2 -listen 127.0.0.1 -port 23596 -dataDir /Applications/StarCraft II/ -tempDir /var/folders/vf/zsfcj3cj00543yqcgjy0409w0000gn/T/sc-lvagoksh/ -displayMode 0 -windowwidth 1920 -windowheight 1200 -windowx 50 -windowy 50
+[INFO 14:56:46] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 0, running: True
+[INFO 14:56:47] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 1, running: True
+[INFO 14:56:48] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 2, running: True
+[INFO 14:56:49] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 3, running: True
+[INFO 14:56:50] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 4, running: True
+[INFO 14:56:51] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 5, running: True
+[INFO 14:56:52] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 6, running: True
+[INFO 14:56:53] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 7, running: True
+[INFO 14:56:54] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 8, running: True
+[INFO 14:56:55] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 9, running: True
+[INFO 14:56:56] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 10, running: True
+[INFO 14:56:57] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 11, running: True
+[INFO 14:56:58] absl Connecting to: ws://127.0.0.1:23596/sc2api, attempt: 12, running: True
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:119: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  /Users/runner/miniforge3/conda-bld/pytorch-recipe_1643121251270/work/torch/csrc/utils/tensor_new.cpp:201.)
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:119: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+[INFO 14:57:08] my_main t_env: 55 / 2050000
+[INFO 14:57:08] my_main Estimated time left: 1 hours, 17 minutes, 23 seconds. Time passed: 22 seconds
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+[INFO 15:10:05] my_main Recent Stats | t_env:      10009 | Episode:      192
+battle_won_mean:           0.0000	dead_allies_mean:          5.0000	dead_enemies_mean:         0.0000	ep_length_mean:           55.0000
+epsilon:                   1.0000	grad_norm:                 2.2350	loss:                      0.1090	q_taken_mean:              0.0105
+return_mean:               2.9363	return_std:                0.0000	target_mean:               0.0585	td_error_abs:              0.2530
+test_battle_won_mean:      0.0000	test_dead_allies_mean:     5.0000	test_dead_enemies_mean:    1.0312	test_ep_length_mean:      49.0625
+test_return_mean:          4.6591	test_return_std:           2.1936	
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+[INFO 15:10:09] my_main t_env: 10064 / 2050000
+[INFO 15:10:09] my_main Estimated time left: 1 days, 20 hours, 11 minutes, 56 seconds. Time passed: 13 minutes, 23 seconds
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+[INFO 15:12:36] my_main Updated target network
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+[INFO 16:05:23] my_main Recent Stats | t_env:      20026 | Episode:      387
+battle_won_mean:           0.0000	dead_allies_mean:          4.9974	dead_enemies_mean:         0.0078	ep_length_mean:           53.5651
+epsilon:                   0.8098	grad_norm:                 1.1364	loss:                      0.0625	q_taken_mean:              0.0303
+return_mean:               3.6613	return_std:                0.4818	target_mean:               0.0544	td_error_abs:              0.1734
+test_battle_won_mean:      0.0000	test_dead_allies_mean:     4.9219	test_dead_enemies_mean:    1.0469	test_ep_length_mean:      54.2812
+test_return_mean:          6.0152	test_return_std:           2.4026	
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+[INFO 16:05:26] my_main t_env: 20075 / 2050000
+[INFO 16:05:26] my_main Estimated time left: 7 days, 18 hours, 49 minutes, 56 seconds. Time passed: 1 hours, 8 minutes, 40 seconds
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 3, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+[INFO 16:08:49] my_main Updated target network
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 4, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+training
+[INFO 16:19:48] my_main Recent Stats | t_env:      30061 | Episode:      596
+battle_won_mean:           0.0000	dead_allies_mean:          4.9948	dead_enemies_mean:         0.0787	ep_length_mean:           52.8229
+epsilon:                   0.6195	grad_norm:                 0.8417	loss:                      0.0481	q_taken_mean:              0.0462
+return_mean:               4.1599	return_std:                0.7065	target_mean:               0.0644	td_error_abs:              0.1500
+test_battle_won_mean:      0.0000	test_dead_allies_mean:     4.8542	test_dead_enemies_mean:    0.9375	test_ep_length_mean:      59.4375
+test_return_mean:          6.2455	test_return_std:           2.1883	
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+[INFO 16:19:51] my_main t_env: 30109 / 2050000
+[INFO 16:19:51] my_main Estimated time left: 2 days, 21 minutes, 52 seconds. Time passed: 1 hours, 23 minutes, 5 seconds
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': True, 'dead_allies': 2, 'dead_enemies': 5}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': True, 'dead_allies': 3, 'dead_enemies': 5}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': True, 'dead_allies': 4, 'dead_enemies': 5}
+env info  {'battle_won': True, 'dead_allies': 4, 'dead_enemies': 5}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 4}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 4}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 4}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': True, 'dead_allies': 2, 'dead_enemies': 5}
+env info  {'battle_won': True, 'dead_allies': 2, 'dead_enemies': 5}
+env info  {'battle_won': True, 'dead_allies': 4, 'dead_enemies': 5}
+env info  {'battle_won': True, 'dead_allies': 3, 'dead_enemies': 5}
+env info  {'battle_won': True, 'dead_allies': 4, 'dead_enemies': 5}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 4}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': True, 'dead_allies': 3, 'dead_enemies': 5}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 4}
+env info  {'battle_won': True, 'dead_allies': 2, 'dead_enemies': 5}
+env info  {'battle_won': True, 'dead_allies': 3, 'dead_enemies': 5}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 3}
+env info  {'battle_won': True, 'dead_allies': 3, 'dead_enemies': 5}
+env info  {'battle_won': True, 'dead_allies': 3, 'dead_enemies': 5}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 2}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 1}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+env info  {'battle_won': False, 'dead_allies': 5, 'dead_enemies': 0}
+training
+[INFO 16:22:16] my_main Updated target network
