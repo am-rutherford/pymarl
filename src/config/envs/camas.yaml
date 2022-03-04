@@ -1,7 +1,7 @@
 env: camas
 
 env_args:
-  map_name: "grid-small"
+  map_name: "bruno"
   # Number of agents to use in the environment
   #     0: maximum number of agents
   #     Will return an error if number specifed is more than the maximum for the given map.
@@ -10,7 +10,7 @@ env_args:
   # Possible observation types: 
   #     global: [agent position, other agent positions.. ]
   #     context: [agent position, context of edges..  ]
-  observation_type: "global"
+  observation_type: "context"
 
   # Divide reward by this factor before outputting
   reward_scaling_factor: 100
@@ -22,8 +22,8 @@ env_args:
   ptd_var: 0.1
 
   # Rewards
-  goal_reward: 0
-  time_multiplier: 1
+  goal_reward: 20
+  time_multiplier: -1
 
   debug: False
   seed: Null
@@ -31,7 +31,7 @@ env_args:
 
 runner: "async"
 gamma: 0.99
-epsilon_anneal_time: 500000
+epsilon_anneal_time: 750000
 
 test_greedy: True
 test_nepisode: 32
@@ -40,7 +40,7 @@ log_interval: 10000
 runner_log_interval: 10000
 learner_log_interval: 10000
 
-t_max: 4100000
+t_max: 4600000
 
 save_model: True
 save_model_interval: 500000
