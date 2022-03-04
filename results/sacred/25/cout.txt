@@ -1,0 +1,118 @@
+[INFO 15:37:42] pymarl Running command 'my_main'
+[INFO 15:37:42] pymarl Started run with ID "25"
+[DEBUG 15:37:42] pymarl Starting Heartbeat
+[DEBUG 15:37:42] my_main Started
+[WARNING 15:37:42] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 15:37:42] my_main Experiment Parameters:
+[INFO 15:37:42] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'debug': False,
+                    'map_name': 'bruno',
+                    'seed': 353882323},
+    'epsilon_anneal_time': 50000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 2000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 2000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'async',
+    'runner_log_interval': 2000,
+    'save_model': False,
+    'save_model_interval': 2000000,
+    'save_replay': False,
+    'seed': 353882323,
+    't_max': 10000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 2000,
+    'test_nepisode': 20,
+    'use_cuda': False,
+    'use_tensorboard': False}
+
+*** Creating env, config: {} ***
+[DEBUG 15:37:42] root Connecting n_0_0 to n_0_1 with n_0_0_n_0_1
+[DEBUG 15:37:42] root Connecting n_0_0 to n_1_0 with n_0_0_n_1_0
+[DEBUG 15:37:42] root Connecting n_0_1 to n_0_2 with n_0_1_n_0_2
+[DEBUG 15:37:42] root Connecting n_0_1 to n_0_0 with n_0_1_n_0_0
+[DEBUG 15:37:42] root Connecting n_0_2 to n_0_3 with n_0_2_n_0_3
+[DEBUG 15:37:42] root Connecting n_0_2 to n_0_1 with n_0_2_n_0_1
+[DEBUG 15:37:42] root Connecting n_0_3 to n_0_2 with n_0_3_n_0_2
+[DEBUG 15:37:42] root Connecting n_0_3 to n_1_3 with n_0_3_n_1_3
+[DEBUG 15:37:42] root Connecting n_1_0 to n_1_1 with n_1_0_n_1_1
+[DEBUG 15:37:42] root Connecting n_1_0 to n_0_0 with n_1_0_n_0_0
+[DEBUG 15:37:42] root Connecting n_1_0 to n_2_0 with n_1_0_n_2_0
+[DEBUG 15:37:42] root Connecting n_1_1 to n_1_2 with n_1_1_n_1_2
+[DEBUG 15:37:42] root Connecting n_1_1 to n_1_0 with n_1_1_n_1_0
+[DEBUG 15:37:42] root Connecting n_1_2 to n_1_3 with n_1_2_n_1_3
+[DEBUG 15:37:42] root Connecting n_1_2 to n_1_1 with n_1_2_n_1_1
+[DEBUG 15:37:42] root Connecting n_1_3 to n_1_2 with n_1_3_n_1_2
+[DEBUG 15:37:42] root Connecting n_1_3 to n_0_3 with n_1_3_n_0_3
+[DEBUG 15:37:42] root Connecting n_1_3 to n_2_3 with n_1_3_n_2_3
+[DEBUG 15:37:42] root Connecting n_2_0 to n_2_1 with n_2_0_n_2_1
+[DEBUG 15:37:42] root Connecting n_2_0 to n_1_0 with n_2_0_n_1_0
+[DEBUG 15:37:42] root Connecting n_2_1 to n_2_2 with n_2_1_n_2_2
+[DEBUG 15:37:42] root Connecting n_2_1 to n_2_0 with n_2_1_n_2_0
+[DEBUG 15:37:42] root Connecting n_2_2 to n_2_3 with n_2_2_n_2_3
+[DEBUG 15:37:42] root Connecting n_2_2 to n_2_1 with n_2_2_n_2_1
+[DEBUG 15:37:42] root Connecting n_2_3 to n_2_2 with n_2_3_n_2_2
+[DEBUG 15:37:42] root Connecting n_2_3 to n_1_3 with n_2_3_n_1_3
+** scheme {'state': {'vshape': (3,)}, 'obs': {'vshape': 3, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}, 'actions_onehot': {'vshape': (5,), 'dtype': torch.float32, 'group': 'agents'}, 'filled': {'vshape': (1,), 'dtype': torch.int64}}
+[INFO 15:37:42] my_main Beginning training for 10000 timesteps
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:119: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  /Users/runner/miniforge3/conda-bld/pytorch-recipe_1643121251270/work/torch/csrc/utils/tensor_new.cpp:201.)
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:119: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:119: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 15:37:42] my_main t_env: 99 / 10000
+[INFO 15:37:42] my_main Estimated time left: 0 seconds. Time passed: 0 seconds
+[INFO 15:37:47] my_main Recent Stats | t_env:       2016 | Episode:       40
+grad_norm:               266000.5000	loss:                    51109.1172	q_taken_mean:            111.7410	target_mean:             121.3414
+td_error_abs:            148.8325	
+[INFO 15:37:47] my_main t_env: 2100 / 10000
+[INFO 15:37:47] my_main Estimated time left: 21 seconds. Time passed: 5 seconds
+[INFO 15:37:56] my_main Recent Stats | t_env:       4066 | Episode:       80
+grad_norm:               184944.1875	loss:                    38059.1260	q_taken_mean:            123.8097	target_mean:             127.4272
+td_error_abs:            132.1067	
+[INFO 15:37:56] my_main t_env: 4172 / 10000
+[INFO 15:37:56] my_main Estimated time left: 25 seconds. Time passed: 14 seconds
+[INFO 15:38:05] my_main Recent Stats | t_env:       6094 | Episode:      122
+grad_norm:               164081.1094	loss:                    31287.6497	q_taken_mean:            118.1016	target_mean:             122.7624
+td_error_abs:            118.6943	
+[INFO 15:38:05] my_main t_env: 6182 / 10000
+[INFO 15:38:05] my_main Estimated time left: 17 seconds. Time passed: 23 seconds
+[INFO 15:38:14] my_main Recent Stats | t_env:       8095 | Episode:      163
+grad_norm:               148566.3438	loss:                    28119.0752	q_taken_mean:            118.2802	target_mean:             120.5437
+td_error_abs:            112.4309	
+[INFO 15:38:14] my_main t_env: 8184 / 10000
+[INFO 15:38:14] my_main Estimated time left: 8 seconds. Time passed: 32 seconds
