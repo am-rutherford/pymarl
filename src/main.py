@@ -8,15 +8,18 @@ from sacred.observers import FileStorageObserver
 from sacred.utils import apply_backspaces_and_linefeeds
 import sys
 import torch as th
-from utils.logging import get_logger
 import yaml
 
-from run import run
 
 SETTINGS['CAPTURE_MODE'] = "fd" # set to "no" if you want to see stdout/stderr in console
-logger = get_logger()
+
 
 ex = Experiment("pymarl")
+
+from run import run  # moved down here as the Experiment() call was throwing an error
+from utils.logging import get_logger
+
+logger = get_logger()
 ex.logger = logger
 ex.captured_out_filter = apply_backspaces_and_linefeeds
 
