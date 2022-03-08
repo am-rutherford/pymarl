@@ -3,6 +3,11 @@ env: camas
 
 env_args:
   map_name: "grid-small"
+  # Number of agents to use in the environment
+  #     0: maximum number of agents
+  #     Will return an error if number specifed is more than the maximum for the given map.
+  agent_count: 5
+  episode_limit: 300
   
   # Possible observation types: 
   #     global: [agent position, other agent positions.. ]
