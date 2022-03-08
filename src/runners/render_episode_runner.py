@@ -3,6 +3,7 @@ https://www.pettingzoo.ml/api
 """
 
 #from envs import REGISTRY as env_REGISTRY
+from math import floor
 from shutil import ExecError
 from src.envs import REGISTRY as env_REGISTRY
 from functools import partial
@@ -10,7 +11,8 @@ from functools import partial
 from src.components.episode_buffer import EpisodeBatch
 import numpy as np
 from src.utils.zoo_utils import update_batch_pre, quadratic_makespan_reward
-from alex_4yp.camas_sim_vis import animate_des
+#from alex_4yp.camas_sim_vis import animate_des
+from camas_gym.envs.rendering.zoo_camas_sim_vis import animate_des
 import matplotlib.pyplot as plt
 
 class RenderEpisodeRunner:
@@ -62,7 +64,7 @@ class RenderEpisodeRunner:
 
     def run(self, test_mode=False):
         test_mode = True 
-        if self.debug: print('*** reset environment ***')
+        print('*** reset environment ***')
         self.reset()
 
         terminated = False
@@ -129,19 +131,20 @@ class RenderEpisodeRunner:
         self.batch.update({"actions": actions}, ts=self.t)
         #print('last data', pre_transition_data, 'actions', actions)
         
-        rc = {'agent_0':'blue', 'agent_1':'green', 'agent_2':'yellow'}
-        rs = {'agent_'+str(i):'square' for i in range(3)}
+        #rc = {'agent_0':'blue', 'agent_1':'green', 'agent_2':'yellow'}
+        rc = {'agent_'+str(i): self._get_agent_colour(i) for i in range(self.env.agent_count())}
+        rs = {agent:'square' for agent in rc.keys()}
 
         print('events', self.env._events)
         print('len', len(self.env._events))
-        aevents = {'agent_'+str(i):[] for i in range(3)}
+        aevents = {agent: [('node', self.env._tm.nodes[self.env.inital_state(agent)], 0.0)] for agent in rc.keys()}
 
         for event in self.env._events:
             for a in aevents.keys():
                 if event[2] == a:
                     if event[0] == 'location':
                         if event[3] != "Agent reached goal":
-                            aevents[a].append(('node', self.env._tm.nodes[event[3]],event[1]))
+                            aevents[a].append(('node', self.env._tm.nodes[event[3]], event[1]))
                     else:
                         aevents[a].append(event)
                 continue 
@@ -184,3 +187,10 @@ class RenderEpisodeRunner:
             if k != "n_episodes":
                 self.logger.log_stat(prefix + k + "_mean" , v/stats["n_episodes"], self.t_env)
         stats.clear()
+
+    def _get_agent_colour(self, idx):
+        self._colours = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
+        
+        if idx > len(self._colours):
+            idx = idx - floor(idx % len(self._colours)) * self._colours
+        return self._colours[idx]
