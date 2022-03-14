@@ -420,7 +420,21 @@
     28.168539325842698,
     28.24507042253521,
     28.222535211267605,
-    28.282485875706215
+    28.282485875706215,
+    28.183098591549296,
+    28.420454545454547,
+    28.1887323943662,
+    28.327683615819208,
+    28.420454545454547,
+    28.23380281690141,
+    28.162921348314608,
+    28.07002801120448,
+    28.25423728813559,
+    28.39943342776204,
+    28.228169014084507,
+    28.322033898305083,
+    28.322033898305083,
+    28.371104815864022
   ],
   "ep_length_mean_T": [
     345,
@@ -843,7 +857,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "episode": [
     48,
@@ -1265,7 +1293,21 @@
     111556,
     111911,
     112266,
-    112620
+    112620,
+    112975,
+    113327,
+    113682,
+    114036,
+    114388,
+    114743,
+    115099,
+    115456,
+    115810,
+    116163,
+    116518,
+    116872,
+    117226,
+    117579
   ],
   "episode_T": [
     10156,
@@ -1687,7 +1729,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "epsilon": [
     1.0,
@@ -1840,6 +1896,20 @@
     0.06395359999999994,
     0.05760506666666665,
     0.051264766666666683,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
     0.05,
     0.05,
     0.05,
@@ -2533,7 +2603,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "grad_norm": [
     {
@@ -25269,6 +25353,762 @@
         null,
         null
       ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTIzNjQwNTEycQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MjM2NDA1MTJxAWEuAQAAAAAAAAARb/4/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NTk5ODEyMjQ0NzA0cQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ1OTk4MTIyNDQ3MDRxAWEuAQAAAAAAAADuEKk+\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTIwNzIxNTUycQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MjA3MjE1NTJxAWEuAQAAAAAAAAB5ASg/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTMyMjM3NjY0cQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MzIyMzc2NjRxAWEuAQAAAAAAAABG/1Q/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTE5NjA4MzM2cQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MTk2MDgzMzZxAWEuAQAAAAAAAACzaXg/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTE3Mjc1NTY4cQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MTcyNzU1NjhxAWEuAQAAAAAAAAA/K4Q/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTIyOTU4NzIwcQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MjI5NTg3MjBxAWEuAQAAAAAAAACHkUM/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTIxMDA0MDAwcQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MjEwMDQwMDBxAWEuAQAAAAAAAAA3Q2o/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTIyNjcxOTg0cQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MjI2NzE5ODRxAWEuAQAAAAAAAAD2la0/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTA3NjY4NzY4cQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MDc2Njg3NjhxAWEuAQAAAAAAAAB0FRw/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTA3MTg0MzIwcQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MDcxODQzMjBxAWEuAQAAAAAAAAB32xdA\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTA5MDg0NTkycQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MDkwODQ1OTJxAWEuAQAAAAAAAADY4l8/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTI1NzExMjAwcQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MjU3MTEyMDBxAWEuAQAAAAAAAAAnqXY/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "py/reduce": [
+        {
+          "py/function": "torch._utils._rebuild_tensor_v2"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/reduce": [
+                {
+                  "py/function": "torch.storage._load_from_bytes"
+                },
+                {
+                  "py/tuple": [
+                    {
+                      "py/b64": "gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA\nAGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA\naW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh\nZ2UKcQFYDgAAADk0NjAwOTE4Mjg2ODE2cQJYBgAAAGN1ZGE6MHEDSwFOdHEEUS6AAl1xAFgOAAAA\nOTQ2MDA5MTgyODY4MTZxAWEuAQAAAAAAAAD4e+8/\n"
+                    }
+                  ]
+                },
+                null,
+                null,
+                null
+              ]
+            },
+            0,
+            {
+              "py/tuple": []
+            },
+            {
+              "py/tuple": []
+            },
+            false,
+            {
+              "py/reduce": [
+                {
+                  "py/type": "collections.OrderedDict"
+                },
+                {
+                  "py/tuple": []
+                },
+                null,
+                null,
+                {
+                  "py/tuple": []
+                }
+              ]
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
     }
   ],
   "grad_norm_T": [
@@ -25692,7 +26532,21 @@
     4188986,
     4199008,
     4209023,
-    4219027
+    4219027,
+    4229031,
+    4239052,
+    4249069,
+    4259082,
+    4269085,
+    4279112,
+    4289129,
+    4299129,
+    4309150,
+    4319156,
+    4329179,
+    4339181,
+    4349192,
+    4359200
   ],
   "loss": [
     0.1659659594297409,
@@ -26115,7 +26969,21 @@
     0.0038505373522639275,
     0.006811136845499277,
     0.00465819938108325,
-    0.007370976265519857
+    0.007370976265519857,
+    0.010310766287147999,
+    0.0032048842404037714,
+    0.003969356883317232,
+    0.005200908984988928,
+    0.004792862571775913,
+    0.006168688647449017,
+    0.004476948641240597,
+    0.004423849284648895,
+    0.0073845358565449715,
+    0.003878102172166109,
+    0.01610873080790043,
+    0.004541779402643442,
+    0.005916882771998644,
+    0.009992475621402264
   ],
   "loss_T": [
     6406,
@@ -26538,7 +27406,21 @@
     4188986,
     4199008,
     4209023,
-    4219027
+    4219027,
+    4229031,
+    4239052,
+    4249069,
+    4259082,
+    4269085,
+    4279112,
+    4289129,
+    4299129,
+    4309150,
+    4319156,
+    4329179,
+    4339181,
+    4349192,
+    4359200
   ],
   "q_taken_mean": [
     -0.023084452685958476,
@@ -26961,7 +27843,21 @@
     2.890282879759934,
     2.9582791758849556,
     2.8619287415187893,
-    3.0309087396978023
+    3.0309087396978023,
+    2.948748282967033,
+    2.941371604767184,
+    2.9638435927013425,
+    2.9423770047494493,
+    2.9561717029185024,
+    2.947632055884009,
+    2.95370410376693,
+    2.937394997925885,
+    2.8969633957435343,
+    2.9234568572522273,
+    2.929507472826087,
+    2.9057604281387666,
+    2.9204836144911503,
+    2.9380916050502233
   ],
   "q_taken_mean_T": [
     6406,
@@ -27384,7 +28280,21 @@
     4188986,
     4199008,
     4209023,
-    4219027
+    4219027,
+    4229031,
+    4239052,
+    4249069,
+    4259082,
+    4269085,
+    4279112,
+    4289129,
+    4299129,
+    4309150,
+    4319156,
+    4329179,
+    4339181,
+    4349192,
+    4359200
   ],
   "return_mean": [
     7.679546106594542,
@@ -27807,7 +28717,21 @@
     19.72702562038125,
     19.74253618786443,
     19.71950993582959,
-    19.729683670494715
+    19.729683670494715,
+    19.737576814519727,
+    19.689075839198978,
+    19.731312223499977,
+    19.735033913974892,
+    19.68015275556624,
+    19.739451825507526,
+    19.70931177166546,
+    19.765553119788862,
+    19.72213538324222,
+    19.719245823137467,
+    19.74134203938523,
+    19.704082462196634,
+    19.73375367472285,
+    19.726671358750362
   ],
   "return_mean_T": [
     345,
@@ -28230,7 +29154,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "return_std": [
     0.0,
@@ -28653,7 +29591,21 @@
     0.4032328995594004,
     0.3774656374107557,
     0.4170997766101975,
-    0.3938891142494127
+    0.3938891142494127,
+    0.3882135779236678,
+    0.42245679584654106,
+    0.3753216144957377,
+    0.361118939810113,
+    0.4629340089686603,
+    0.38543586656357837,
+    0.43462932422863526,
+    0.37687600649937303,
+    0.39686967972584847,
+    0.4057455039262939,
+    0.3697482322359392,
+    0.41890506706131847,
+    0.3780589246364198,
+    0.39271037422357635
   ],
   "return_std_T": [
     345,
@@ -29076,7 +30028,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "target_mean": [
     -0.008250053279518225,
@@ -29499,7 +30465,21 @@
     2.8963399386037527,
     2.9691445139657078,
     2.8631079560281836,
-    3.0179402043269232
+    3.0179402043269232,
+    2.9314848042582415,
+    2.9433195329822617,
+    2.95815112905481,
+    2.948210782626652,
+    2.9471939960765416,
+    2.955318306587838,
+    2.948004109057562,
+    2.92888680517146,
+    2.9082043877963364,
+    2.927458588530067,
+    2.9086703889266303,
+    2.8991404529185023,
+    2.9291920889795353,
+    2.9549693516322546
   ],
   "target_mean_T": [
     6406,
@@ -29922,7 +30902,21 @@
     4188986,
     4199008,
     4209023,
-    4219027
+    4219027,
+    4229031,
+    4239052,
+    4249069,
+    4259082,
+    4269085,
+    4279112,
+    4289129,
+    4299129,
+    4309150,
+    4319156,
+    4329179,
+    4339181,
+    4349192,
+    4359200
   ],
   "td_error_abs": [
     0.20615446273513113,
@@ -30345,7 +31339,21 @@
     0.04768539159240049,
     0.06971133915723952,
     0.03699765772809564,
-    0.07636995420351134
+    0.07636995420351134,
+    0.09122339604975103,
+    0.04040529881242638,
+    0.042587075457476926,
+    0.05735843507203762,
+    0.05699328283906508,
+    0.06113446725381387,
+    0.049892821645629054,
+    0.05342756541429368,
+    0.07247551556291251,
+    0.048086034694068414,
+    0.11006278991699218,
+    0.05407462351122617,
+    0.05763115925071514,
+    0.08874496391841344
   ],
   "td_error_abs_T": [
     6406,
@@ -30768,7 +31776,21 @@
     4188986,
     4199008,
     4209023,
-    4219027
+    4219027,
+    4229031,
+    4239052,
+    4249069,
+    4259082,
+    4269085,
+    4279112,
+    4289129,
+    4299129,
+    4309150,
+    4319156,
+    4329179,
+    4339181,
+    4349192,
+    4359200
   ],
   "test_ep_length_mean": [
     500.0,
@@ -31157,6 +32179,20 @@
     27.0,
     27.0,
     29.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
+    27.0,
     27.0,
     27.0,
     27.0,
@@ -31614,7 +32650,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "test_reached_goal": [
     0.0,
@@ -31789,6 +32839,20 @@
     94.375,
     96.25,
     85.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
     100.0,
     100.0,
     100.0,
@@ -32460,7 +33524,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "test_return_mean": [
     0.0024621125123532117,
@@ -32883,7 +33961,21 @@
     19.91060832699561,
     19.9397502645012,
     19.952434186193976,
-    19.9459055527123
+    19.9459055527123,
+    19.913772071974947,
+    20.029999395255302,
+    19.921586099313092,
+    19.98053281586872,
+    19.973878162143357,
+    19.92452767005829,
+    19.8630941181844,
+    19.986404413112982,
+    19.944251330455078,
+    19.91378308809241,
+    19.954064078219385,
+    19.902019549737986,
+    19.995305442594635,
+    19.993102623270524
   ],
   "test_return_mean_T": [
     345,
@@ -33306,7 +34398,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "test_return_std": [
     0.0,
@@ -33729,7 +34835,21 @@
     0.1492631650729431,
     0.2637082853633354,
     0.20712816445479815,
-    0.20482085311490913
+    0.20482085311490913,
+    0.20331900479562526,
+    0.18926686824486183,
+    0.21887753749423677,
+    0.21144771288919467,
+    0.18424173427086823,
+    0.21392804506520224,
+    0.22873184168773913,
+    0.18363673274001485,
+    0.1964350273905171,
+    0.22135124116375562,
+    0.16100094034615836,
+    0.225720995974966,
+    0.21830725659028177,
+    0.1907631798048661
   ],
   "test_return_std_T": [
     345,
@@ -34152,7 +35272,21 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ],
   "test_sim_time": [
     819.1377589492242,
@@ -34575,7 +35709,21 @@
     18.793835233611873,
     18.86092732282557,
     18.438233566743847,
-    18.56196857784537
+    18.56196857784537,
+    18.65830666189221,
+    17.791747805379472,
+    19.229217802294798,
+    17.776261180306903,
+    18.391589767008718,
+    19.242916648035493,
+    19.64858868363635,
+    17.569216231974373,
+    18.13733676826638,
+    18.479829380544167,
+    18.083797921067685,
+    19.650339721396186,
+    17.97685839850395,
+    17.736346804733323
   ],
   "test_sim_time_T": [
     345,
@@ -34998,6 +36146,20 @@
     4183866,
     4193893,
     4203912,
-    4213924
+    4213924,
+    4223929,
+    4233933,
+    4243940,
+    4253968,
+    4263972,
+    4273995,
+    4284021,
+    4294042,
+    4304044,
+    4314069,
+    4324090,
+    4334116,
+    4344142,
+    4354157
   ]
 }
