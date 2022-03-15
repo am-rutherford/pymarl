@@ -3,7 +3,7 @@ from sympy import EX
 import torch as th
 import numpy as np
 from types import SimpleNamespace as SN
-from episode_buffer import EpisodeBatch
+from .episode_buffer import EpisodeBatch
 
 class PERBuffer(EpisodeBatch):
     """Implements non-uniform sampling from the episode buffer. Weighted proportionally based on episode return.
