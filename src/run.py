@@ -102,6 +102,7 @@ def run_sequential(args, logger):
     logger.console_logger.debug(f"Buffer scheme: {scheme}, groups: {groups}")
 
     if args.prioritised_replay:
+        print(" -- using prioritised replay --")
         buffer = PERBuffer(scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
                            args.per_alpha, args.per_epsilon,
                             preprocess=preprocess,
