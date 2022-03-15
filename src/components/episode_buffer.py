@@ -16,17 +16,15 @@ class EpisodeBatch:
         """_summary_
 
         Args:
-            scheme (_type_): _description_
+            scheme (_type_): Defines size of observations, actions, action mask, reward and terminated flag
             groups (_type_): _description_
-            batch_size (_type_): _description_
-            max_seq_length (_type_): _description_
-            data (_type_, optional): _description_. Defaults to None.
-            preprocess (_type_, optional): _description_. Defaults to None.
-            device (str, optional): _description_. Defaults to "cpu".
-            
-        Attributes:
-            data.transition_data = all transistions so far
+            batch_size (_type_): number of experiments run in parallel, usually this is 1
+            max_seq_length (_type_): maximum number of transistions in an episode
+            data (_type_, optional): data to initialise batch with. Defaults to None.
+            preprocess (_type_, optional): function to run on data before passing to learner. Defaults to None.
+            device (str, optional): where batch should be stored. Defaults to "cpu".
         """
+        
         self.scheme = scheme.copy()
         self.groups = groups
         self.batch_size = batch_size
