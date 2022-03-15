@@ -27,7 +27,7 @@ class PERBuffer(EpisodeBatch):
         Args:
             ep_batch (EpiosdeBatch): Episode to be inserted
         """
-        print(f'inserting episode batch, buffer idx {self.buffer_index}, ep batch size {ep_batch.batch_size}')
+        #print(f'inserting episode batch, buffer idx {self.buffer_index}, ep batch size {ep_batch.batch_size}')
         if self.buffer_index + ep_batch.batch_size <= self.buffer_size:  
             
             self.reward_sum[self.buffer_index] = (th.sum(ep_batch["reward"][:, :-1]) + self.per_epsilon)**self.per_alpha
