@@ -221,6 +221,8 @@ def run_sequential(args, logger):
             # learner should handle saving/loading -- delegate actor save/load to mac,
             # use appropriate filenames to do critics, optimizer states
             learner.save_models(save_path)
+            if args.prioritised_replay:
+                buffer.save_distribution(os.path.join(args.local_results_path, "models", args.unique_token, "{}.yaml".format(runner.t_env)))
 
         episode += args.batch_size_run
 
