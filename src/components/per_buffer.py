@@ -80,7 +80,7 @@ class PERBuffer(EpisodeBatch):
         print('writing PER values to yaml')
         file_path = pathlib.Path(path)
         with open(file_path, 'w') as outp:
-            yaml.dump([self.reward_sum, self.pvalues, self.e_sampled], file_path)
+            yaml.dump([self.reward_sum, self.pvalues, self.e_sampled], outp)
 
     def __repr__(self):
         return "ReplayBuffer. {}/{} episodes. Keys:{} Groups:{}".format(self.episodes_in_buffer,
