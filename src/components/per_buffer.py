@@ -1,4 +1,5 @@
 import yaml
+import pathlib
 from typing import DefaultDict
 from sympy import EX
 import torch as th
@@ -77,8 +78,9 @@ class PERBuffer(EpisodeBatch):
         
     def save_distribution(self, path):
         print('writing PER values to yaml')
-        with open(path, 'w') as outp:
-            yaml.dump([self.reward_sum, self.pvalues, self.e_sampled], path)
+        file_path = pathlib.Path(path)
+        with open(file_path, 'w') as outp:
+            yaml.dump([self.reward_sum, self.pvalues, self.e_sampled], file_path)
 
     def __repr__(self):
         return "ReplayBuffer. {}/{} episodes. Keys:{} Groups:{}".format(self.episodes_in_buffer,
