@@ -104,7 +104,7 @@ def run_sequential(args, logger):
     if args.prioritised_replay:
         print(" -- using prioritised replay --")
         buffer = PERBuffer(scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
-                           args.per_alpha, args.per_epsilon,
+                           args.per_alpha, args.per_epsilon, args.per_beta, args.per_beta_anneal,
                             preprocess=preprocess,
                             device="cpu" if args.buffer_cpu_only else args.device)
     else:
@@ -176,7 +176,10 @@ def run_sequential(args, logger):
         buffer.insert_episode_batch(episode_batch)
 
         if buffer.can_sample(args.batch_size):
-            episode_sample = buffer.sample(args.batch_size)
+            if args.prioritised_replay:
+                episode_sample = buffer.sample(args.batch_size, runner.t_env)
+            else:
+                episode_sample = buffer.sample(args.batch_size)
 
             # Truncate batch to only filled timesteps
             max_ep_t = episode_sample.max_t_filled()
@@ -222,7 +225,7 @@ def run_sequential(args, logger):
             # use appropriate filenames to do critics, optimizer states
             learner.save_models(save_path)
             if args.prioritised_replay:
-                buffer.save_distribution(os.path.join(args.local_results_path, "models", args.unique_token, "{}.yaml".format(runner.t_env)))
+                buffer.save_distribution(save_path)
 
         episode += args.batch_size_run
 
