@@ -1,6 +1,7 @@
 import datetime
 import os
 import time
+from sympy import EX
 import yaml
 import torch as th
 from types import SimpleNamespace as SN
@@ -260,7 +261,7 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
     
 if __name__ == "__main__":
 
-    num_episodes = 5000
+    num_episodes = 50
     train_steps = 20000
     test_episodes = 20
     
