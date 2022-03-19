@@ -24,3 +24,29 @@ class DecayThenFlatSchedule():
         elif self.decay in ["exp"]:
             return min(self.start, max(self.finish, np.exp(- T / self.exp_scaling)))
     pass
+
+class RiseThenFlatSchedule():
+
+    def __init__(self,
+                 start,
+                 finish,
+                 time_length,
+                 decay="linear"):
+
+        assert start <= finish
+        self.start = start
+        self.finish = finish
+        self.time_length = time_length
+        self.delta = (self.finish - self.start) / self.time_length
+        self.decay = decay
+
+        if self.decay in ["exp"]:
+            raise NotImplementedError
+            self.exp_scaling = (-1) * self.time_length / np.log(self.finish) if self.finish > 0 else 1
+
+    def eval(self, T):
+        if self.decay in ["linear"]:
+            return min(self.finish, self.start + self.delta * T)
+        elif self.decay in ["exp"]:
+            return min(self.start, max(self.finish, np.exp(- T / self.exp_scaling)))
+    pass

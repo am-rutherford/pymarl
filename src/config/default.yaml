@@ -35,10 +35,13 @@ critic_lr: 0.0005 # Learning rate for critics
 optim_alpha: 0.99 # RMSProp alpha
 optim_eps: 0.00001 # RMSProp epsilon
 grad_norm_clip: 10 # Reduce magnitude of gradients above this L2 norm
+
+# --- Prioritised Replay ---
 prioritised_replay: False # Whether to use Prioritised Experience Replay
 per_alpha: 0.6  # defines shape of distribution, must lie in range [0, 1]
 per_epsilon: 1  # constant added to reward value to ensure all episodes have a non zero probability of being sampled.
-
+per_beta: 0.4  # importance sampling exponent, controls how much prioritization to apply. Must lie in the range [0, 1].
+per_beta_anneal: 0.7  # percantage of t_max at which per_beta will be annealed to equal 1.
 
 # --- Agent parameters ---
 agent: "rnn" # Default rnn agent
