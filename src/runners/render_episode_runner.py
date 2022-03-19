@@ -191,6 +191,6 @@ class RenderEpisodeRunner:
     def _get_agent_colour(self, idx):
         self._colours = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
         
-        if idx > len(self._colours):
-            idx = idx - floor(idx % len(self._colours)) * self._colours
+        if idx >= len(self._colours):
+            idx = idx % len(self._colours)
         return self._colours[idx]
