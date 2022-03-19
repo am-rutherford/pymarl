@@ -1,7 +1,7 @@
 env: camas
 
 env_args:
-  map_name: "supermarket-small"
+  map_name: "supermarket-medium"
   # Number of agents to use in the environment
   #     0: maximum number of agents
   #     Will return an error if number specifed is more than the maximum for the given map.
@@ -12,7 +12,7 @@ env_args:
   #     global: [agent position, other agent positions.. ]
   #     context: [agent position, context of edges..  ]
   observation_type: "context"
-  congestion: False
+  congestion: True
   dummy_actions: True
 
   # Divide reward by this factor before outputting
@@ -35,7 +35,8 @@ env_args:
 
 runner: "async"
 gamma: 0.99
-epsilon_anneal_time: 1500000
+epsilon_start: 0.4
+epsilon_anneal_time: 500000
 
 test_greedy: True
 test_nepisode: 32
@@ -48,4 +49,4 @@ t_max: 5000000
 
 save_model: True
 save_model_interval: 500000
-#checkpoint_path: "results/models/qmix__2022-02-27_15-03-52/2000446" # Load a checkpoint from this path
+checkpoint_path: "results/models/qmix__2022-03-18_20-23-41/" # Load a checkpoint from this path
