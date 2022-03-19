@@ -69,10 +69,7 @@ class QLearner:
         target_mac_out = th.stack(target_mac_out[1:], dim=1)  # Concat across time
 
         # Mask out unavailable actions
-        #print('target_mac_out pre ', np.shape(target_mac_out), 'shape 2', np.shape(target_mac_out[0]), target_mac_out[0]) # only 50 not 51
-        #print('avial actions shape', np.shape(avail_actions), 'shape 2', np.shape(avail_actions[0]), avail_actions[0])
         target_mac_out[avail_actions[:, 1:] == 0] = -9999999
-        #print('target_mac_out post ', target_mac_out[0])
 
         # Max over target Q-Values
         if self.args.double_q:
@@ -93,21 +90,23 @@ class QLearner:
             #print(f'chosen_action_qvals shape {np.shape(chosen_action_qvals)} , {chosen_action_qvals[0]}')
             target_max_qvals = self.target_mixer(target_max_qvals, batch["state"][:, 1:])
 
-        #print(f'target_max_qvals shape {np.shape(target_max_qvals)} , {target_max_qvals[0]}')
+        
         # Calculate 1-step Q-Learning targets
         targets = rewards + self.args.gamma * (1 - terminated) * target_max_qvals
-        #print('targets - shape', np.shape(targets), 'shape 2', np.shape(targets[0]), targets[0])
+        
         # Td-error
         td_error = (chosen_action_qvals - targets.detach())
-        #print('error', (td_error[0]))
         mask = mask.expand_as(td_error)
 
         # 0-out the targets that came from padded data
         masked_td_error = td_error * mask
+        
+        if self.args.prioritised_replay:  # Apply importance sampling weights
+            masked_td_error = masked_td_error * batch["weights"][:, :-1]
+        
         # Normal L2 loss, take mean over actual data
         loss = (masked_td_error ** 2).sum() / mask.sum()
-        #print('loss', loss)
-
+        
         # Optimise
         self.optimiser.zero_grad()
         loss.backward()

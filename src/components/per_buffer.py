@@ -18,9 +18,9 @@ class PERBuffer(EpisodeBatch):
         
         self.per_alpha = per_alpha
         self.per_epsilon = per_epsilon
-        self.pvalues = {}
+        self.pvalues = th.zeros((buffer_size, 1, 1), device=self.device)
         self.max_reward_sum = 0.0
-        self.reward_sum = {}
+        self.reward_sum = th.zeros((buffer_size, 1, 1), device=self.device)
         self.e_sampled = DefaultDict(lambda : False)
 
     def insert_episode_batch(self, ep_batch):
@@ -31,7 +31,8 @@ class PERBuffer(EpisodeBatch):
         """
         #print(f'inserting episode batch, buffer idx {self.buffer_index}, ep batch size {ep_batch.batch_size}')
         if self.buffer_index + ep_batch.batch_size <= self.buffer_size:  
-            
+            ## PER values
+            assert ep_batch.batch_size == 1
             self.reward_sum[self.buffer_index] = (th.sum(ep_batch["reward"][:, :-1]) + self.per_epsilon)**self.per_alpha
             if self.reward_sum[self.buffer_index] > self.max_reward_sum:
                 self.max_reward_sum = self.reward_sum[self.buffer_index]
@@ -67,9 +68,16 @@ class PERBuffer(EpisodeBatch):
         if self.episodes_in_buffer == batch_size:
             return self[:batch_size]
         else:
-            probs = np.fromiter(self.pvalues.values(), dtype=float)
-            probs = probs/np.sum(probs)
-            ep_ids = np.random.choice(self.episodes_in_buffer, batch_size, replace=False)
+            probs = self.pvalues[:self.episodes_in_buffer]/th.sum(self.pvalues[:self.episodes_in_buffer], dim=0)  # calculate probability values
+            ep_ids = np.random.choice(self.episodes_in_buffer, batch_size, replace=False, p=th.flatten(probs).cpu().detach().numpy())
+            
+            # Calculate importance sampling weights -- correct for bias introduced
+            is_weights = th.ones(batch_size, 1, 1) * 1/probs[ep_ids] * 1/self.episodes_in_buffer
+            is_weights = th.pow(is_weights, 0.4)
+            is_weights = is_weights/th.max(is_weights)  # normalise            
+            self.data.transition_data["weights"][ep_ids]= is_weights
+            
+            # Update PER values for episodes sampled for first time # NOTE could be made more torchy
             for i in ep_ids:
                 if not self.e_sampled[i]:
                     self.pvalues[i] = self.reward_sum[i]
