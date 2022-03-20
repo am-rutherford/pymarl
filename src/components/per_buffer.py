@@ -1,4 +1,5 @@
 import pathlib
+from copy import deepcopy
 from math import floor
 from typing import DefaultDict
 from sympy import EX
@@ -70,7 +71,7 @@ class PERBuffer(EpisodeBatch):
 
 
     def can_sample(self, batch_size):
-        return self.episodes_in_buffer >= batch_size
+        return self.episodes_in_buffer > batch_size
 
 
     def sample(self, batch_size, t):
@@ -98,16 +99,7 @@ class PERBuffer(EpisodeBatch):
                 if not self.e_sampled[i]:
                     self.pvalues[i] = self.reward_sum[i]
                     self.e_sampled[i] = True
-            return self[ep_ids]
-        
-        
-    def save_distribution(self, path):
-        """ Saves PER distributions within the directory specified by `path`. 
-        Path should not specify the file name.
-        """
-        print(f'saving PER objects to {path}')
-        th.save({"pvalues": self.pvalues, "reward_sum": self.reward_sum, "e_sampled": self.e_sampled}, "{}/per_objs.th".format(path))
-        
+            return self[ep_ids]        
 
     def __repr__(self):
         return "ReplayBuffer. {}/{} episodes. Keys:{} Groups:{}".format(self.episodes_in_buffer,
@@ -115,3 +107,13 @@ class PERBuffer(EpisodeBatch):
                                                                         self.scheme.keys(),
                                                                         self.groups.keys())
 
+
+def save_per_distributions(per_buffer, path):
+    """ Saves PER distributions within the directory specified by `path`. 
+    Path should not specify the file name.
+    """
+    print(f'saving PER objects to {path}')
+    pvalues = th.flatten(per_buffer.pvalues).cpu().detach().numpy()
+    reward_sum = th.flatten(per_buffer.reward_sum).cpu().detach().numpy()
+    e_sampled = [1 if per_buffer.e_sampled[i] else 0 for i in per_buffer.e_sampled]
+    th.save({"pvalues": pvalues, "reward_sum": reward_sum, "e_sampled": e_sampled}, "{}/per_objs.th".format(path))
