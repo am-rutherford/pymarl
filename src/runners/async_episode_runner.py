@@ -25,7 +25,6 @@ class AsyncEpisodeRunner:
         self.env = env_REGISTRY[self.args.env](**self.args.env_args)
         self.episode_limit = self.env.episode_limit
         self.t = 0
-
         self.t_env = 0
 
         self.train_returns = []

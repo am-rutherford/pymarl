@@ -5,7 +5,7 @@ env_args:
   # Number of agents to use in the environment
   #     0: maximum number of agents
   #     Will return an error if number specifed is more than the maximum for the given map.
-  agent_count: 0
+  agent_count: 5
   episode_limit: 0
   
   # Possible observation types: 
@@ -35,8 +35,8 @@ env_args:
 
 runner: "async"
 gamma: 0.99
-epsilon_start: 0.4
-epsilon_anneal_time: 500000
+epsilon_start: 1.0
+epsilon_anneal_time: 1500000
 
 test_greedy: True
 test_nepisode: 32
@@ -49,4 +49,4 @@ t_max: 5000000
 
 save_model: True
 save_model_interval: 500000
-checkpoint_path: "results/models/qmix__2022-03-18_20-23-41/" # Load a checkpoint from this path
+#checkpoint_path: "results/models/qmix__2022-03-18_20-23-41/" # Load a checkpoint from this path

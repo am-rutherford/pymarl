@@ -14,7 +14,7 @@ from learners import REGISTRY as le_REGISTRY
 from runners import REGISTRY as r_REGISTRY
 from controllers import REGISTRY as mac_REGISTRY
 from components.episode_buffer import ReplayBuffer
-from components.per_buffer import PERBuffer
+from components.per_buffer import PERBuffer, save_per_distributions
 from components.transforms import OneHot
 
 def run(_run, _config, _log):
@@ -102,9 +102,9 @@ def run_sequential(args, logger):
     logger.console_logger.debug(f"Buffer scheme: {scheme}, groups: {groups}")
 
     if args.prioritised_replay:
+        scheme["weights"] = {"vshape": (1,)}
         print(" -- using prioritised replay --")
-        buffer = PERBuffer(scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
-                           args.per_alpha, args.per_epsilon, args.per_beta, args.per_beta_anneal,
+        buffer = PERBuffer(args, scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
                             preprocess=preprocess,
                             device="cpu" if args.buffer_cpu_only else args.device)
     else:
@@ -225,7 +225,7 @@ def run_sequential(args, logger):
             # use appropriate filenames to do critics, optimizer states
             learner.save_models(save_path)
             if args.prioritised_replay:
-                buffer.save_distribution(save_path)
+                save_per_distributions(buffer, save_path)
 
         episode += args.batch_size_run
 
