@@ -68,7 +68,7 @@ class PERBuffer(EpisodeBatch):
             
             if self.use_offset:
                 if reward < -1*self.offset: # reward is lower than any currently in buffer - shift origin
-                    self.og_reward = self.og_reward - (self.offset + reward).to(self.device)
+                    self.og_reward = self.og_reward - (self.offset + reward)#.to(self.device) -- try fix cuda implementation at some point
                     self.origin_reward_idx = self.buffer_index
                     self.offset = -1*reward
                     self.og_reward[self.buffer_index] = 0.0
