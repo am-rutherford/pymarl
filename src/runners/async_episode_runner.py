@@ -132,12 +132,16 @@ class AsyncEpisodeRunner:
 
         if test_mode and (len(self.test_returns) == self.args.test_nepisode):  #-- can't rectify log_stat 
             self._log(cur_returns, cur_stats, log_prefix)
+        
         elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:
             self._log(cur_returns, cur_stats, log_prefix)
+            
             if hasattr(self.mac.action_selector, "epsilon"):
                 self.logger.log_stat("epsilon", self.mac.action_selector.epsilon, self.t_env)
             self.log_train_stats_t = self.t_env
+        
         if self.debug: raise Exception()
+        
         return self.batch
 
     def _log(self, returns, stats, prefix):

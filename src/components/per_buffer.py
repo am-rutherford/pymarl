@@ -25,17 +25,25 @@ class PERBuffer(EpisodeBatch):
         self.episodes_in_buffer = 0
         
         assert (args.per_alpha >= 0) and (args.per_alpha <= 1), "per_alpha is out of bounds, must lie in the range [0, 1]"
-        self.per_alpha = args.per_alpha
         assert args.per_epsilon >= 0, "per_epsilon must be positive"
-        self.per_epsilon = args.per_epsilon
         assert (args.per_beta >= 0) and (args.per_beta <= 1), "per_beta is out of bounds, must lie in the range [0, 1]"
         assert (args.per_beta_anneal >= 0) and (args.per_beta_anneal <= 1), "per_beta_anneal is out of bounds, must lie in the range [0, 1]"
+        
+        self.per_alpha = args.per_alpha
+        self.per_epsilon = args.per_epsilon
         self.per_beta_schedule = RiseThenFlatSchedule(args.per_beta, 1, floor(args.t_max * args.per_beta_anneal), decay="linear")
+        
         print(f'Initialising PER buffer, annealing beta from {args.per_beta} to 1 over {floor(args.t_max * args.per_beta_anneal)} timesteps.')
+        
         self.pvalues = th.zeros((buffer_size, 1, 1), device=self.device)
         self.max_reward_sum = 0.0
         self.reward_sum = th.zeros((buffer_size, 1, 1), device=self.device)
-        self.e_sampled = DefaultDict(lambda : False)
+        self.e_sampled = {}
+        
+        # recording values
+        self.buffer_counter = 0
+        self.reward_sum_record = {}
+        self.sample_count = {}
 
     def insert_episode_batch(self, ep_batch):
         """Insert episode into replay buffer.
@@ -47,10 +55,11 @@ class PERBuffer(EpisodeBatch):
         if self.buffer_index + ep_batch.batch_size <= self.buffer_size:  
             ## PER values
             assert ep_batch.batch_size == 1
-            self.reward_sum[self.buffer_index] = (th.sum(ep_batch["reward"][:, :-1]) + self.per_epsilon)**self.per_alpha
+            self.reward_sum[self.buffer_index] = (th.sum(ep_batch["reward"]) + self.per_epsilon)**self.per_alpha
             if self.reward_sum[self.buffer_index] > self.max_reward_sum:
                 self.max_reward_sum = self.reward_sum[self.buffer_index]
             self.pvalues[self.buffer_index] = self.max_reward_sum
+            self.e_sampled[self.buffer_index] = False
             
             self.update(ep_batch.data.transition_data,
                         slice(self.buffer_index, self.buffer_index + ep_batch.batch_size),
@@ -58,10 +67,17 @@ class PERBuffer(EpisodeBatch):
                         mark_filled=False)
             self.update(ep_batch.data.episode_data,
                         slice(self.buffer_index, self.buffer_index + ep_batch.batch_size))
+            
+            # record values for debugging/analysis
+            self.reward_sum_record[self.buffer_counter] = (th.sum(ep_batch["reward"]) + self.per_epsilon)**self.per_alpha
+            self.sample_count[self.buffer_counter] = 0
+            self.buffer_counter += ep_batch.batch_size
+            
+            # increment buffer index
             self.buffer_index = (self.buffer_index + ep_batch.batch_size)
             self.episodes_in_buffer = max(self.episodes_in_buffer, self.buffer_index)
             self.buffer_index = self.buffer_index % self.buffer_size  # resets buffer index once it is greater than buffer size, allows it to then remove oldest epsiodes
-            assert self.buffer_index < self.buffer_size
+            assert self.buffer_index < self.buffer_size         
             
         else: 
             buffer_left = self.buffer_size - self.buffer_index  # i guess this is for when buffer_size % batch_size > 0
@@ -89,8 +105,9 @@ class PERBuffer(EpisodeBatch):
             ep_ids = np.random.choice(self.episodes_in_buffer, batch_size, replace=False, p=th.flatten(probs).cpu().detach().numpy())
             
             # Calculate importance sampling weights -- correct for bias introduced
+            self.per_beta = self.per_beta_schedule.eval(t)
             is_weights = th.ones(batch_size, 1, 1) * 1/probs[ep_ids] * 1/self.episodes_in_buffer
-            is_weights = th.pow(is_weights, self.per_beta_schedule.eval(t))
+            is_weights = th.pow(is_weights, self.per_beta)
             is_weights = is_weights/th.max(is_weights)  # normalise            
             self.data.transition_data["weights"][ep_ids]= is_weights
             
@@ -99,10 +116,11 @@ class PERBuffer(EpisodeBatch):
                 if not self.e_sampled[i]:
                     self.pvalues[i] = self.reward_sum[i]
                     self.e_sampled[i] = True
+                self.sample_count[i+(self.buffer_counter-self.episodes_in_buffer)] += 1
             return self[ep_ids]        
 
     def __repr__(self):
-        return "ReplayBuffer. {}/{} episodes. Keys:{} Groups:{}".format(self.episodes_in_buffer,
+        return "PER ReplayBuffer. {}/{} episodes. Keys:{} Groups:{}".format(self.episodes_in_buffer,
                                                                         self.buffer_size,
                                                                         self.scheme.keys(),
                                                                         self.groups.keys())
@@ -115,5 +133,13 @@ def save_per_distributions(per_buffer, path):
     print(f'saving PER objects to {path}')
     pvalues = th.flatten(per_buffer.pvalues).cpu().detach().numpy()
     reward_sum = th.flatten(per_buffer.reward_sum).cpu().detach().numpy()
-    e_sampled = [1 if per_buffer.e_sampled[i] else 0 for i in per_buffer.e_sampled]
-    th.save({"pvalues": pvalues, "reward_sum": reward_sum, "e_sampled": e_sampled}, "{}/per_objs.th".format(path))
+    reward_sum_record = deepcopy(per_buffer.reward_sum_record)
+    e_sampled = deepcopy(per_buffer.sample_count)
+    per_beta = deepcopy(per_buffer.per_beta)
+    
+    th.save({"pvalues": pvalues,
+             "reward_sum": reward_sum, 
+             "reward_sum_record": reward_sum_record, 
+             "sample_count": e_sampled, 
+             "per_beta": per_beta}, 
+            "{}/per_objs.th".format(path))
