@@ -144,6 +144,7 @@ class PERBuffer(EpisodeBatch):
         assert self.can_sample(batch_size)
         if self.episodes_in_buffer == batch_size:
             return self[:batch_size]
+        
         else:
             probs = self.pvalues[:self.episodes_in_buffer]/th.sum(self.pvalues[:self.episodes_in_buffer], dim=0)  # calculate probability values
             ep_ids = np.random.choice(self.episodes_in_buffer, batch_size, replace=False, p=th.flatten(probs).cpu().detach().numpy())
