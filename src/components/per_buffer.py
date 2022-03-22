@@ -23,6 +23,7 @@ class PERBuffer(EpisodeBatch):
         self.buffer_size = buffer_size  # same as self.batch_size but more explicit
         self.buffer_index = 0
         self.episodes_in_buffer = 0
+        self.device = args.device
         
         assert (args.per_alpha >= 0) and (args.per_alpha <= 1), "per_alpha is out of bounds, must lie in the range [0, 1]"
         assert args.per_epsilon >= 0, "per_epsilon must be positive"
@@ -67,7 +68,7 @@ class PERBuffer(EpisodeBatch):
             
             if self.use_offset:
                 if reward < -1*self.offset: # reward is lower than any currently in buffer - shift origin
-                    self.og_reward = self.og_reward - (self.offset + reward)
+                    self.og_reward = self.og_reward - (self.offset + reward).to(self.device)
                     self.origin_reward_idx = self.buffer_index
                     self.offset = -1*reward
                     self.og_reward[self.buffer_index] = 0.0
