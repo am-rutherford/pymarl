@@ -1,0 +1,154 @@
+[INFO 11:31:24] pymarl Running command 'my_main'
+[INFO 11:31:24] pymarl Started run with ID "361"
+[DEBUG 11:31:24] my_main Started
+[INFO 11:31:24] my_main Experiment Parameters:
+[INFO 11:31:24] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 0,
+                    'goal_reward': 100,
+                    'map_name': 'warehouse-middle',
+                    'observation_type': 'context',
+                    'ptd_mean': 1.0,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'cost-to-go',
+                    'seed': 455369831,
+                    'time_multiplier': -5},
+    'epsilon_anneal_time': 1500000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 0.6,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.6,
+    'per_epsilon': 0.2,
+    'prioritised_replay': False,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'async',
+    'runner_log_interval': 10000,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 455369831,
+    't_max': 5100000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 32,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 500, 'max_agents': 5, 'initial': {'agent_0': ('WayPoint1', 'WayPoint13'), 'agent_1': ('WayPoint13', 'WayPoint1'), 'agent_2': ('WayPoint8', 'WayPoint5'), 'agent_3': ('WayPoint5', 'WayPoint17'), 'agent_4': ('WayPoint25', 'WayPoint21')}, 'generator': 'warehouse', 'size': 5, 'anna_map': False, 'sss-time': 10, 'top-longest-path': 5}
+map_name warehouse-middle
+[DEBUG 11:31:24] root Connecting WayPoint1 to WayPoint2 with WayPoint1_WayPoint2
+[DEBUG 11:31:24] root Connecting WayPoint2 to WayPoint1 with WayPoint2_WayPoint1
+[DEBUG 11:31:24] root Connecting WayPoint2 to WayPoint3 with WayPoint2_WayPoint3
+[DEBUG 11:31:24] root Connecting WayPoint3 to WayPoint2 with WayPoint3_WayPoint2
+[DEBUG 11:31:24] root Connecting WayPoint3 to WayPoint4 with WayPoint3_WayPoint4
+[DEBUG 11:31:24] root Connecting WayPoint4 to WayPoint3 with WayPoint4_WayPoint3
+[DEBUG 11:31:24] root Connecting WayPoint4 to WayPoint5 with WayPoint4_WayPoint5
+[DEBUG 11:31:24] root Connecting WayPoint5 to WayPoint4 with WayPoint5_WayPoint4
+[DEBUG 11:31:24] root Connecting WayPoint11 to WayPoint12 with WayPoint11_WayPoint12
+[DEBUG 11:31:24] root Connecting WayPoint12 to WayPoint11 with WayPoint12_WayPoint11
+[DEBUG 11:31:24] root Connecting WayPoint12 to WayPoint13 with WayPoint12_WayPoint13
+[DEBUG 11:31:24] root Connecting WayPoint13 to WayPoint12 with WayPoint13_WayPoint12
+[DEBUG 11:31:24] root Connecting WayPoint13 to WayPoint14 with WayPoint13_WayPoint14
+[DEBUG 11:31:24] root Connecting WayPoint14 to WayPoint13 with WayPoint14_WayPoint13
+[DEBUG 11:31:24] root Connecting WayPoint14 to WayPoint15 with WayPoint14_WayPoint15
+[DEBUG 11:31:24] root Connecting WayPoint15 to WayPoint14 with WayPoint15_WayPoint14
+[DEBUG 11:31:24] root Connecting WayPoint21 to WayPoint22 with WayPoint21_WayPoint22
+[DEBUG 11:31:24] root Connecting WayPoint22 to WayPoint21 with WayPoint22_WayPoint21
+[DEBUG 11:31:24] root Connecting WayPoint22 to WayPoint23 with WayPoint22_WayPoint23
+[DEBUG 11:31:24] root Connecting WayPoint23 to WayPoint22 with WayPoint23_WayPoint22
+[DEBUG 11:31:24] root Connecting WayPoint23 to WayPoint24 with WayPoint23_WayPoint24
+[DEBUG 11:31:24] root Connecting WayPoint24 to WayPoint23 with WayPoint24_WayPoint23
+[DEBUG 11:31:24] root Connecting WayPoint24 to WayPoint25 with WayPoint24_WayPoint25
+[DEBUG 11:31:24] root Connecting WayPoint25 to WayPoint24 with WayPoint25_WayPoint24
+[DEBUG 11:31:24] root Connecting WayPoint1 to WayPoint6 with WayPoint1_WayPoint6
+[DEBUG 11:31:24] root Connecting WayPoint6 to WayPoint1 with WayPoint6_WayPoint1
+[DEBUG 11:31:24] root Connecting WayPoint6 to WayPoint11 with WayPoint6_WayPoint11
+[DEBUG 11:31:24] root Connecting WayPoint11 to WayPoint6 with WayPoint11_WayPoint6
+[DEBUG 11:31:24] root Connecting WayPoint11 to WayPoint16 with WayPoint11_WayPoint16
+[DEBUG 11:31:24] root Connecting WayPoint16 to WayPoint11 with WayPoint16_WayPoint11
+[DEBUG 11:31:24] root Connecting WayPoint16 to WayPoint21 with WayPoint16_WayPoint21
+[DEBUG 11:31:24] root Connecting WayPoint21 to WayPoint16 with WayPoint21_WayPoint16
+[DEBUG 11:31:24] root Connecting WayPoint2 to WayPoint7 with WayPoint2_WayPoint7
+[DEBUG 11:31:24] root Connecting WayPoint7 to WayPoint2 with WayPoint7_WayPoint2
+[DEBUG 11:31:24] root Connecting WayPoint7 to WayPoint12 with WayPoint7_WayPoint12
+[DEBUG 11:31:24] root Connecting WayPoint12 to WayPoint7 with WayPoint12_WayPoint7
+[DEBUG 11:31:24] root Connecting WayPoint12 to WayPoint17 with WayPoint12_WayPoint17
+[DEBUG 11:31:24] root Connecting WayPoint17 to WayPoint12 with WayPoint17_WayPoint12
+[DEBUG 11:31:24] root Connecting WayPoint17 to WayPoint22 with WayPoint17_WayPoint22
+[DEBUG 11:31:24] root Connecting WayPoint22 to WayPoint17 with WayPoint22_WayPoint17
+[DEBUG 11:31:24] root Connecting WayPoint3 to WayPoint8 with WayPoint3_WayPoint8
+[DEBUG 11:31:24] root Connecting WayPoint8 to WayPoint3 with WayPoint8_WayPoint3
+[DEBUG 11:31:24] root Connecting WayPoint8 to WayPoint13 with WayPoint8_WayPoint13
+[DEBUG 11:31:24] root Connecting WayPoint13 to WayPoint8 with WayPoint13_WayPoint8
+[DEBUG 11:31:24] root Connecting WayPoint13 to WayPoint18 with WayPoint13_WayPoint18
+[DEBUG 11:31:24] root Connecting WayPoint18 to WayPoint13 with WayPoint18_WayPoint13
+[DEBUG 11:31:24] root Connecting WayPoint18 to WayPoint23 with WayPoint18_WayPoint23
+[DEBUG 11:31:24] root Connecting WayPoint23 to WayPoint18 with WayPoint23_WayPoint18
+[DEBUG 11:31:24] root Connecting WayPoint4 to WayPoint9 with WayPoint4_WayPoint9
+[DEBUG 11:31:24] root Connecting WayPoint9 to WayPoint4 with WayPoint9_WayPoint4
+[DEBUG 11:31:24] root Connecting WayPoint9 to WayPoint14 with WayPoint9_WayPoint14
+[DEBUG 11:31:24] root Connecting WayPoint14 to WayPoint9 with WayPoint14_WayPoint9
+[DEBUG 11:31:24] root Connecting WayPoint14 to WayPoint19 with WayPoint14_WayPoint19
+[DEBUG 11:31:24] root Connecting WayPoint19 to WayPoint14 with WayPoint19_WayPoint14
+[DEBUG 11:31:24] root Connecting WayPoint19 to WayPoint24 with WayPoint19_WayPoint24
+[DEBUG 11:31:24] root Connecting WayPoint24 to WayPoint19 with WayPoint24_WayPoint19
+[DEBUG 11:31:24] root Connecting WayPoint5 to WayPoint10 with WayPoint5_WayPoint10
+[DEBUG 11:31:24] root Connecting WayPoint10 to WayPoint5 with WayPoint10_WayPoint5
+[DEBUG 11:31:24] root Connecting WayPoint10 to WayPoint15 with WayPoint10_WayPoint15
+[DEBUG 11:31:24] root Connecting WayPoint15 to WayPoint10 with WayPoint15_WayPoint10
+[DEBUG 11:31:24] root Connecting WayPoint15 to WayPoint20 with WayPoint15_WayPoint20
+[DEBUG 11:31:24] root Connecting WayPoint20 to WayPoint15 with WayPoint20_WayPoint15
+[DEBUG 11:31:24] root Connecting WayPoint20 to WayPoint25 with WayPoint20_WayPoint25
+[DEBUG 11:31:24] root Connecting WayPoint25 to WayPoint20 with WayPoint25_WayPoint20
+Returning warehouse-middle with 25 nodes and 64 edges.
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4']
+Goal states {'agent_0': 'WayPoint13', 'agent_1': 'WayPoint1', 'agent_2': 'WayPoint5', 'agent_3': 'WayPoint17', 'agent_4': 'WayPoint21'} 
+Initial states {'agent_0': 'WayPoint1', 'agent_1': 'WayPoint13', 'agent_2': 'WayPoint8', 'agent_3': 'WayPoint5', 'agent_4': 'WayPoint25'}
+[DEBUG 11:31:24] my_main Buffer scheme: {'state': {'vshape': (5,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 5}
+[INFO 11:31:25] my_main Beginning training for 5100000 timesteps
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 11:31:26] my_main t_env: 297 / 5100000
+[INFO 11:31:26] my_main Estimated time left: 9 minutes, 28 seconds. Time passed: 1 seconds
