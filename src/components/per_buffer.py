@@ -32,15 +32,23 @@ class PERBuffer(EpisodeBatch):
         self.per_alpha = args.per_alpha
         self.per_epsilon = args.per_epsilon
         self.per_beta_schedule = RiseThenFlatSchedule(args.per_beta, 1, floor(args.t_max * args.per_beta_anneal), decay="linear")
+        self.per_beta = self.per_beta_schedule.eval(0)
         
         print(f'Initialising PER buffer, annealing beta from {args.per_beta} to 1 over {floor(args.t_max * args.per_beta_anneal)} timesteps.')
         
+        self.use_offset = True if args.env_args["reward_type"] == "time-cost" else False
+        
+        self.offset = 0.0
+        self.origin_reward_idx = 0
+        self.og_reward = th.zeros((buffer_size, 1, 1), device=self.device)
+        
         self.pvalues = th.zeros((buffer_size, 1, 1), device=self.device)
         self.max_reward_sum = 0.0
+        self.max_reward_idx = 0
         self.reward_sum = th.zeros((buffer_size, 1, 1), device=self.device)
-        self.e_sampled = {}
+        self.e_sampled = th.zeros((buffer_size, 1, 1), device=self.device)
         
-        # recording values
+        # for logging values
         self.buffer_counter = 0
         self.reward_sum_record = {}
         self.sample_count = {}
@@ -55,11 +63,47 @@ class PERBuffer(EpisodeBatch):
         if self.buffer_index + ep_batch.batch_size <= self.buffer_size:  
             ## PER values
             assert ep_batch.batch_size == 1
-            self.reward_sum[self.buffer_index] = (th.sum(ep_batch["reward"]) + self.per_epsilon)**self.per_alpha
+            reward = th.sum(ep_batch["reward"])
+            
+            if self.use_offset:
+                if reward < -1*self.offset: # reward is lower than any currently in buffer - shift origin
+                    self.og_reward = self.og_reward - (self.offset + reward)
+                    self.origin_reward_idx = self.buffer_index
+                    self.offset = -1*reward
+                    self.og_reward[self.buffer_index] = 0.0
+                    self.reward_sum = th.pow(self.og_reward + self.per_epsilon, self.per_alpha)
+                    
+                    # calculate new max
+                    self.max_reward_idx = th.argmax(self.reward_sum)
+                    self.max_reward_sum = self.reward_sum[self.max_reward_idx]
+                    self.pvalues = deepcopy(self.reward_sum)
+                    self.pvalues[(self.e_sampled == 0).nonzero()] = self.max_reward_sum
+
+                else:
+                    self.og_reward[self.buffer_index] = self.offset + reward
+                    
+                    if self.buffer_index == self.origin_reward_idx:  # update offset if the current offset is overwritten
+                        self.og_reward = self.og_reward - self.offset
+                        self.origin_reward_idx = th.argmin(self.og_reward)
+                        self.offset = self.og_reward[self.origin_reward_idx]
+                        self.og_reward = self.og_reward + self.offset
+                    
+                    self.reward_sum[self.buffer_index] = (self.og_reward[self.buffer_index] + self.per_epsilon)**self.per_alpha
+                
+            else:
+                assert reward >= 0, "reward must be positive"
+                self.reward_sum[self.buffer_index] = (reward + self.per_epsilon)**self.per_alpha
+            
+            if self.buffer_index == self.max_reward_idx:  # update max reward if current is overwritten
+                self.max_reward_idx = th.argmax(self.reward_sum)
+                self.max_reward_sum = self.reward_sum[self.max_reward_idx]
+                #self.pvalues[(self.e_sampled == 0).nonzero()] = self.max_reward_sum -- not sure whether we do this
+                
             if self.reward_sum[self.buffer_index] > self.max_reward_sum:
                 self.max_reward_sum = self.reward_sum[self.buffer_index]
+                self.max_reward_idx = self.buffer_index
             self.pvalues[self.buffer_index] = self.max_reward_sum
-            self.e_sampled[self.buffer_index] = False
+            self.e_sampled[self.buffer_index] = 0
             
             self.update(ep_batch.data.transition_data,
                         slice(self.buffer_index, self.buffer_index + ep_batch.batch_size),
@@ -115,7 +159,7 @@ class PERBuffer(EpisodeBatch):
             for i in ep_ids:
                 if not self.e_sampled[i]:
                     self.pvalues[i] = self.reward_sum[i]
-                    self.e_sampled[i] = True
+                    self.e_sampled[i] = 1
                 self.sample_count[i+(self.buffer_counter-self.episodes_in_buffer)] += 1
             return self[ep_ids]        
 
@@ -137,9 +181,16 @@ def save_per_distributions(per_buffer, path):
     e_sampled = deepcopy(per_buffer.sample_count)
     per_beta = deepcopy(per_buffer.per_beta)
     
+    offset = deepcopy(per_buffer.offset)
+    ori = deepcopy(per_buffer.origin_reward_idx)
+    og_rewards = th.flatten(per_buffer.og_reward).cpu().detach().numpy()
+    
     th.save({"pvalues": pvalues,
              "reward_sum": reward_sum, 
              "reward_sum_record": reward_sum_record, 
              "sample_count": e_sampled, 
-             "per_beta": per_beta}, 
+             "per_beta": per_beta,
+             "offset": offset,
+             "ori": ori,
+             "og_rewards": og_rewards}, 
             "{}/per_objs.th".format(path))

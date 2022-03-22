@@ -5,6 +5,7 @@ import logging
 import torch as th
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 from pathlib import Path
 path = Path(os.path.dirname(__file__))
@@ -88,6 +89,14 @@ def run(model_id):
     
     sorted_indicies = np.argsort(per_data["reward_sum"][:buffer_filled])
     
+    '''ts = pd.Series(buffer_sample_values[sorted_indicies])
+    #ts.plot(style='k--')
+    ts.rolling(window=60).mean().plot(style='k')
+
+    # add the 20 day rolling standard deviation:
+    ts.rolling(window=20).std().plot(style='b')
+    plt.show()'''
+    
     fig, axes = plt.subplots(2, 2)
     print('axes', axes)
     
@@ -97,10 +106,10 @@ def run(model_id):
     axes[1][0].plot(per_data["pvalues"][sorted_indicies]/np.sum(per_data["pvalues"][sorted_indicies]))
     axes[1][0].legend(["Sorted probabilty values"])
     
-    sampled_val_movavg = _movingaverage(buffer_sample_values[sorted_indicies], 200)
+    sampled_val_movavg = _movingaverage(buffer_sample_values[sorted_indicies], 5)
     axes[0][1].plot(buffer_sample_values[sorted_indicies])
     axes[0][1].plot(sampled_val_movavg)
-    axes[0][1].legend(["Sorted sample count"])
+    axes[0][1].legend(["Sorted sample count", "mean"])
     '''axes[0].plot(px, pvalues+2)
     axes[0].plot(r_values)'''
     #ax.plot(list(per_data["sample_count"].values()))
@@ -133,6 +142,8 @@ if __name__ == "__main__":
     model_id = "qmix__2022-03-22_16-38-40"
     model_id = "qmix__2022-03-22_16-49-33"
     model_id = "qmix__2022-03-22_17-39-55" # supermarket smol
+    model_id = "qmix__2022-03-22_22-04-05" # time-cost
+    model_id = "qmix__2022-03-22_22-54-53" # bug fix lol lol
     
     run(model_id)
     
