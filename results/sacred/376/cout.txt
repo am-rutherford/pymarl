@@ -1,0 +1,208 @@
+[INFO 23:18:47] pymarl Running command 'my_main'
+[INFO 23:18:47] pymarl Started run with ID "376"
+[DEBUG 23:18:47] my_main Started
+[INFO 23:18:47] my_main Experiment Parameters:
+[INFO 23:18:47] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 0,
+                    'goal_reward': 100,
+                    'map_name': 'warehouse-middle',
+                    'observation_type': 'context',
+                    'ptd_mean': 1.0,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'time-cost',
+                    'seed': 298024821,
+                    'time_multiplier': -5},
+    'epsilon_anneal_time': 1500000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 0.6,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.6,
+    'per_epsilon': 0.5,
+    'prioritised_replay': True,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'async',
+    'runner_log_interval': 10000,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 298024821,
+    't_max': 5100000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 32,
+    'use_cuda': False,
+    'use_tensorboard': True}
+
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 500, 'max_agents': 5, 'initial': {'agent_0': ('WayPoint1', 'WayPoint13'), 'agent_1': ('WayPoint13', 'WayPoint1'), 'agent_2': ('WayPoint8', 'WayPoint5'), 'agent_3': ('WayPoint5', 'WayPoint17'), 'agent_4': ('WayPoint25', 'WayPoint21')}, 'generator': 'warehouse', 'size': 5, 'anna_map': False, 'sss-time': 10, 'top-longest-path': 5}
+map_name warehouse-middle
+[DEBUG 23:18:47] root Connecting WayPoint1 to WayPoint2 with WayPoint1_WayPoint2
+[DEBUG 23:18:47] root Connecting WayPoint2 to WayPoint1 with WayPoint2_WayPoint1
+[DEBUG 23:18:47] root Connecting WayPoint2 to WayPoint3 with WayPoint2_WayPoint3
+[DEBUG 23:18:47] root Connecting WayPoint3 to WayPoint2 with WayPoint3_WayPoint2
+[DEBUG 23:18:47] root Connecting WayPoint3 to WayPoint4 with WayPoint3_WayPoint4
+[DEBUG 23:18:47] root Connecting WayPoint4 to WayPoint3 with WayPoint4_WayPoint3
+[DEBUG 23:18:47] root Connecting WayPoint4 to WayPoint5 with WayPoint4_WayPoint5
+[DEBUG 23:18:47] root Connecting WayPoint5 to WayPoint4 with WayPoint5_WayPoint4
+[DEBUG 23:18:47] root Connecting WayPoint11 to WayPoint12 with WayPoint11_WayPoint12
+[DEBUG 23:18:47] root Connecting WayPoint12 to WayPoint11 with WayPoint12_WayPoint11
+[DEBUG 23:18:47] root Connecting WayPoint12 to WayPoint13 with WayPoint12_WayPoint13
+[DEBUG 23:18:47] root Connecting WayPoint13 to WayPoint12 with WayPoint13_WayPoint12
+[DEBUG 23:18:47] root Connecting WayPoint13 to WayPoint14 with WayPoint13_WayPoint14
+[DEBUG 23:18:47] root Connecting WayPoint14 to WayPoint13 with WayPoint14_WayPoint13
+[DEBUG 23:18:47] root Connecting WayPoint14 to WayPoint15 with WayPoint14_WayPoint15
+[DEBUG 23:18:47] root Connecting WayPoint15 to WayPoint14 with WayPoint15_WayPoint14
+[DEBUG 23:18:47] root Connecting WayPoint21 to WayPoint22 with WayPoint21_WayPoint22
+[DEBUG 23:18:47] root Connecting WayPoint22 to WayPoint21 with WayPoint22_WayPoint21
+[DEBUG 23:18:47] root Connecting WayPoint22 to WayPoint23 with WayPoint22_WayPoint23
+[DEBUG 23:18:47] root Connecting WayPoint23 to WayPoint22 with WayPoint23_WayPoint22
+[DEBUG 23:18:47] root Connecting WayPoint23 to WayPoint24 with WayPoint23_WayPoint24
+[DEBUG 23:18:47] root Connecting WayPoint24 to WayPoint23 with WayPoint24_WayPoint23
+[DEBUG 23:18:47] root Connecting WayPoint24 to WayPoint25 with WayPoint24_WayPoint25
+[DEBUG 23:18:47] root Connecting WayPoint25 to WayPoint24 with WayPoint25_WayPoint24
+[DEBUG 23:18:47] root Connecting WayPoint1 to WayPoint6 with WayPoint1_WayPoint6
+[DEBUG 23:18:47] root Connecting WayPoint6 to WayPoint1 with WayPoint6_WayPoint1
+[DEBUG 23:18:47] root Connecting WayPoint6 to WayPoint11 with WayPoint6_WayPoint11
+[DEBUG 23:18:47] root Connecting WayPoint11 to WayPoint6 with WayPoint11_WayPoint6
+[DEBUG 23:18:47] root Connecting WayPoint11 to WayPoint16 with WayPoint11_WayPoint16
+[DEBUG 23:18:47] root Connecting WayPoint16 to WayPoint11 with WayPoint16_WayPoint11
+[DEBUG 23:18:47] root Connecting WayPoint16 to WayPoint21 with WayPoint16_WayPoint21
+[DEBUG 23:18:47] root Connecting WayPoint21 to WayPoint16 with WayPoint21_WayPoint16
+[DEBUG 23:18:47] root Connecting WayPoint2 to WayPoint7 with WayPoint2_WayPoint7
+[DEBUG 23:18:47] root Connecting WayPoint7 to WayPoint2 with WayPoint7_WayPoint2
+[DEBUG 23:18:47] root Connecting WayPoint7 to WayPoint12 with WayPoint7_WayPoint12
+[DEBUG 23:18:47] root Connecting WayPoint12 to WayPoint7 with WayPoint12_WayPoint7
+[DEBUG 23:18:47] root Connecting WayPoint12 to WayPoint17 with WayPoint12_WayPoint17
+[DEBUG 23:18:47] root Connecting WayPoint17 to WayPoint12 with WayPoint17_WayPoint12
+[DEBUG 23:18:47] root Connecting WayPoint17 to WayPoint22 with WayPoint17_WayPoint22
+[DEBUG 23:18:47] root Connecting WayPoint22 to WayPoint17 with WayPoint22_WayPoint17
+[DEBUG 23:18:47] root Connecting WayPoint3 to WayPoint8 with WayPoint3_WayPoint8
+[DEBUG 23:18:47] root Connecting WayPoint8 to WayPoint3 with WayPoint8_WayPoint3
+[DEBUG 23:18:47] root Connecting WayPoint8 to WayPoint13 with WayPoint8_WayPoint13
+[DEBUG 23:18:47] root Connecting WayPoint13 to WayPoint8 with WayPoint13_WayPoint8
+[DEBUG 23:18:47] root Connecting WayPoint13 to WayPoint18 with WayPoint13_WayPoint18
+[DEBUG 23:18:47] root Connecting WayPoint18 to WayPoint13 with WayPoint18_WayPoint13
+[DEBUG 23:18:47] root Connecting WayPoint18 to WayPoint23 with WayPoint18_WayPoint23
+[DEBUG 23:18:47] root Connecting WayPoint23 to WayPoint18 with WayPoint23_WayPoint18
+[DEBUG 23:18:47] root Connecting WayPoint4 to WayPoint9 with WayPoint4_WayPoint9
+[DEBUG 23:18:47] root Connecting WayPoint9 to WayPoint4 with WayPoint9_WayPoint4
+[DEBUG 23:18:47] root Connecting WayPoint9 to WayPoint14 with WayPoint9_WayPoint14
+[DEBUG 23:18:47] root Connecting WayPoint14 to WayPoint9 with WayPoint14_WayPoint9
+[DEBUG 23:18:47] root Connecting WayPoint14 to WayPoint19 with WayPoint14_WayPoint19
+[DEBUG 23:18:47] root Connecting WayPoint19 to WayPoint14 with WayPoint19_WayPoint14
+[DEBUG 23:18:47] root Connecting WayPoint19 to WayPoint24 with WayPoint19_WayPoint24
+[DEBUG 23:18:47] root Connecting WayPoint24 to WayPoint19 with WayPoint24_WayPoint19
+[DEBUG 23:18:47] root Connecting WayPoint5 to WayPoint10 with WayPoint5_WayPoint10
+[DEBUG 23:18:47] root Connecting WayPoint10 to WayPoint5 with WayPoint10_WayPoint5
+[DEBUG 23:18:47] root Connecting WayPoint10 to WayPoint15 with WayPoint10_WayPoint15
+[DEBUG 23:18:47] root Connecting WayPoint15 to WayPoint10 with WayPoint15_WayPoint10
+[DEBUG 23:18:47] root Connecting WayPoint15 to WayPoint20 with WayPoint15_WayPoint20
+[DEBUG 23:18:47] root Connecting WayPoint20 to WayPoint15 with WayPoint20_WayPoint15
+[DEBUG 23:18:47] root Connecting WayPoint20 to WayPoint25 with WayPoint20_WayPoint25
+[DEBUG 23:18:47] root Connecting WayPoint25 to WayPoint20 with WayPoint25_WayPoint20
+Returning warehouse-middle with 25 nodes and 64 edges.
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4']
+Goal states {'agent_0': 'WayPoint13', 'agent_1': 'WayPoint1', 'agent_2': 'WayPoint5', 'agent_3': 'WayPoint17', 'agent_4': 'WayPoint21'} 
+Initial states {'agent_0': 'WayPoint1', 'agent_1': 'WayPoint13', 'agent_2': 'WayPoint8', 'agent_3': 'WayPoint5', 'agent_4': 'WayPoint25'}
+[DEBUG 23:18:47] my_main Buffer scheme: {'state': {'vshape': (5,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 5}
+ -- using prioritised replay --
+Initialising PER buffer, annealing beta from 0.4 to 1 over 3060000 timesteps.
+[INFO 23:18:47] my_main Beginning training for 5100000 timesteps
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 23:18:47] my_main t_env: 241 / 5100000
+[INFO 23:18:47] my_main Estimated time left: 2 minutes, 38 seconds. Time passed: 0 seconds
+av test time: 207.966109036765 (114.61149088492913), av step count 500.0 (0.0), percentage at goal 18.125 (58.984375) 32 episodes
+[INFO 23:19:09] my_main Saving models to results/models/qmix__2022-03-22_23-18-47/241
+saving PER objects to results/models/qmix__2022-03-22_23-18-47/241
+[INFO 23:19:23] my_main Recent Stats | t_env:      10047 | Episode:       33
+ep_length_mean:          241.0000	epsilon:                   1.0000	grad_norm:                 0.2842	loss:                      0.0302
+q_taken_mean:             -0.0214	return_mean:              -3.3635	return_std:                0.0000	target_mean:              -0.0158
+td_error_abs:              0.1044	test_ep_length_mean:     500.0000	test_reached_goal:        18.1250	test_return_mean:         -9.4921
+test_return_std:           0.3493	test_sim_time:           207.9661	
+[INFO 23:19:24] my_main t_env: 10327 / 5100000
+[INFO 23:19:24] my_main Estimated time left: 5 hours, 7 minutes, 58 seconds. Time passed: 36 seconds
+av test time: 207.6142608714333 (19.16628903078274), av step count 500.0 (0.0), percentage at goal 20.0 (0.0) 32 episodes
+[INFO 23:20:14] my_main Recent Stats | t_env:      20213 | Episode:       66
+ep_length_mean:          268.8235	epsilon:                   0.9936	grad_norm:                 0.1492	loss:                      0.0210
+q_taken_mean:             -0.0183	return_mean:              -3.5090	return_std:                1.9623	target_mean:              -0.0154
+td_error_abs:              0.0830	test_ep_length_mean:     500.0000	test_reached_goal:        19.0625	test_return_mean:         -9.4364
+test_return_std:           0.2841	test_sim_time:           207.7902	
+[INFO 23:20:15] my_main t_env: 20404 / 5100000
+[INFO 23:20:15] my_main Estimated time left: 7 hours, 6 minutes, 5 seconds. Time passed: 1 minutes, 27 seconds
+av test time: 227.7753071040088 (36.48096697087977), av step count 500.0 (0.0), percentage at goal 20.0 (0.0) 32 episodes
+[INFO 23:21:08] my_main t_env: 30406 / 5100000
+[INFO 23:21:08] my_main Estimated time left: 7 hours, 33 minutes, 18 seconds. Time passed: 2 minutes, 21 seconds
+av test time: 242.0541334854355 (19.738102530473945), av step count 500.0 (0.0), percentage at goal 20.0 (0.0) 32 episodes
+[INFO 23:21:30] my_main Recent Stats | t_env:      30406 | Episode:      105
+ep_length_mean:          278.9410	epsilon:                   0.9811	grad_norm:                 0.1089	loss:                      0.0184
+q_taken_mean:             -0.0184	return_mean:              -3.6832	return_std:                3.3292	target_mean:              -0.0168
+td_error_abs:              0.0774	test_ep_length_mean:     500.0000	test_reached_goal:        19.5312	test_return_mean:        -10.0911
+test_return_std:           0.2731	test_sim_time:           221.3525	
+[INFO 23:22:02] my_main t_env: 40702 / 5100000
+[INFO 23:22:02] my_main Estimated time left: 7 hours, 17 minutes, 22 seconds. Time passed: 3 minutes, 14 seconds
+av test time: 309.3088012904992 (46.90223116140285), av step count 500.0 (0.0), percentage at goal 55.625 (68.359375) 32 episodes
+[INFO 23:22:23] my_main Recent Stats | t_env:      40702 | Episode:      142
+ep_length_mean:          278.8068	epsilon:                   0.9744	grad_norm:                 0.0827	loss:                      0.0151
+q_taken_mean:             -0.0195	return_mean:              -3.7380	return_std:                3.5698	target_mean:              -0.0183
+td_error_abs:              0.0677	test_ep_length_mean:     500.0000	test_reached_goal:        26.7500	test_return_mean:        -10.6097
+test_return_std:           0.3060	test_sim_time:           238.9437	
+[INFO 23:22:54] my_main t_env: 50776 / 5100000
+[INFO 23:22:54] my_main Estimated time left: 7 hours, 14 minutes, 0 seconds. Time passed: 4 minutes, 6 seconds
+av test time: 320.0095807032427 (78.99841259145892), av step count 500.0 (0.0), percentage at goal 60.0 (0.0) 32 episodes
+[INFO 23:23:15] my_main Recent Stats | t_env:      50776 | Episode:      178
+ep_length_mean:          286.5735	epsilon:                   0.9681	grad_norm:                 0.0760	loss:                      0.0158
+q_taken_mean:             -0.0203	return_mean:              -3.6625	return_std:                4.2765	target_mean:              -0.0190
+td_error_abs:              0.0687	test_ep_length_mean:     500.0000	test_reached_goal:        35.1250	test_return_mean:        -11.3114
+test_return_std:           0.3250	test_sim_time:           261.3524	
+[INFO 23:23:34] my_main Updated target network
+[INFO 23:23:44] my_main t_env: 60800 / 5100000
+[INFO 23:23:44] my_main Estimated time left: 7 hours, 2 minutes, 36 seconds. Time passed: 4 minutes, 57 seconds
+av test time: 328.8417582846373 (166.8936037158611), av step count 500.0 (0.0), percentage at goal 60.0 (0.0) 32 episodes
+[INFO 23:24:05] my_main Recent Stats | t_env:      60800 | Episode:      212
+ep_length_mean:          286.2088	epsilon:                   0.9617	grad_norm:                 0.0369	loss:                      0.0137
+q_taken_mean:             -0.0191	return_mean:              -3.9366	return_std:                4.6143	target_mean:              -0.0184
+td_error_abs:              0.0580	test_ep_length_mean:     500.0000	test_reached_goal:        43.1250	test_return_mean:        -12.1236
+test_return_std:           0.4104	test_sim_time:           285.5979	
