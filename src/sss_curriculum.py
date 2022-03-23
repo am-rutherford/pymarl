@@ -1,3 +1,11 @@
+""" Includes two functions which use shortest path policies
+1) run_sss_curriculum - trains a PyMARL agent using experiences gathered 
+    while following an epsilon greedy shortest path policy.
+
+2) mean_sss_time - returns the mean time taken to complete a map while following
+    an epsilon greedy shortest path policy.
+"""
+
 import datetime
 import os
 import time
@@ -56,10 +64,12 @@ class SSS_Runner(AsyncEpisodeRunner):
     """
     
     debug = False
-    epsilon = 0.3
     
-    def __init__(self, args, logger):
+    
+    def __init__(self, args, logger, epsilon=0.3):
         super().__init__(args, logger)
+        
+        self.epsilon = epsilon
         
         self.env.reset()
         self.policies = {agent: construct_shortest_path_policy(self.env._tm, self.env._goal_states[agent]) 
@@ -75,7 +85,7 @@ class SSS_Runner(AsyncEpisodeRunner):
         
         terminated = False
         episode_return = 0
-        self.mac.init_hidden(batch_size=self.batch_size)  # NOTE not sure what this is
+        #self.mac.init_hidden(batch_size=self.batch_size)  # NOTE not sure what this is
 
         obs, reward, done, info = self.env.last()
         k = 0
@@ -142,8 +152,8 @@ class SSS_Runner(AsyncEpisodeRunner):
         agent = self.env.agent_selection
         agent_loc = self.env._agent_location[agent]
         agent_idx = self.env.agent_name_mapping[self.env.agent_selection]
-        
         if self.debug:  print(f'choosing action for {agent}, loc: {agent_loc}, idx: {agent_idx}')
+        
         if random.uniform(0, 1) > self.epsilon:  # exploit
             camas_act = self.policies[agent]._state_action_map[State({'loc': agent_loc})]
             if self.debug: print(f'exploiting, camas act {camas_act}')
@@ -172,7 +182,7 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
         train_steps (int): number of steps to train the model for
         test_episodes (int): number of episodes to evaluate the model on once training is complete
     """
-        
+    print(' -- Env args', args.env_args)
     start_time = time.time()
     
     main_runner = r_REGISTRY[args.runner](args=args, logger=logger)    
@@ -257,13 +267,86 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
     # learner should handle saving/loading -- delegate actor save/load to mac,
     # use appropriate filenames to do critics, optimizer states
     learner.save_models(save_path) 
+    
+    # Save config
+    with open(os.path.join(save_path, "config.yaml"), 'w') as outp:  # NOTE this has not been tested
+        yaml.dump(args, outp)
+    
+    
+def mean_sss_time(args, logger,  num_episodes, epsilon):
+    """Runs a PyMARL-Camas map using an epsilon greedy shortest path policy
+
+    Args:
+        num_episodes (int): number of episodes to run for
+        epislon (int): epsilon to use in action selection
+    """
+    print(' -- Env args', args.env_args)
+    start_time = time.time()
+    
+    sss_runner = SSS_Runner(args, logger, epsilon=epsilon)
+    
+    # Set up schemes and groups
+    env_info = sss_runner.get_env_info()
+    args.n_agents = env_info["n_agents"]
+    args.n_actions = env_info["n_actions"]
+    args.state_shape = env_info["state_shape"]
+
+    scheme = {
+        "state": {"vshape": env_info["state_shape"]},
+        "obs": {"vshape": env_info["obs_shape"], "group": "agents"},
+        "actions": {"vshape": (1,), "group": "agents", "dtype": th.long},
+        "avail_actions": {"vshape": (env_info["n_actions"],), "group": "agents", "dtype": th.int},
+        "reward": {"vshape": (1,)},
+        "terminated": {"vshape": (1,), "dtype": th.uint8},
+    }
+    groups = {
+        "agents": args.n_agents
+    }
+    preprocess = {
+        "actions": ("actions_onehot", [OneHot(out_dim=args.n_actions)])
+    }
+    
+    buffer = ReplayBuffer(scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
+                        preprocess=preprocess,
+                        device="cpu" if args.buffer_cpu_only else args.device)
+
+    # Setup multiagent controller here
+    mac = mac_REGISTRY[args.mac](buffer.scheme, groups, args)
+
+    # Give runners the scheme
+    #main_runner.setup(scheme=scheme, groups=groups, preprocess=preprocess, mac=mac)
+    sss_runner.setup(scheme=scheme, groups=groups, preprocess=preprocess, mac=mac)
+
+    # Learner
+    learner = le_REGISTRY[args.learner](mac, buffer.scheme, logger, args)
+    if args.use_cuda:
+        learner.cuda()
+    
+    logger.console_logger.info(f'...running {num_episodes} episodes...')
+    episode_times = []
+    step_count = []
+    for i in range(num_episodes):
+        _ = sss_runner.run()
+        episode_times.append(sss_runner.env.sim_time())
+        step_count.append(sss_runner.t)
+        if i % 50 == 0:
+            logger.console_logger.info(f'...{i} episodes complete...')
+        
+    print(f'Mean sim time for {num_episodes} and an epsilon of {epsilon}: {np.mean(episode_times)} ({np.var(episode_times)}), \
+        mean step count {np.mean(step_count)} ({np.var(step_count)})')    
+    return np.mean(episode_times), np.mean(step_count)
+    
+
+def load_default_params(map_name="bruno"):
+    pass
+    #TODO
 
     
 if __name__ == "__main__":
 
-    num_episodes = 50
-    train_steps = 20000
-    test_episodes = 20
+    num_episodes = 10000
+    train_steps = 40000
+    test_episodes = 40
     
     console_logger = getLogger()
     logger = Logger(console_logger)
@@ -275,8 +358,10 @@ if __name__ == "__main__":
     
     unique_token = "{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     args.unique_token = unique_token
+        
+    mean_sss_time(args, logger, 100, 0)
     
-    run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes)
+    #run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes)
     
 
 

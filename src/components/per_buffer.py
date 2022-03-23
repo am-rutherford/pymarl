@@ -73,7 +73,6 @@ class PERBuffer(EpisodeBatch):
                     self.offset = -1*reward
                     self.og_reward[self.buffer_index] = 0.0
                     self.reward_sum = th.pow(self.og_reward + self.per_epsilon, self.per_alpha)
-                    
                     # calculate new max
                     self.max_reward_idx = th.argmax(self.reward_sum)
                     self.max_reward_sum = self.reward_sum[self.max_reward_idx]
@@ -86,7 +85,7 @@ class PERBuffer(EpisodeBatch):
                     if self.buffer_index == self.origin_reward_idx:  # update offset if the current offset is overwritten
                         self.og_reward = self.og_reward - self.offset
                         self.origin_reward_idx = th.argmin(self.og_reward)
-                        self.offset = self.og_reward[self.origin_reward_idx]
+                        self.offset = -1*self.og_reward[self.origin_reward_idx].item()
                         self.og_reward = self.og_reward + self.offset
                     
                     self.reward_sum[self.buffer_index] = (self.og_reward[self.buffer_index] + self.per_epsilon)**self.per_alpha
@@ -103,9 +102,9 @@ class PERBuffer(EpisodeBatch):
             if self.reward_sum[self.buffer_index] > self.max_reward_sum:
                 self.max_reward_sum = self.reward_sum[self.buffer_index]
                 self.max_reward_idx = self.buffer_index
+            
             self.pvalues[self.buffer_index] = self.max_reward_sum
             self.e_sampled[self.buffer_index] = 0
-            
             self.update(ep_batch.data.transition_data,
                         slice(self.buffer_index, self.buffer_index + ep_batch.batch_size),
                         slice(0, ep_batch.max_seq_length),
