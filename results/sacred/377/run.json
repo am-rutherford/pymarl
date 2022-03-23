@@ -20,17 +20,7 @@
       ]
     ]
   },
-  "fail_trace": [
-    "Traceback (most recent call last):\n",
-    "  File \"/home/am-rutherford/anaconda3/envs/pymarl/lib/python3.7/site-packages/sacred-0.7.2-py3.7.egg/sacred/config/captured_function.py\", line 48, in captured_function\n    result = wrapped(*args, **kwargs)\n",
-    "  File \"src/main.py\", line 38, in my_main\n    run(_run, config, _log)\n",
-    "  File \"/home/am-rutherford/repos/pymarl/src/run.py\", line 48, in run\n    run_sequential(args=args, logger=logger)\n",
-    "  File \"/home/am-rutherford/repos/pymarl/src/run.py\", line 180, in run_sequential\n    episode_sample = buffer.sample(args.batch_size, runner.t_env)\n",
-    "  File \"/home/am-rutherford/repos/pymarl/src/components/per_buffer.py\", line 151, in sample\n    ep_ids = np.random.choice(self.episodes_in_buffer, batch_size, replace=False, p=th.flatten(probs).cpu().detach().numpy())\n",
-    "  File \"mtrand.pyx\", line 929, in numpy.random.mtrand.RandomState.choice\n",
-    "ValueError: probabilities contain NaN\n"
-  ],
-  "heartbeat": "2022-03-23T00:28:29.119084",
+  "heartbeat": "2022-03-23T11:49:25.298822",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
@@ -80,7 +70,6 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2022-03-22T23:18:47.461685",
-  "status": "FAILED",
-  "stop_time": "2022-03-23T00:28:29.160905"
+  "start_time": "2022-03-23T11:47:25.244058",
+  "status": "RUNNING"
 }
