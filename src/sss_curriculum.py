@@ -31,6 +31,8 @@ from runners import AsyncEpisodeRunner
 from main import recursive_dict_update
 from run import args_sanity_check
 
+from torch.utils.tensorboard import SummaryWriter
+
 def load_configs():
     """ Load configuration dictionaries from default locations
     """
@@ -185,6 +187,9 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
     print(' -- Env args', args.env_args)
     start_time = time.time()
     
+    tb = SummaryWriter()
+    log_freq = 1000
+    
     main_runner = r_REGISTRY[args.runner](args=args, logger=logger)    
     sss_runner = SSS_Runner(args, logger)
     
@@ -243,6 +248,17 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
             episode_sample.to(args.device)
 
         learner.train(episode_sample, sss_runner.t_env, i)
+        
+        if i % log_freq == 0:
+            tb.add_histogram("agent fc1 weight", mac.agent.fc1.weight, i)
+            tb.add_histogram("agent fc1 bias", mac.agent.fc1.bias, i)
+            tb.add_histogram("agent gru ih weight", mac.agent.rnn.weight_ih, i)
+            tb.add_histogram("agent gru ih bias", mac.agent.rnn.bias_ih, i)
+            tb.add_histogram("agent gru hh weight", mac.agent.rnn.weight_hh, i)
+            tb.add_histogram("agent gru hh bias", mac.agent.rnn.bias_hh, i)
+            tb.add_histogram("agent fc2 weight", mac.agent.fc1.weight, i)
+            tb.add_histogram("agent fc2 bias", mac.agent.fc2.bias, i)        
+        
     
     tdelta = time.time()-start_time
     logger.console_logger.info(f'...time taken for training: {datetime.timedelta(seconds=tdelta)}...')
@@ -344,8 +360,8 @@ def load_default_params(map_name="bruno"):
     
 if __name__ == "__main__":
 
-    num_episodes = 10000
-    train_steps = 40000
+    num_episodes = 5000
+    train_steps = 20000
     test_episodes = 40
     
     console_logger = getLogger()
@@ -359,9 +375,9 @@ if __name__ == "__main__":
     unique_token = "{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     args.unique_token = unique_token
         
-    mean_sss_time(args, logger, 100, 0)
+    #mean_sss_time(args, logger, 100, 0)
     
-    #run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes)
+    run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes)
     
 
 
