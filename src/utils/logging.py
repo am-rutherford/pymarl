@@ -15,9 +15,10 @@ class Logger:
 
     def setup_tb(self, directory_name):
         # Import here so it doesn't have to be installed if you don't use it
-        from tensorboard_logger import configure, log_value
+        from tensorboard_logger import configure, log_value, log_histogram
         configure(directory_name)
         self.tb_logger = log_value
+        self.tb_logger_hist = log_histogram
         self.use_tb = True
 
     def setup_sacred(self, sacred_run_dict):

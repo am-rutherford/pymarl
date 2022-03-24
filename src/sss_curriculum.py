@@ -8,6 +8,7 @@
 
 import datetime
 import os
+from os.path import dirname, abspath
 import time
 from sympy import EX
 import yaml
@@ -24,7 +25,6 @@ from runners import REGISTRY as r_REGISTRY
 from controllers import REGISTRY as mac_REGISTRY
 from components.episode_buffer import ReplayBuffer
 from components.transforms import OneHot
-from utils.logging import Logger
 
 from src.components.episode_buffer import EpisodeBatch
 from runners import AsyncEpisodeRunner
@@ -68,10 +68,12 @@ class SSS_Runner(AsyncEpisodeRunner):
     debug = False
     
     
-    def __init__(self, args, logger, epsilon=0.3):
+    def __init__(self, args, logger, epsilon_mean=0.3, epsilon_var=0.05):
         super().__init__(args, logger)
         
-        self.epsilon = epsilon
+        self.epsilon_mean = epsilon_mean
+        self.epsilon_var = epsilon_var
+        self.epsilon = self._draw_epsilon()
         
         self.env.reset()
         self.policies = {agent: construct_shortest_path_policy(self.env._tm, self.env._goal_states[agent]) 
@@ -84,6 +86,7 @@ class SSS_Runner(AsyncEpisodeRunner):
         """
         if self.debug: print('*** reset environment ***')
         self.reset()
+        self.epsilon = self._draw_epsilon()
         
         terminated = False
         episode_return = 0
@@ -174,8 +177,12 @@ class SSS_Runner(AsyncEpisodeRunner):
         acts[0, agent_idx] = action
         if self.debug: print(f'acts {acts}')
         return acts
+    
+    def _draw_epsilon(self):
+        return np.random.normal(self.epsilon_mean, self.epsilon_var)
+    
 
-def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
+def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=20, log_freq=2000):
     """Trains a PyMARL method using shortest path experiences and saves the result 
     to the results/model directory
 
@@ -184,11 +191,31 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
         train_steps (int): number of steps to train the model for
         test_episodes (int): number of episodes to evaluate the model on once training is complete
     """
+    
+    def _test_env(_runner, _test_episdoes):
+        """ Test environment using `_runner`
+        Returns:
+            tt: test sim times
+            sc: test step counts
+            gc: test reached goal %'s
+        """
+        tt, sc, gc = [], [], []
+        for _ in range(_test_episdoes):
+            _runner.run(test_mode=True)
+            tt.append(_runner.env.sim_time())
+            sc.append(_runner.env.step_count())
+            gc.append(_runner.env.agents_at_goal())
+        return tt, sc, gc
+    
     print(' -- Env args', args.env_args)
     start_time = time.time()
     
-    tb = SummaryWriter()
-    log_freq = 1000
+    tb_logs_direc = os.path.join(dirname(dirname(abspath(__file__))), "results", "curriculum_tb")
+    tb_exp_direc = os.path.join(tb_logs_direc, "{}").format(args.unique_token)
+    logger.setup_tb(tb_exp_direc)
+    
+    args.log_interval = log_freq
+    args.learner_log_interval = log_freq
     
     main_runner = r_REGISTRY[args.runner](args=args, logger=logger)    
     sss_runner = SSS_Runner(args, logger)
@@ -231,10 +258,12 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
         learner.cuda()
     
     logger.console_logger.info(f'...gathering data...')
-    for _ in range(num_episodes):
+    for k in range(num_episodes):
         
         episode_batch = sss_runner.run()
         buffer.insert_episode_batch(episode_batch)
+        if k % log_freq == 0:
+            logger.console_logger.info(f'...{i} episodes complete...')
     
     logger.console_logger.info(f'...training network...')
     for i in range(train_steps):
@@ -247,36 +276,37 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes):
         if episode_sample.device != args.device:
             episode_sample.to(args.device)
 
-        learner.train(episode_sample, sss_runner.t_env, i)
+        learner.train(episode_sample, i, i)
         
         if i % log_freq == 0:
-            tb.add_histogram("agent fc1 weight", mac.agent.fc1.weight, i)
-            tb.add_histogram("agent fc1 bias", mac.agent.fc1.bias, i)
-            tb.add_histogram("agent gru ih weight", mac.agent.rnn.weight_ih, i)
-            tb.add_histogram("agent gru ih bias", mac.agent.rnn.bias_ih, i)
-            tb.add_histogram("agent gru hh weight", mac.agent.rnn.weight_hh, i)
-            tb.add_histogram("agent gru hh bias", mac.agent.rnn.bias_hh, i)
-            tb.add_histogram("agent fc2 weight", mac.agent.fc1.weight, i)
-            tb.add_histogram("agent fc2 bias", mac.agent.fc2.bias, i)        
-        
+            logger.console_logger.info(f'...logging at step {i}...')
+            tt, sc, gc = _test_env(main_runner, test_episodes)
+            logger.log_stat("Test_mean_sim_time", np.mean(tt), i)
+            logger.log_stat("Test_mean_step_count", np.mean(sc), i)
+            logger.log_stat("Test_mean_goal_found", np.mean(gc), i)
+            
+            logger.tb_logger_hist("agent fc1 weight", mac.agent.fc1.weight.detach().numpy(), i)
+            logger.tb_logger_hist("agent fc1 bias", mac.agent.fc1.bias.detach().numpy(), i)
+            logger.tb_logger_hist("agent gru ih weight", mac.agent.rnn.weight_ih.detach().numpy(), i)
+            logger.tb_logger_hist("agent gru ih bias", mac.agent.rnn.bias_ih.detach().numpy(), i)
+            logger.tb_logger_hist("agent gru hh weight", mac.agent.rnn.weight_hh.detach().numpy(), i)
+            logger.tb_logger_hist("agent gru hh bias", mac.agent.rnn.bias_hh.detach().numpy(), i)
+            logger.tb_logger_hist("agent fc2 weight", mac.agent.fc2.weight.detach().numpy(), i)
+            logger.tb_logger_hist("agent fc2 bias", mac.agent.fc2.bias.detach().numpy(), i)        
     
     tdelta = time.time()-start_time
     logger.console_logger.info(f'...time taken for training: {datetime.timedelta(seconds=tdelta)}...')
     
     # Evaluate trained agent
     logger.console_logger.info(f'...evaluating...')
-    tt, sc, gc = [], [], []
-    for _ in range(test_episodes):
-        main_runner.run(test_mode=True)
-        tt.append(main_runner.env.sim_time())
-        sc.append(main_runner.env.step_count())
-        gc.append(main_runner.env.agents_at_goal())
-        
+    tt, sc, gc = _test_env(main_runner, test_episodes)
+    logger.log_stat("Test_mean_sim_time", np.mean(tt), i)
+    logger.log_stat("Test_mean_step_count", np.mean(sc), i)
+    logger.log_stat("Test_mean_goal_found", np.mean(gc), i)
     logger.console_logger.info(f'-- evaluation av test time: {np.mean(tt)} ({np.var(tt)}), av step count {np.mean(sc)} ({np.var(sc)}), percentage at goal {np.mean(gc)} ({np.var(gc)}), {len(sc)} episodes')
     
     logger.console_logger.info('...saving  model...')
-    save_path = os.path.join(args.local_results_path, "models", args.unique_token, str(main_runner.t_env))
-    #"results/models/{}".format(unique_token)
+    save_path = os.path.join("curriculum", args.unique_token, str(main_runner.t_env))
     os.makedirs(save_path, exist_ok=True)
     logger.console_logger.info("Saving models to {}".format(save_path))
 
@@ -360,8 +390,8 @@ def load_default_params(map_name="bruno"):
     
 if __name__ == "__main__":
 
-    num_episodes = 5000
-    train_steps = 20000
+    num_episodes = 10000
+    train_steps = 40000
     test_episodes = 40
     
     console_logger = getLogger()
@@ -372,12 +402,12 @@ if __name__ == "__main__":
     args.use_cuda = False
     args.device = "cuda" if args.use_cuda else "cpu"
     
-    unique_token = "{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+    unique_token = "curriculum_{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     args.unique_token = unique_token
         
     #mean_sss_time(args, logger, 100, 0)
     
-    run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes)
+    run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes, log_freq=5000)
     
 
 
