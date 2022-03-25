@@ -6,6 +6,8 @@ import torch as th
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 from pathlib import Path
 path = Path(os.path.dirname(__file__))
@@ -31,6 +33,31 @@ def _get_(params, arg_name, subfolder):
 
 def run(model_id):
     
+    def _process_buffer(_per_data, _buffer_size):
+        data = {}
+        data["rsum_record"] = th.stack(list(_per_data["reward_sum_record"].values())).cpu().detach().numpy().flatten()
+        data["ecount"] = len(data["rsum_record"])
+        
+        if data["ecount"] > _buffer_size:
+            offset = len(_per_data["reward_sum_record"]) % _buffer_size
+        
+            data["pval_record"] = np.concatenate((_per_data["pvalues"][offset:], _per_data["pvalues"][:offset]))  # order pvalues to line up with reward_sum_record
+            x_offset = len(_per_data["reward_sum_record"]) - _buffer_size
+            data["pval_recordx"] = np.arange(x_offset, x_offset + _buffer_size)
+            
+            data["e_in_buffer"] = _buffer_size
+        else:
+            x_offset = 0
+            data["pval_record"] = _per_data["pvalues"][:data["ecount"]]
+            data["pval_recordx"] = np.arange(x_offset, x_offset + _buffer_size)
+            
+            data["e_in_buffer"] = data["ecount"]
+            
+        data["buffer_sample_count"] = np.array(list(_per_data["sample_count"].values())[x_offset:x_offset+data["e_in_buffer"]])
+        data["buffer_sortedidx"] = np.argsort(_per_data["reward_sum"][:data["e_in_buffer"]])
+        
+        return data
+    
     def _movingaverage(interval, window_size=100):
         window = np.ones(int(window_size))/float(window_size)
         return np.convolve(interval, window, 'same')
@@ -45,28 +72,106 @@ def run(model_id):
         return
 
     # Go through all files in model directory
-    timesteps = []
+    all_timesteps = []
     for name in os.listdir(load_path):
         full_name = os.path.join(load_path, name)
         # Check if they are dirs the names of which are numbers
         if os.path.isdir(full_name) and name.isdigit():
-            timesteps.append(int(name))
-
-    if True:
-        # choose the max timestep
-        print('timesteps', timesteps)
-        timestep_to_load = max(timesteps)
-    else:
-        # choose the timestep closest to load_step
-        timestep_to_load = min(timesteps, key=lambda x: abs(x - args.load_step))
-
-    model_path = os.path.join(load_path, str(timestep_to_load))
-    print("Loading model from {}".format(model_path))
+            all_timesteps.append(int(name))
+    all_timesteps.sort()
+    timesteps = all_timesteps[1:]
+    t_max = max(timesteps)
+    per_data = {}
+    per_proccessed = {}
+    for t in timesteps:
+        model_path = os.path.join(load_path, str(t))
+        per_data[t] = th.load(os.path.join(model_path, "per_objs.th"))
+        per_proccessed[t] = _process_buffer(per_data[t], buffer_size)
     
-    per_data = th.load(os.path.join(model_path, "per_objs.th"))
-    print('per_data keys', per_data.keys(), 'epsiodes:', len(per_data["reward_sum_record"]))
+    print('per_data loaded. Keys:', per_data[t_max].keys(), ' epsiodes:', len(per_data[t_max]["reward_sum_record"]))
+
+    ## PLOTLY
+    #fig = go.Figure()
+    fig = make_subplots(2, 2,
+                        subplot_titles=("Plot 1", "Plot 2", "Plot 3", "Plot 4"))
     
-    ## Process data
+    # Add traces, one for each slider step     
+    for t in timesteps:
+        sorted_indicies = per_proccessed[t]["buffer_sortedidx"]
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#00CED1", width=1),
+                name="timestep: " + str(t),
+                y=per_data[t]["reward_sum"][sorted_indicies],
+            ),
+            row=1,
+            col=1,
+        )
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#d12600", width=1),
+                name="timestep: " + str(t),
+                y=per_data[t]["pvalues"][sorted_indicies]/np.sum(per_data[t]["pvalues"][sorted_indicies]),
+            ),
+            row=2,
+            col=1,
+        )
+        
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#d12600", width=1),
+                name="timestep: " + str(t),
+                y=per_proccessed[t]["buffer_sample_count"][sorted_indicies],
+            ),
+            row=1,
+            col=2,
+        )
+        
+    # Make 1st trace visible
+    fig.data[3].visible = True
+    fig.data[4].visible = True
+    fig.data[5].visible = True
+
+    # Create and add slider
+    steps = []
+    for i in range(len(timesteps)):
+        step = dict(
+            method="update",
+            args=[{"visible": [False] * len(fig.data)},
+                {"title": "Slider switched to timestep: " + str(timesteps[i])}],  # layout attribute
+        )
+        step["args"][0]["visible"][3*i] = True  # Toggle i'th trace to "visible"
+        step["args"][0]["visible"][3*i+1] = True
+        step["args"][0]["visible"][3*i+2] = True
+        steps.append(step)
+
+    sliders = [dict(
+        active=1,
+        currentvalue={"prefix": "Timestep: "},
+        pad={"t": 50},
+        steps=steps
+    )]
+
+    fig.update_layout(
+        sliders=sliders
+    )
+    rmax = max([max(per_data[t]["reward_sum"]) for t in timesteps])*1.1
+    pmax = max([max(per_data[t]["pvalues"][per_proccessed[t]["buffer_sortedidx"]]/np.sum(per_data[t]["pvalues"][per_proccessed[t]["buffer_sortedidx"]])) for t in timesteps])*1.1
+    print('r range', [0, (per_proccessed[t_max]["rsum_record"])])
+    fig.update_yaxes(title_text="yaxis 1 title", range=[0, rmax], row=1, col=1)
+    fig.update_yaxes(title_text="yaxis 2 title", range=[0, pmax], row=2, col=1)
+    fig.update_yaxes(title_text="yaxis 3 title", range=[0, max(list(per_data[t_max]["sample_count"].values()))*1.1], row=1, col=2)
+    #fig.update_yaxes(title_text="yaxis 4 title", row=2, col=2)
+
+    fig.show()  
+
+
+
+def old_code(per_data):
+     ## Process data
     all_r_values = th.stack(list(per_data["reward_sum_record"].values())).cpu().detach().numpy().flatten()
     
     if len(per_data["reward_sum_record"]) > buffer_size:
@@ -85,7 +190,7 @@ def run(model_id):
         buffer_filled = len(all_r_values)
         
         
-    buffer_sample_values = np.array(list(per_data["sample_count"].values())[x_offset:buffer_filled])
+    buffer_sample_values = np.array(list(per_data["sample_count"].values())[x_offset:x_offset+buffer_filled])
     
     sorted_indicies = np.argsort(per_data["reward_sum"][:buffer_filled])
     
@@ -105,7 +210,7 @@ def run(model_id):
     axes[0][0].legend(["Sorted reward sum"])
     axes[1][0].plot(per_data["pvalues"][sorted_indicies]/np.sum(per_data["pvalues"][sorted_indicies]))
     axes[1][0].legend(["Sorted probabilty values"])
-    
+    #print('s', buffer_sample_values)
     sampled_val_movavg = _movingaverage(buffer_sample_values[sorted_indicies], 5)
     axes[0][1].plot(buffer_sample_values[sorted_indicies])
     axes[0][1].plot(sampled_val_movavg)
@@ -124,12 +229,6 @@ def run(model_id):
     axes[2].plot(per_data["sample_count"].values())
     axes[2].plot([len(per_data["sample_count"])-buffer_size, len(per_data["sample_count"])], [0, 0])
     axes[2].legend(["sample count", "current buffer"])'''
-    
-    #print('difference', np.sum(np.abs(r_values-per_data["reward_sum"][:2633])))
-    
-    plt.show()
-    
-
 
 if __name__ == "__main__":
     model_id = "qmix__2022-03-21_10-28-46" # smac
@@ -144,7 +243,9 @@ if __name__ == "__main__":
     model_id = "qmix__2022-03-22_17-39-55" # supermarket smol
     model_id = "qmix__2022-03-22_22-04-05" # time-cost
     model_id = "qmix__2022-03-22_22-54-53" # bug fix lol lol
-    
+    model_id = "qmix__2022-03-23_10-59-42" # bruno
+    model_id = "qmix__2022-03-23_11-47-25" # warehouse-midd`le
+    model_id = "qmix__2022-03-24_00-24-47"    
     run(model_id)
     
     
