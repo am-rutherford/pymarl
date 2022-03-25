@@ -11,3 +11,6 @@ REGISTRY["async"] = AsyncEpisodeRunner
 
 from .render_episode_runner import RenderEpisodeRunner
 REGISTRY["render"] = RenderEpisodeRunner
+
+from .timelim_episode_runner import TimeLimEpisodeRunner
+REGISTRY["timelim"] = TimeLimEpisodeRunner

@@ -25,18 +25,19 @@ env_args:
   ptd_var: 0.1
 
   # Rewards
-  reward_type: "cost-to-go"
-  goal_reward: 30
-  time_multiplier: -1
+  reward_type: "time-cost"
+  goal_reward: 100
+  time_multiplier: -3
 
   debug: False
   seed: Null  # NOTE this would be useful to implement
 
-
-runner: "async"
+runner: "timelim"
 gamma: 0.99
 epsilon_start: 1.0
 epsilon_anneal_time: 1500000
+
+#buffer_size: 10000
 
 test_greedy: True
 test_nepisode: 32
@@ -45,8 +46,8 @@ log_interval: 10000
 runner_log_interval: 10000
 learner_log_interval: 10000
 
-t_max: 5000000
+t_max: 6010000
 
 save_model: True
 save_model_interval: 500000
-#checkpoint_path: "results/models/qmix__2022-03-18_20-23-41/" # Load a checkpoint from this path
+#checkpoint_path: "results/models/qmix__2022-03-23_18-35-08/" # Load a checkpoint from this path
