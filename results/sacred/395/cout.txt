@@ -1,0 +1,221 @@
+[INFO 18:48:16] pymarl Running command 'my_main'
+[INFO 18:48:16] pymarl Started run with ID "395"
+[DEBUG 18:48:16] my_main Started
+[INFO 18:48:16] my_main Experiment Parameters:
+[INFO 18:48:16] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 0,
+                    'goal_reward': 100,
+                    'map_name': 'supermarket-medium',
+                    'observation_type': 'context',
+                    'ptd_mean': 1.0,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'time-cost',
+                    'seed': 312075412,
+                    'time_multiplier': -3},
+    'epsilon_anneal_time': 1500000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 0.6,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.7,
+    'per_epsilon': 1,
+    'prioritised_replay': False,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'timelim',
+    'runner_log_interval': 10000,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 312075412,
+    't_max': 6010000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 32,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 600, 'max_agents': 8, 'initial': {'agent_0': ('(0, 0)', '(4, 2)'), 'agent_1': ('(0, 0)', '(4, 0)'), 'agent_2': ('(1, 6)', '(3, 5)'), 'agent_3': ('(4, 5)', '(0, 6)'), 'agent_4': ('(0, 4)', '(4, 3)'), 'agent_5': ('(4, 7)', '(0, 6)'), 'agent_6': ('(4, 2)', '(0, 0)'), 'agent_7': ('(0, 3)', '(4, 4)')}, 'generator': 'supermarket', 'size': (8, 5), 'anna_map': True, 'time-lim': 300}
+[DEBUG 18:48:16] root Connecting (0, 0) to (0, 1) with e_(0, 0)_(0, 1)
+[DEBUG 18:48:16] root Connecting (0, 0) to (1, 0) with e_(0, 0)_(1, 0)
+[DEBUG 18:48:16] root Connecting (0, 1) to (0, 0) with e_(0, 1)_(0, 0)
+[DEBUG 18:48:16] root Connecting (0, 1) to (0, 2) with e_(0, 1)_(0, 2)
+[DEBUG 18:48:16] root Connecting (0, 1) to (1, 1) with e_(0, 1)_(1, 1)
+[DEBUG 18:48:16] root Connecting (0, 2) to (0, 1) with e_(0, 2)_(0, 1)
+[DEBUG 18:48:16] root Connecting (0, 2) to (0, 3) with e_(0, 2)_(0, 3)
+[DEBUG 18:48:16] root Connecting (0, 2) to (1, 2) with e_(0, 2)_(1, 2)
+[DEBUG 18:48:16] root Connecting (0, 3) to (0, 2) with e_(0, 3)_(0, 2)
+[DEBUG 18:48:16] root Connecting (0, 3) to (0, 4) with e_(0, 3)_(0, 4)
+[DEBUG 18:48:16] root Connecting (0, 3) to (1, 3) with e_(0, 3)_(1, 3)
+[DEBUG 18:48:16] root Connecting (0, 4) to (0, 3) with e_(0, 4)_(0, 3)
+[DEBUG 18:48:16] root Connecting (0, 4) to (0, 5) with e_(0, 4)_(0, 5)
+[DEBUG 18:48:16] root Connecting (0, 4) to (1, 4) with e_(0, 4)_(1, 4)
+[DEBUG 18:48:16] root Connecting (0, 5) to (0, 4) with e_(0, 5)_(0, 4)
+[DEBUG 18:48:16] root Connecting (0, 5) to (0, 6) with e_(0, 5)_(0, 6)
+[DEBUG 18:48:16] root Connecting (0, 5) to (1, 5) with e_(0, 5)_(1, 5)
+[DEBUG 18:48:16] root Connecting (0, 6) to (0, 5) with e_(0, 6)_(0, 5)
+[DEBUG 18:48:16] root Connecting (0, 6) to (0, 7) with e_(0, 6)_(0, 7)
+[DEBUG 18:48:16] root Connecting (0, 6) to (1, 6) with e_(0, 6)_(1, 6)
+[DEBUG 18:48:16] root Connecting (0, 7) to (0, 6) with e_(0, 7)_(0, 6)
+[DEBUG 18:48:16] root Connecting (0, 7) to (1, 7) with e_(0, 7)_(1, 7)
+[DEBUG 18:48:16] root Connecting (1, 0) to (0, 0) with e_(1, 0)_(0, 0)
+[DEBUG 18:48:16] root Connecting (1, 0) to (2, 0) with e_(1, 0)_(2, 0)
+[DEBUG 18:48:16] root Connecting (1, 1) to (0, 1) with e_(1, 1)_(0, 1)
+[DEBUG 18:48:16] root Connecting (1, 1) to (2, 1) with e_(1, 1)_(2, 1)
+[DEBUG 18:48:16] root Connecting (1, 2) to (0, 2) with e_(1, 2)_(0, 2)
+[DEBUG 18:48:16] root Connecting (1, 2) to (2, 2) with e_(1, 2)_(2, 2)
+[DEBUG 18:48:16] root Connecting (1, 3) to (0, 3) with e_(1, 3)_(0, 3)
+[DEBUG 18:48:16] root Connecting (1, 3) to (2, 3) with e_(1, 3)_(2, 3)
+[DEBUG 18:48:16] root Connecting (1, 4) to (0, 4) with e_(1, 4)_(0, 4)
+[DEBUG 18:48:16] root Connecting (1, 4) to (2, 4) with e_(1, 4)_(2, 4)
+[DEBUG 18:48:16] root Connecting (1, 5) to (0, 5) with e_(1, 5)_(0, 5)
+[DEBUG 18:48:16] root Connecting (1, 5) to (2, 5) with e_(1, 5)_(2, 5)
+[DEBUG 18:48:16] root Connecting (1, 6) to (0, 6) with e_(1, 6)_(0, 6)
+[DEBUG 18:48:16] root Connecting (1, 6) to (2, 6) with e_(1, 6)_(2, 6)
+[DEBUG 18:48:16] root Connecting (1, 7) to (0, 7) with e_(1, 7)_(0, 7)
+[DEBUG 18:48:16] root Connecting (1, 7) to (2, 7) with e_(1, 7)_(2, 7)
+[DEBUG 18:48:16] root Connecting (2, 0) to (1, 0) with e_(2, 0)_(1, 0)
+[DEBUG 18:48:16] root Connecting (2, 0) to (3, 0) with e_(2, 0)_(3, 0)
+[DEBUG 18:48:16] root Connecting (2, 1) to (1, 1) with e_(2, 1)_(1, 1)
+[DEBUG 18:48:16] root Connecting (2, 1) to (3, 1) with e_(2, 1)_(3, 1)
+[DEBUG 18:48:16] root Connecting (2, 2) to (1, 2) with e_(2, 2)_(1, 2)
+[DEBUG 18:48:16] root Connecting (2, 2) to (3, 2) with e_(2, 2)_(3, 2)
+[DEBUG 18:48:16] root Connecting (2, 3) to (1, 3) with e_(2, 3)_(1, 3)
+[DEBUG 18:48:16] root Connecting (2, 3) to (3, 3) with e_(2, 3)_(3, 3)
+[DEBUG 18:48:16] root Connecting (2, 4) to (1, 4) with e_(2, 4)_(1, 4)
+[DEBUG 18:48:16] root Connecting (2, 4) to (3, 4) with e_(2, 4)_(3, 4)
+[DEBUG 18:48:16] root Connecting (2, 5) to (1, 5) with e_(2, 5)_(1, 5)
+[DEBUG 18:48:16] root Connecting (2, 5) to (3, 5) with e_(2, 5)_(3, 5)
+[DEBUG 18:48:16] root Connecting (2, 6) to (1, 6) with e_(2, 6)_(1, 6)
+[DEBUG 18:48:16] root Connecting (2, 6) to (3, 6) with e_(2, 6)_(3, 6)
+[DEBUG 18:48:16] root Connecting (2, 7) to (1, 7) with e_(2, 7)_(1, 7)
+[DEBUG 18:48:16] root Connecting (2, 7) to (3, 7) with e_(2, 7)_(3, 7)
+[DEBUG 18:48:16] root Connecting (3, 0) to (2, 0) with e_(3, 0)_(2, 0)
+[DEBUG 18:48:16] root Connecting (3, 0) to (4, 0) with e_(3, 0)_(4, 0)
+[DEBUG 18:48:16] root Connecting (3, 1) to (2, 1) with e_(3, 1)_(2, 1)
+[DEBUG 18:48:16] root Connecting (3, 1) to (4, 1) with e_(3, 1)_(4, 1)
+[DEBUG 18:48:16] root Connecting (3, 2) to (2, 2) with e_(3, 2)_(2, 2)
+[DEBUG 18:48:16] root Connecting (3, 2) to (4, 2) with e_(3, 2)_(4, 2)
+[DEBUG 18:48:16] root Connecting (3, 3) to (2, 3) with e_(3, 3)_(2, 3)
+[DEBUG 18:48:16] root Connecting (3, 3) to (4, 3) with e_(3, 3)_(4, 3)
+[DEBUG 18:48:16] root Connecting (3, 4) to (2, 4) with e_(3, 4)_(2, 4)
+[DEBUG 18:48:16] root Connecting (3, 4) to (4, 4) with e_(3, 4)_(4, 4)
+[DEBUG 18:48:16] root Connecting (3, 5) to (2, 5) with e_(3, 5)_(2, 5)
+[DEBUG 18:48:16] root Connecting (3, 5) to (4, 5) with e_(3, 5)_(4, 5)
+[DEBUG 18:48:16] root Connecting (3, 6) to (2, 6) with e_(3, 6)_(2, 6)
+[DEBUG 18:48:16] root Connecting (3, 6) to (4, 6) with e_(3, 6)_(4, 6)
+[DEBUG 18:48:16] root Connecting (3, 7) to (2, 7) with e_(3, 7)_(2, 7)
+[DEBUG 18:48:16] root Connecting (3, 7) to (4, 7) with e_(3, 7)_(4, 7)
+[DEBUG 18:48:16] root Connecting (4, 0) to (3, 0) with e_(4, 0)_(3, 0)
+[DEBUG 18:48:16] root Connecting (4, 0) to (4, 1) with e_(4, 0)_(4, 1)
+[DEBUG 18:48:16] root Connecting (4, 1) to (3, 1) with e_(4, 1)_(3, 1)
+[DEBUG 18:48:16] root Connecting (4, 1) to (4, 0) with e_(4, 1)_(4, 0)
+[DEBUG 18:48:16] root Connecting (4, 1) to (4, 2) with e_(4, 1)_(4, 2)
+[DEBUG 18:48:16] root Connecting (4, 2) to (3, 2) with e_(4, 2)_(3, 2)
+[DEBUG 18:48:16] root Connecting (4, 2) to (4, 1) with e_(4, 2)_(4, 1)
+[DEBUG 18:48:16] root Connecting (4, 2) to (4, 3) with e_(4, 2)_(4, 3)
+[DEBUG 18:48:16] root Connecting (4, 3) to (3, 3) with e_(4, 3)_(3, 3)
+[DEBUG 18:48:16] root Connecting (4, 3) to (4, 2) with e_(4, 3)_(4, 2)
+[DEBUG 18:48:16] root Connecting (4, 3) to (4, 4) with e_(4, 3)_(4, 4)
+[DEBUG 18:48:16] root Connecting (4, 4) to (3, 4) with e_(4, 4)_(3, 4)
+[DEBUG 18:48:16] root Connecting (4, 4) to (4, 3) with e_(4, 4)_(4, 3)
+[DEBUG 18:48:16] root Connecting (4, 4) to (4, 5) with e_(4, 4)_(4, 5)
+[DEBUG 18:48:16] root Connecting (4, 5) to (3, 5) with e_(4, 5)_(3, 5)
+[DEBUG 18:48:16] root Connecting (4, 5) to (4, 4) with e_(4, 5)_(4, 4)
+[DEBUG 18:48:16] root Connecting (4, 5) to (4, 6) with e_(4, 5)_(4, 6)
+[DEBUG 18:48:16] root Connecting (4, 6) to (3, 6) with e_(4, 6)_(3, 6)
+[DEBUG 18:48:16] root Connecting (4, 6) to (4, 5) with e_(4, 6)_(4, 5)
+[DEBUG 18:48:16] root Connecting (4, 6) to (4, 7) with e_(4, 6)_(4, 7)
+[DEBUG 18:48:16] root Connecting (4, 7) to (3, 7) with e_(4, 7)_(3, 7)
+[DEBUG 18:48:16] root Connecting (4, 7) to (4, 6) with e_(4, 7)_(4, 6)
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4', 'agent_5', 'agent_6', 'agent_7']
+Goal states {'agent_0': '(4, 2)', 'agent_1': '(4, 0)', 'agent_2': '(3, 5)', 'agent_3': '(0, 6)', 'agent_4': '(4, 3)', 'agent_5': '(0, 6)', 'agent_6': '(0, 0)', 'agent_7': '(4, 4)'} 
+Initial states {'agent_0': '(0, 0)', 'agent_1': '(0, 0)', 'agent_2': '(1, 6)', 'agent_3': '(4, 5)', 'agent_4': '(0, 4)', 'agent_5': '(4, 7)', 'agent_6': '(4, 2)', 'agent_7': '(0, 3)'}
+[DEBUG 18:48:16] my_main Buffer scheme: {'state': {'vshape': (8,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 8}
+[INFO 18:48:17] my_main Beginning training for 6010000 timesteps
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 18:48:18] my_main t_env: 378 / 6010000
+[INFO 18:48:18] my_main Estimated time left: 8 minutes, 57 seconds. Time passed: 0 seconds
+av test time: 779.0566618201711 (41952.182855405255), av step count 122.125 (72.984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 18:48:26] my_main Saving models to results/models/qmix__2022-03-25_18-48-16/378
+[INFO 18:48:47] my_main Recent Stats | t_env:      10240 | Episode:       26
+ep_length_mean:          378.0000	epsilon:                   1.0000	return_mean:              -1.5423	return_std:                0.0000
+test_ep_length_mean:     122.1250	test_reached_goal:       100.0000	test_return_mean:        -15.3717	test_return_std:           6.1447
+test_sim_time:           779.0567	
+[INFO 18:48:48] my_main t_env: 10614 / 6010000
+[INFO 18:48:48] my_main Estimated time left: 4 hours, 47 minutes, 28 seconds. Time passed: 30 seconds
+av test time: 783.5600204739811 (28867.967772080552), av step count 119.375 (82.359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 18:49:24] my_main Recent Stats | t_env:      20352 | Episode:       52
+ep_length_mean:          385.8462	epsilon:                   0.9935	grad_norm:                 0.2847	loss:                      0.0438
+q_taken_mean:              0.0104	return_mean:              -1.6888	return_std:                0.3785	target_mean:               0.0130
+td_error_abs:              0.1453	test_ep_length_mean:     120.7500	test_reached_goal:       100.0000	test_return_mean:        -15.4393
+test_return_std:           5.6209	test_sim_time:           781.3083	
+[INFO 18:49:25] my_main t_env: 20770 / 6010000
+[INFO 18:49:25] my_main Estimated time left: 6 hours, 10 minutes, 1 seconds. Time passed: 1 minutes, 8 seconds
+av test time: 773.2116190673373 (46511.93693891178), av step count 255.0 (958.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 18:50:14] my_main Recent Stats | t_env:      30742 | Episode:       78
+ep_length_mean:          387.4359	epsilon:                   0.9871	grad_norm:                 0.1599	loss:                      0.0393
+q_taken_mean:              0.0120	return_mean:              -1.6885	return_std:                0.3653	target_mean:               0.0136
+td_error_abs:              0.1346	test_ep_length_mean:     165.5000	test_reached_goal:       100.0000	test_return_mean:        -15.3583
+test_return_std:           5.9039	test_sim_time:           778.6094	
+[INFO 18:50:16] my_main t_env: 31254 / 6010000
+[INFO 18:50:16] my_main Estimated time left: 7 hours, 59 minutes, 30 seconds. Time passed: 1 minutes, 58 seconds
+av test time: 659.3611963628592 (40117.19895479044), av step count 407.625 (814.609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 18:51:19] my_main Recent Stats | t_env:      40834 | Episode:      104
+ep_length_mean:          391.3846	epsilon:                   0.9805	grad_norm:                 0.1283	loss:                      0.0374
+q_taken_mean:              0.0127	return_mean:              -1.6848	return_std:                0.5160	target_mean:               0.0140
+td_error_abs:              0.1285	test_ep_length_mean:     226.0312	test_reached_goal:       100.0000	test_return_mean:        -14.4639
+test_return_std:           5.9302	test_sim_time:           748.7974	
+[INFO 18:51:20] my_main t_env: 41342 / 6010000
+[INFO 18:51:20] my_main Estimated time left: 10 hours, 35 minutes, 36 seconds. Time passed: 3 minutes, 2 seconds
+av test time: 571.6931683906846 (28818.838297392034), av step count 398.875 (777.484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 18:52:22] my_main Recent Stats | t_env:      50980 | Episode:      129
+ep_length_mean:          390.7077	epsilon:                   0.9741	grad_norm:                 0.1126	loss:                      0.0362
+q_taken_mean:              0.0127	return_mean:              -1.6584	return_std:                0.5277	target_mean:               0.0135
+td_error_abs:              0.1247	test_ep_length_mean:     260.6000	test_reached_goal:       100.0000	test_return_mean:        -13.4013
+test_return_std:           5.7627	test_sim_time:           713.3765	
+[INFO 18:52:25] my_main t_env: 51874 / 6010000
+[INFO 18:52:25] my_main Estimated time left: 10 hours, 11 minutes, 58 seconds. Time passed: 4 minutes, 7 seconds
+av test time: 608.5364080144201 (32094.162245609838), av step count 406.6875 (806.15234375), percentage at goal 100.0 (0.0) 32 episodes
