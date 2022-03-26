@@ -20,7 +20,18 @@
       ]
     ]
   },
-  "heartbeat": "2022-03-25T22:34:01.949065",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/am-rutherford/anaconda3/envs/pymarl/lib/python3.7/site-packages/sacred-0.7.2-py3.7.egg/sacred/config/captured_function.py\", line 48, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"src/main.py\", line 38, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/home/am-rutherford/repos/pymarl/src/run.py\", line 48, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/home/am-rutherford/repos/pymarl/src/run.py\", line 175, in run_sequential\n    episode_batch = runner.run(test_mode=False)\n",
+    "  File \"/home/am-rutherford/repos/pymarl/src/runners/timelim_episode_runner.py\", line 44, in run\n    self.batch.update(pre_transition_data, ts=self.t)\n",
+    "  File \"/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py\", line 118, in update\n    self._check_safe_view(v, target[k][_slices])\n",
+    "  File \"/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py\", line 133, in _check_safe_view\n    raise ValueError(\"Unsafe reshape of {} to {}\".format(v.shape, dest.shape))\n",
+    "ValueError: Unsafe reshape of torch.Size([1, 8]) to torch.Size([1, 0, 8])\n"
+  ],
+  "heartbeat": "2022-03-25T18:53:18.749131",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
@@ -70,6 +81,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2022-03-25T17:16:46.085565",
-  "status": "RUNNING"
+  "start_time": "2022-03-25T18:48:16.560314",
+  "status": "FAILED",
+  "stop_time": "2022-03-25T18:53:18.753606"
 }
