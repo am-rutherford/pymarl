@@ -1,11 +1,11 @@
 env: camas
 
 env_args:
-  map_name: "supermarket-medium"
+  map_name: "supermarket"
   # Number of agents to use in the environment
   #     0: maximum number of agents
   #     Will return an error if number specifed is more than the maximum for the given map.
-  agent_count: 5
+  agent_count: 0
   episode_limit: 0
   
   # Possible observation types: 
@@ -26,7 +26,7 @@ env_args:
 
   # Rewards
   reward_type: "time-cost"
-  goal_reward: 100
+  goal_reward: 200
   time_multiplier: -3
 
   debug: False
@@ -35,7 +35,7 @@ env_args:
 runner: "timelim"
 gamma: 0.99
 epsilon_start: 1.0
-epsilon_anneal_time: 1500000
+epsilon_anneal_time: 2000000
 
 #buffer_size: 10000
 
@@ -46,7 +46,7 @@ log_interval: 10000
 runner_log_interval: 10000
 learner_log_interval: 10000
 
-t_max: 6010000
+t_max: 8010000
 
 save_model: True
 save_model_interval: 500000
