@@ -15,6 +15,7 @@ class TimeLimEpisodeRunner(AsyncEpisodeRunner):
         
         self.time_lim = self.env.map_param("time-lim")
         assert self.time_lim > 0, "time limit must be positive"
+        self.logger.console_logger.info(f'Running Camas time limited episodes with a limit of {self.time_lim}')
         
         self.env.reset()
         self.sss_policies = {agent: construct_shortest_path_policy(self.env._tm, self.env._goal_states[agent]) 
@@ -73,8 +74,9 @@ class TimeLimEpisodeRunner(AsyncEpisodeRunner):
             self.batch.update(post_transition_data, ts=self.t)
             
             self.t += 1
-            '''if self.t == self.episode_limit:
-                terminated = True'''
+            if self.t == self.episode_limit:
+                print('episode lim reached')
+                terminated = True
             if (self.env.sim_time() > self.time_lim) and not sss_actions: #self.time_lim:
                 if self.debug: print(f'camas time: {self.env.sim_time()} greater than limit {self.time_lim}, switching to sss actions')
                 sss_actions = True

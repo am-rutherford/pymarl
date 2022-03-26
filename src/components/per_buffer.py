@@ -113,7 +113,7 @@ class PERBuffer(EpisodeBatch):
                         slice(self.buffer_index, self.buffer_index + ep_batch.batch_size))
             
             # record values for debugging/analysis
-            self.reward_sum_record[self.buffer_counter] = (th.sum(ep_batch["reward"]) + self.per_epsilon)**self.per_alpha
+            self.reward_sum_record[self.buffer_counter] = (th.sum(ep_batch["reward"]) + self.per_epsilon)**self.per_alpha # NOTE needs adapting for offset
             self.sample_count[self.buffer_counter] = 0
             self.buffer_counter += ep_batch.batch_size
             
