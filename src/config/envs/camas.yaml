@@ -27,7 +27,7 @@ env_args:
   # Rewards
   reward_type: "time-cost"
   goal_reward: 200
-  time_multiplier: -3
+  time_multiplier: -4
 
   debug: False
   seed: Null  # NOTE this would be useful to implement
@@ -35,18 +35,18 @@ env_args:
 runner: "timelim"
 gamma: 0.99
 epsilon_start: 1.0
-epsilon_anneal_time: 2000000
+epsilon_anneal_time: 3000000
 
 #buffer_size: 10000
 
 test_greedy: True
 test_nepisode: 32
-test_interval: 10000
-log_interval: 10000
-runner_log_interval: 10000
-learner_log_interval: 10000
+test_interval: 20000 # all used to be 10000
+log_interval: 20000
+runner_log_interval: 20000
+learner_log_interval: 20000
 
-t_max: 8010000
+t_max: 15010000
 
 save_model: True
 save_model_interval: 500000
