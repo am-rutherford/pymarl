@@ -1,0 +1,317 @@
+[INFO 11:45:09] pymarl Running command 'my_main'
+[INFO 11:45:09] pymarl Started run with ID "404"
+[DEBUG 11:45:09] pymarl Starting Heartbeat
+[DEBUG 11:45:09] my_main Started
+[WARNING 11:45:09] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 11:45:09] my_main Experiment Parameters:
+[INFO 11:45:09] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 0,
+                    'goal_reward': 200,
+                    'map_name': 'supermarket',
+                    'observation_type': 'context',
+                    'ptd_mean': 1.0,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'time-cost',
+                    'seed': 634706407,
+                    'time_multiplier': -4},
+    'epsilon_anneal_time': 3000000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 20000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 20000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 0.6,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.7,
+    'per_epsilon': 1,
+    'prioritised_replay': False,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'timelim',
+    'runner_log_interval': 20000,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 634706407,
+    't_max': 15010000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 20000,
+    'test_nepisode': 32,
+    'train_twice': True,
+    'use_cuda': False,
+    'use_tensorboard': True}
+
+[DEBUG 11:45:15] tensorflow Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+[DEBUG 11:45:15] h5py._conv Creating converter from 7 to 5
+[DEBUG 11:45:15] h5py._conv Creating converter from 5 to 7
+[DEBUG 11:45:15] h5py._conv Creating converter from 7 to 5
+[DEBUG 11:45:15] h5py._conv Creating converter from 5 to 7
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 1000, 'max_agents': 5, 'initial': {'agent_0': ('(0, 6)', '(9, 6)'), 'agent_1': ('(0, 4)', '(9, 4)'), 'agent_2': ('(9, 6)', '(0, 6)'), 'agent_3': ('(0, 9)', '(5, 4)'), 'agent_4': ('(0, 0)', '(5, 7)'), 'agent_5': ('(0, 1)', '(9, 2)'), 'agent_6': ('(9, 1)', '(0, 2)')}, 'generator': 'supermarket', 'size': (10, 10), 'anna_map': True, 'time-lim': 300}
+[DEBUG 11:45:16] root Connecting (0, 0) to (0, 1) with e_(0, 0)_(0, 1)
+[DEBUG 11:45:16] root Connecting (0, 0) to (1, 0) with e_(0, 0)_(1, 0)
+[DEBUG 11:45:16] root Connecting (0, 1) to (0, 0) with e_(0, 1)_(0, 0)
+[DEBUG 11:45:16] root Connecting (0, 1) to (0, 2) with e_(0, 1)_(0, 2)
+[DEBUG 11:45:16] root Connecting (0, 1) to (1, 1) with e_(0, 1)_(1, 1)
+[DEBUG 11:45:16] root Connecting (0, 2) to (0, 1) with e_(0, 2)_(0, 1)
+[DEBUG 11:45:16] root Connecting (0, 2) to (0, 3) with e_(0, 2)_(0, 3)
+[DEBUG 11:45:16] root Connecting (0, 2) to (1, 2) with e_(0, 2)_(1, 2)
+[DEBUG 11:45:16] root Connecting (0, 3) to (0, 2) with e_(0, 3)_(0, 2)
+[DEBUG 11:45:16] root Connecting (0, 3) to (0, 4) with e_(0, 3)_(0, 4)
+[DEBUG 11:45:16] root Connecting (0, 3) to (1, 3) with e_(0, 3)_(1, 3)
+[DEBUG 11:45:16] root Connecting (0, 4) to (0, 3) with e_(0, 4)_(0, 3)
+[DEBUG 11:45:16] root Connecting (0, 4) to (0, 5) with e_(0, 4)_(0, 5)
+[DEBUG 11:45:16] root Connecting (0, 4) to (1, 4) with e_(0, 4)_(1, 4)
+[DEBUG 11:45:16] root Connecting (0, 5) to (0, 4) with e_(0, 5)_(0, 4)
+[DEBUG 11:45:16] root Connecting (0, 5) to (0, 6) with e_(0, 5)_(0, 6)
+[DEBUG 11:45:16] root Connecting (0, 5) to (1, 5) with e_(0, 5)_(1, 5)
+[DEBUG 11:45:16] root Connecting (0, 6) to (0, 5) with e_(0, 6)_(0, 5)
+[DEBUG 11:45:16] root Connecting (0, 6) to (0, 7) with e_(0, 6)_(0, 7)
+[DEBUG 11:45:16] root Connecting (0, 6) to (1, 6) with e_(0, 6)_(1, 6)
+[DEBUG 11:45:16] root Connecting (0, 7) to (0, 6) with e_(0, 7)_(0, 6)
+[DEBUG 11:45:16] root Connecting (0, 7) to (0, 8) with e_(0, 7)_(0, 8)
+[DEBUG 11:45:16] root Connecting (0, 7) to (1, 7) with e_(0, 7)_(1, 7)
+[DEBUG 11:45:16] root Connecting (0, 8) to (0, 7) with e_(0, 8)_(0, 7)
+[DEBUG 11:45:16] root Connecting (0, 8) to (0, 9) with e_(0, 8)_(0, 9)
+[DEBUG 11:45:16] root Connecting (0, 8) to (1, 8) with e_(0, 8)_(1, 8)
+[DEBUG 11:45:16] root Connecting (0, 9) to (0, 8) with e_(0, 9)_(0, 8)
+[DEBUG 11:45:16] root Connecting (0, 9) to (1, 9) with e_(0, 9)_(1, 9)
+[DEBUG 11:45:16] root Connecting (1, 0) to (0, 0) with e_(1, 0)_(0, 0)
+[DEBUG 11:45:16] root Connecting (1, 0) to (2, 0) with e_(1, 0)_(2, 0)
+[DEBUG 11:45:16] root Connecting (1, 1) to (0, 1) with e_(1, 1)_(0, 1)
+[DEBUG 11:45:16] root Connecting (1, 1) to (2, 1) with e_(1, 1)_(2, 1)
+[DEBUG 11:45:16] root Connecting (1, 2) to (0, 2) with e_(1, 2)_(0, 2)
+[DEBUG 11:45:16] root Connecting (1, 2) to (2, 2) with e_(1, 2)_(2, 2)
+[DEBUG 11:45:16] root Connecting (1, 3) to (0, 3) with e_(1, 3)_(0, 3)
+[DEBUG 11:45:16] root Connecting (1, 3) to (2, 3) with e_(1, 3)_(2, 3)
+[DEBUG 11:45:16] root Connecting (1, 4) to (0, 4) with e_(1, 4)_(0, 4)
+[DEBUG 11:45:16] root Connecting (1, 4) to (2, 4) with e_(1, 4)_(2, 4)
+[DEBUG 11:45:16] root Connecting (1, 5) to (0, 5) with e_(1, 5)_(0, 5)
+[DEBUG 11:45:16] root Connecting (1, 5) to (2, 5) with e_(1, 5)_(2, 5)
+[DEBUG 11:45:16] root Connecting (1, 6) to (0, 6) with e_(1, 6)_(0, 6)
+[DEBUG 11:45:16] root Connecting (1, 6) to (2, 6) with e_(1, 6)_(2, 6)
+[DEBUG 11:45:16] root Connecting (1, 7) to (0, 7) with e_(1, 7)_(0, 7)
+[DEBUG 11:45:16] root Connecting (1, 7) to (2, 7) with e_(1, 7)_(2, 7)
+[DEBUG 11:45:16] root Connecting (1, 8) to (0, 8) with e_(1, 8)_(0, 8)
+[DEBUG 11:45:16] root Connecting (1, 8) to (2, 8) with e_(1, 8)_(2, 8)
+[DEBUG 11:45:16] root Connecting (1, 9) to (0, 9) with e_(1, 9)_(0, 9)
+[DEBUG 11:45:16] root Connecting (1, 9) to (2, 9) with e_(1, 9)_(2, 9)
+[DEBUG 11:45:16] root Connecting (2, 0) to (1, 0) with e_(2, 0)_(1, 0)
+[DEBUG 11:45:16] root Connecting (2, 0) to (3, 0) with e_(2, 0)_(3, 0)
+[DEBUG 11:45:16] root Connecting (2, 1) to (1, 1) with e_(2, 1)_(1, 1)
+[DEBUG 11:45:16] root Connecting (2, 1) to (3, 1) with e_(2, 1)_(3, 1)
+[DEBUG 11:45:16] root Connecting (2, 2) to (1, 2) with e_(2, 2)_(1, 2)
+[DEBUG 11:45:16] root Connecting (2, 2) to (3, 2) with e_(2, 2)_(3, 2)
+[DEBUG 11:45:16] root Connecting (2, 3) to (1, 3) with e_(2, 3)_(1, 3)
+[DEBUG 11:45:16] root Connecting (2, 3) to (3, 3) with e_(2, 3)_(3, 3)
+[DEBUG 11:45:16] root Connecting (2, 4) to (1, 4) with e_(2, 4)_(1, 4)
+[DEBUG 11:45:16] root Connecting (2, 4) to (3, 4) with e_(2, 4)_(3, 4)
+[DEBUG 11:45:16] root Connecting (2, 5) to (1, 5) with e_(2, 5)_(1, 5)
+[DEBUG 11:45:16] root Connecting (2, 5) to (3, 5) with e_(2, 5)_(3, 5)
+[DEBUG 11:45:16] root Connecting (2, 6) to (1, 6) with e_(2, 6)_(1, 6)
+[DEBUG 11:45:16] root Connecting (2, 6) to (3, 6) with e_(2, 6)_(3, 6)
+[DEBUG 11:45:16] root Connecting (2, 7) to (1, 7) with e_(2, 7)_(1, 7)
+[DEBUG 11:45:16] root Connecting (2, 7) to (3, 7) with e_(2, 7)_(3, 7)
+[DEBUG 11:45:16] root Connecting (2, 8) to (1, 8) with e_(2, 8)_(1, 8)
+[DEBUG 11:45:16] root Connecting (2, 8) to (3, 8) with e_(2, 8)_(3, 8)
+[DEBUG 11:45:16] root Connecting (2, 9) to (1, 9) with e_(2, 9)_(1, 9)
+[DEBUG 11:45:16] root Connecting (2, 9) to (3, 9) with e_(2, 9)_(3, 9)
+[DEBUG 11:45:16] root Connecting (3, 0) to (2, 0) with e_(3, 0)_(2, 0)
+[DEBUG 11:45:16] root Connecting (3, 0) to (4, 0) with e_(3, 0)_(4, 0)
+[DEBUG 11:45:16] root Connecting (3, 1) to (2, 1) with e_(3, 1)_(2, 1)
+[DEBUG 11:45:16] root Connecting (3, 1) to (4, 1) with e_(3, 1)_(4, 1)
+[DEBUG 11:45:16] root Connecting (3, 2) to (2, 2) with e_(3, 2)_(2, 2)
+[DEBUG 11:45:16] root Connecting (3, 2) to (4, 2) with e_(3, 2)_(4, 2)
+[DEBUG 11:45:16] root Connecting (3, 3) to (2, 3) with e_(3, 3)_(2, 3)
+[DEBUG 11:45:16] root Connecting (3, 3) to (4, 3) with e_(3, 3)_(4, 3)
+[DEBUG 11:45:16] root Connecting (3, 4) to (2, 4) with e_(3, 4)_(2, 4)
+[DEBUG 11:45:16] root Connecting (3, 4) to (4, 4) with e_(3, 4)_(4, 4)
+[DEBUG 11:45:16] root Connecting (3, 5) to (2, 5) with e_(3, 5)_(2, 5)
+[DEBUG 11:45:16] root Connecting (3, 5) to (4, 5) with e_(3, 5)_(4, 5)
+[DEBUG 11:45:16] root Connecting (3, 6) to (2, 6) with e_(3, 6)_(2, 6)
+[DEBUG 11:45:16] root Connecting (3, 6) to (4, 6) with e_(3, 6)_(4, 6)
+[DEBUG 11:45:16] root Connecting (3, 7) to (2, 7) with e_(3, 7)_(2, 7)
+[DEBUG 11:45:16] root Connecting (3, 7) to (4, 7) with e_(3, 7)_(4, 7)
+[DEBUG 11:45:16] root Connecting (3, 8) to (2, 8) with e_(3, 8)_(2, 8)
+[DEBUG 11:45:16] root Connecting (3, 8) to (4, 8) with e_(3, 8)_(4, 8)
+[DEBUG 11:45:16] root Connecting (3, 9) to (2, 9) with e_(3, 9)_(2, 9)
+[DEBUG 11:45:16] root Connecting (3, 9) to (4, 9) with e_(3, 9)_(4, 9)
+[DEBUG 11:45:16] root Connecting (4, 0) to (3, 0) with e_(4, 0)_(3, 0)
+[DEBUG 11:45:16] root Connecting (4, 0) to (5, 0) with e_(4, 0)_(5, 0)
+[DEBUG 11:45:16] root Connecting (4, 1) to (3, 1) with e_(4, 1)_(3, 1)
+[DEBUG 11:45:16] root Connecting (4, 1) to (5, 1) with e_(4, 1)_(5, 1)
+[DEBUG 11:45:16] root Connecting (4, 2) to (3, 2) with e_(4, 2)_(3, 2)
+[DEBUG 11:45:16] root Connecting (4, 2) to (5, 2) with e_(4, 2)_(5, 2)
+[DEBUG 11:45:16] root Connecting (4, 3) to (3, 3) with e_(4, 3)_(3, 3)
+[DEBUG 11:45:16] root Connecting (4, 3) to (5, 3) with e_(4, 3)_(5, 3)
+[DEBUG 11:45:16] root Connecting (4, 4) to (3, 4) with e_(4, 4)_(3, 4)
+[DEBUG 11:45:16] root Connecting (4, 4) to (5, 4) with e_(4, 4)_(5, 4)
+[DEBUG 11:45:16] root Connecting (4, 5) to (3, 5) with e_(4, 5)_(3, 5)
+[DEBUG 11:45:16] root Connecting (4, 5) to (5, 5) with e_(4, 5)_(5, 5)
+[DEBUG 11:45:16] root Connecting (4, 6) to (3, 6) with e_(4, 6)_(3, 6)
+[DEBUG 11:45:16] root Connecting (4, 6) to (5, 6) with e_(4, 6)_(5, 6)
+[DEBUG 11:45:16] root Connecting (4, 7) to (3, 7) with e_(4, 7)_(3, 7)
+[DEBUG 11:45:16] root Connecting (4, 7) to (5, 7) with e_(4, 7)_(5, 7)
+[DEBUG 11:45:16] root Connecting (4, 8) to (3, 8) with e_(4, 8)_(3, 8)
+[DEBUG 11:45:16] root Connecting (4, 8) to (5, 8) with e_(4, 8)_(5, 8)
+[DEBUG 11:45:16] root Connecting (4, 9) to (3, 9) with e_(4, 9)_(3, 9)
+[DEBUG 11:45:16] root Connecting (4, 9) to (5, 9) with e_(4, 9)_(5, 9)
+[DEBUG 11:45:16] root Connecting (5, 0) to (4, 0) with e_(5, 0)_(4, 0)
+[DEBUG 11:45:16] root Connecting (5, 0) to (6, 0) with e_(5, 0)_(6, 0)
+[DEBUG 11:45:16] root Connecting (5, 1) to (4, 1) with e_(5, 1)_(4, 1)
+[DEBUG 11:45:16] root Connecting (5, 1) to (6, 1) with e_(5, 1)_(6, 1)
+[DEBUG 11:45:16] root Connecting (5, 2) to (4, 2) with e_(5, 2)_(4, 2)
+[DEBUG 11:45:16] root Connecting (5, 2) to (6, 2) with e_(5, 2)_(6, 2)
+[DEBUG 11:45:16] root Connecting (5, 3) to (4, 3) with e_(5, 3)_(4, 3)
+[DEBUG 11:45:16] root Connecting (5, 3) to (6, 3) with e_(5, 3)_(6, 3)
+[DEBUG 11:45:16] root Connecting (5, 4) to (4, 4) with e_(5, 4)_(4, 4)
+[DEBUG 11:45:16] root Connecting (5, 4) to (6, 4) with e_(5, 4)_(6, 4)
+[DEBUG 11:45:16] root Connecting (5, 5) to (4, 5) with e_(5, 5)_(4, 5)
+[DEBUG 11:45:16] root Connecting (5, 5) to (6, 5) with e_(5, 5)_(6, 5)
+[DEBUG 11:45:16] root Connecting (5, 6) to (4, 6) with e_(5, 6)_(4, 6)
+[DEBUG 11:45:16] root Connecting (5, 6) to (6, 6) with e_(5, 6)_(6, 6)
+[DEBUG 11:45:16] root Connecting (5, 7) to (4, 7) with e_(5, 7)_(4, 7)
+[DEBUG 11:45:16] root Connecting (5, 7) to (6, 7) with e_(5, 7)_(6, 7)
+[DEBUG 11:45:16] root Connecting (5, 8) to (4, 8) with e_(5, 8)_(4, 8)
+[DEBUG 11:45:16] root Connecting (5, 8) to (6, 8) with e_(5, 8)_(6, 8)
+[DEBUG 11:45:16] root Connecting (5, 9) to (4, 9) with e_(5, 9)_(4, 9)
+[DEBUG 11:45:16] root Connecting (5, 9) to (6, 9) with e_(5, 9)_(6, 9)
+[DEBUG 11:45:16] root Connecting (6, 0) to (5, 0) with e_(6, 0)_(5, 0)
+[DEBUG 11:45:16] root Connecting (6, 0) to (7, 0) with e_(6, 0)_(7, 0)
+[DEBUG 11:45:16] root Connecting (6, 1) to (5, 1) with e_(6, 1)_(5, 1)
+[DEBUG 11:45:16] root Connecting (6, 1) to (7, 1) with e_(6, 1)_(7, 1)
+[DEBUG 11:45:16] root Connecting (6, 2) to (5, 2) with e_(6, 2)_(5, 2)
+[DEBUG 11:45:16] root Connecting (6, 2) to (7, 2) with e_(6, 2)_(7, 2)
+[DEBUG 11:45:16] root Connecting (6, 3) to (5, 3) with e_(6, 3)_(5, 3)
+[DEBUG 11:45:16] root Connecting (6, 3) to (7, 3) with e_(6, 3)_(7, 3)
+[DEBUG 11:45:16] root Connecting (6, 4) to (5, 4) with e_(6, 4)_(5, 4)
+[DEBUG 11:45:16] root Connecting (6, 4) to (7, 4) with e_(6, 4)_(7, 4)
+[DEBUG 11:45:16] root Connecting (6, 5) to (5, 5) with e_(6, 5)_(5, 5)
+[DEBUG 11:45:16] root Connecting (6, 5) to (7, 5) with e_(6, 5)_(7, 5)
+[DEBUG 11:45:16] root Connecting (6, 6) to (5, 6) with e_(6, 6)_(5, 6)
+[DEBUG 11:45:16] root Connecting (6, 6) to (7, 6) with e_(6, 6)_(7, 6)
+[DEBUG 11:45:16] root Connecting (6, 7) to (5, 7) with e_(6, 7)_(5, 7)
+[DEBUG 11:45:16] root Connecting (6, 7) to (7, 7) with e_(6, 7)_(7, 7)
+[DEBUG 11:45:16] root Connecting (6, 8) to (5, 8) with e_(6, 8)_(5, 8)
+[DEBUG 11:45:16] root Connecting (6, 8) to (7, 8) with e_(6, 8)_(7, 8)
+[DEBUG 11:45:16] root Connecting (6, 9) to (5, 9) with e_(6, 9)_(5, 9)
+[DEBUG 11:45:16] root Connecting (6, 9) to (7, 9) with e_(6, 9)_(7, 9)
+[DEBUG 11:45:16] root Connecting (7, 0) to (6, 0) with e_(7, 0)_(6, 0)
+[DEBUG 11:45:16] root Connecting (7, 0) to (8, 0) with e_(7, 0)_(8, 0)
+[DEBUG 11:45:16] root Connecting (7, 1) to (6, 1) with e_(7, 1)_(6, 1)
+[DEBUG 11:45:16] root Connecting (7, 1) to (8, 1) with e_(7, 1)_(8, 1)
+[DEBUG 11:45:16] root Connecting (7, 2) to (6, 2) with e_(7, 2)_(6, 2)
+[DEBUG 11:45:16] root Connecting (7, 2) to (8, 2) with e_(7, 2)_(8, 2)
+[DEBUG 11:45:16] root Connecting (7, 3) to (6, 3) with e_(7, 3)_(6, 3)
+[DEBUG 11:45:16] root Connecting (7, 3) to (8, 3) with e_(7, 3)_(8, 3)
+[DEBUG 11:45:16] root Connecting (7, 4) to (6, 4) with e_(7, 4)_(6, 4)
+[DEBUG 11:45:16] root Connecting (7, 4) to (8, 4) with e_(7, 4)_(8, 4)
+[DEBUG 11:45:16] root Connecting (7, 5) to (6, 5) with e_(7, 5)_(6, 5)
+[DEBUG 11:45:16] root Connecting (7, 5) to (8, 5) with e_(7, 5)_(8, 5)
+[DEBUG 11:45:16] root Connecting (7, 6) to (6, 6) with e_(7, 6)_(6, 6)
+[DEBUG 11:45:16] root Connecting (7, 6) to (8, 6) with e_(7, 6)_(8, 6)
+[DEBUG 11:45:16] root Connecting (7, 7) to (6, 7) with e_(7, 7)_(6, 7)
+[DEBUG 11:45:16] root Connecting (7, 7) to (8, 7) with e_(7, 7)_(8, 7)
+[DEBUG 11:45:16] root Connecting (7, 8) to (6, 8) with e_(7, 8)_(6, 8)
+[DEBUG 11:45:16] root Connecting (7, 8) to (8, 8) with e_(7, 8)_(8, 8)
+[DEBUG 11:45:16] root Connecting (7, 9) to (6, 9) with e_(7, 9)_(6, 9)
+[DEBUG 11:45:16] root Connecting (7, 9) to (8, 9) with e_(7, 9)_(8, 9)
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4']
+Goal states {'agent_0': '(9, 6)', 'agent_1': '(9, 4)', 'agent_2': '(0, 6)', 'agent_3': '(5, 4)', 'agent_4': '(5, 7)'} 
+Initial states {'agent_0': '(0, 6)', 'agent_1': '(0, 4)', 'agent_2': '(9, 6)', 'agent_3': '(0, 9)', 'agent_4': '(0, 0)'}
+[DEBUG 11:45:16] root Connecting (8, 0) to (7, 0) with e_(8, 0)_(7, 0)
+[DEBUG 11:45:16] root Connecting (8, 0) to (9, 0) with e_(8, 0)_(9, 0)
+[DEBUG 11:45:16] root Connecting (8, 1) to (7, 1) with e_(8, 1)_(7, 1)
+[DEBUG 11:45:16] root Connecting (8, 1) to (9, 1) with e_(8, 1)_(9, 1)
+[DEBUG 11:45:16] root Connecting (8, 2) to (7, 2) with e_(8, 2)_(7, 2)
+[DEBUG 11:45:16] root Connecting (8, 2) to (9, 2) with e_(8, 2)_(9, 2)
+[DEBUG 11:45:16] root Connecting (8, 3) to (7, 3) with e_(8, 3)_(7, 3)
+[DEBUG 11:45:16] root Connecting (8, 3) to (9, 3) with e_(8, 3)_(9, 3)
+[DEBUG 11:45:16] root Connecting (8, 4) to (7, 4) with e_(8, 4)_(7, 4)
+[DEBUG 11:45:16] root Connecting (8, 4) to (9, 4) with e_(8, 4)_(9, 4)
+[DEBUG 11:45:16] root Connecting (8, 5) to (7, 5) with e_(8, 5)_(7, 5)
+[DEBUG 11:45:16] root Connecting (8, 5) to (9, 5) with e_(8, 5)_(9, 5)
+[DEBUG 11:45:16] root Connecting (8, 6) to (7, 6) with e_(8, 6)_(7, 6)
+[DEBUG 11:45:16] root Connecting (8, 6) to (9, 6) with e_(8, 6)_(9, 6)
+[DEBUG 11:45:16] root Connecting (8, 7) to (7, 7) with e_(8, 7)_(7, 7)
+[DEBUG 11:45:16] root Connecting (8, 7) to (9, 7) with e_(8, 7)_(9, 7)
+[DEBUG 11:45:16] root Connecting (8, 8) to (7, 8) with e_(8, 8)_(7, 8)
+[DEBUG 11:45:16] root Connecting (8, 8) to (9, 8) with e_(8, 8)_(9, 8)
+[DEBUG 11:45:16] root Connecting (8, 9) to (7, 9) with e_(8, 9)_(7, 9)
+[DEBUG 11:45:16] root Connecting (8, 9) to (9, 9) with e_(8, 9)_(9, 9)
+[DEBUG 11:45:16] root Connecting (9, 0) to (8, 0) with e_(9, 0)_(8, 0)
+[DEBUG 11:45:16] root Connecting (9, 0) to (9, 1) with e_(9, 0)_(9, 1)
+[DEBUG 11:45:16] root Connecting (9, 1) to (8, 1) with e_(9, 1)_(8, 1)
+[DEBUG 11:45:16] root Connecting (9, 1) to (9, 0) with e_(9, 1)_(9, 0)
+[DEBUG 11:45:16] root Connecting (9, 1) to (9, 2) with e_(9, 1)_(9, 2)
+[DEBUG 11:45:16] root Connecting (9, 2) to (8, 2) with e_(9, 2)_(8, 2)
+[DEBUG 11:45:16] root Connecting (9, 2) to (9, 1) with e_(9, 2)_(9, 1)
+[DEBUG 11:45:16] root Connecting (9, 2) to (9, 3) with e_(9, 2)_(9, 3)
+[DEBUG 11:45:16] root Connecting (9, 3) to (8, 3) with e_(9, 3)_(8, 3)
+[DEBUG 11:45:16] root Connecting (9, 3) to (9, 2) with e_(9, 3)_(9, 2)
+[DEBUG 11:45:16] root Connecting (9, 3) to (9, 4) with e_(9, 3)_(9, 4)
+[DEBUG 11:45:16] root Connecting (9, 4) to (8, 4) with e_(9, 4)_(8, 4)
+[DEBUG 11:45:16] root Connecting (9, 4) to (9, 3) with e_(9, 4)_(9, 3)
+[DEBUG 11:45:16] root Connecting (9, 4) to (9, 5) with e_(9, 4)_(9, 5)
+[DEBUG 11:45:16] root Connecting (9, 5) to (8, 5) with e_(9, 5)_(8, 5)
+[DEBUG 11:45:16] root Connecting (9, 5) to (9, 4) with e_(9, 5)_(9, 4)
+[DEBUG 11:45:16] root Connecting (9, 5) to (9, 6) with e_(9, 5)_(9, 6)
+[DEBUG 11:45:16] root Connecting (9, 6) to (8, 6) with e_(9, 6)_(8, 6)
+[DEBUG 11:45:16] root Connecting (9, 6) to (9, 5) with e_(9, 6)_(9, 5)
+[DEBUG 11:45:16] root Connecting (9, 6) to (9, 7) with e_(9, 6)_(9, 7)
+[DEBUG 11:45:16] root Connecting (9, 7) to (8, 7) with e_(9, 7)_(8, 7)
+[DEBUG 11:45:16] root Connecting (9, 7) to (9, 6) with e_(9, 7)_(9, 6)
+[DEBUG 11:45:16] root Connecting (9, 7) to (9, 8) with e_(9, 7)_(9, 8)
+[DEBUG 11:45:16] root Connecting (9, 8) to (8, 8) with e_(9, 8)_(8, 8)
+[DEBUG 11:45:16] root Connecting (9, 8) to (9, 7) with e_(9, 8)_(9, 7)
+[DEBUG 11:45:16] root Connecting (9, 8) to (9, 9) with e_(9, 8)_(9, 9)
+[DEBUG 11:45:16] root Connecting (9, 9) to (8, 9) with e_(9, 9)_(8, 9)
+[DEBUG 11:45:16] root Connecting (9, 9) to (9, 8) with e_(9, 9)_(9, 8)
+[INFO 11:45:16] my_main Running Camas time limited episodes with a limit of 300
+[DEBUG 11:45:16] my_main Buffer scheme: {'state': {'vshape': (5,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 5}
+[INFO 11:45:18] my_main Beginning training for 15010000 timesteps
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  /Users/runner/miniforge3/conda-bld/pytorch-recipe_1643121251270/work/torch/csrc/utils/tensor_new.cpp:201.)
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/Users/alexrutherford/repos/pymarl/src/components/episode_buffer.py:117: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 11:45:19] my_main t_env: 483 / 15010000
+[INFO 11:45:19] my_main Estimated time left: 13 minutes, 0 seconds. Time passed: 1 seconds
+av test time: 364.019827181334 (178.04264158451727), av step count 180.5625 (93.18359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 11:45:29] my_main Saving models to results/models/qmix__2022-03-27_11-45-09/483
