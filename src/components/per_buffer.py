@@ -87,8 +87,15 @@ class PERBuffer(EpisodeBatch):
                         self.origin_reward_idx = th.argmin(self.og_reward)
                         self.offset = -1*self.og_reward[self.origin_reward_idx].item()
                         self.og_reward = self.og_reward + self.offset
+                        
+                        self.reward_sum = th.pow(self.og_reward + self.per_epsilon, self.per_alpha)
+                        self.max_reward_idx = th.argmax(self.reward_sum)
+                        self.max_reward_sum = self.reward_sum[self.max_reward_idx]
+                        self.pvalues = deepcopy(self.reward_sum)
+                        self.pvalues[(self.e_sampled == 0).nonzero()] = self.max_reward_sum
                     
-                    self.reward_sum[self.buffer_index] = (self.og_reward[self.buffer_index] + self.per_epsilon)**self.per_alpha
+                    else:
+                        self.reward_sum[self.buffer_index] = (self.og_reward[self.buffer_index] + self.per_epsilon)**self.per_alpha
                 
             else:
                 assert reward >= 0, "reward must be positive"
@@ -97,7 +104,7 @@ class PERBuffer(EpisodeBatch):
             if self.buffer_index == self.max_reward_idx:  # update max reward if current is overwritten
                 self.max_reward_idx = th.argmax(self.reward_sum)
                 self.max_reward_sum = self.reward_sum[self.max_reward_idx]
-                #self.pvalues[(self.e_sampled == 0).nonzero()] = self.max_reward_sum -- not sure whether we do this
+                # do we then scale the max p values... 
                 
             if self.reward_sum[self.buffer_index] > self.max_reward_sum:
                 self.max_reward_sum = self.reward_sum[self.buffer_index]
