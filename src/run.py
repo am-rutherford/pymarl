@@ -77,6 +77,8 @@ def run_sequential(args, logger):
 
     # Init runner so we can get env info
     runner = r_REGISTRY[args.runner](args=args, logger=logger)
+    
+    if args.train_twice: print('** Training twice after each episode **')
 
     # Set up schemes and groups here
     env_info = runner.get_env_info()
@@ -189,6 +191,22 @@ def run_sequential(args, logger):
                 episode_sample.to(args.device)
 
             learner.train(episode_sample, runner.t_env, episode)
+            
+            ## train again on a new sample if specified
+            if args.train_twice:
+                if args.prioritised_replay:
+                    episode_sample = buffer.sample(args.batch_size, runner.t_env)
+                else:
+                    episode_sample = buffer.sample(args.batch_size)
+
+                # Truncate batch to only filled timesteps
+                max_ep_t = episode_sample.max_t_filled()
+                episode_sample = episode_sample[:, :max_ep_t]
+
+                if episode_sample.device != args.device:
+                    episode_sample.to(args.device)
+
+                learner.train(episode_sample, runner.t_env, episode)
 
         # Execute test runs once in a while
         n_test_runs = max(1, args.test_nepisode // runner.batch_size)
