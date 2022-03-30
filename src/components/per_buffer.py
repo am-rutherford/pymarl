@@ -171,7 +171,8 @@ class PERBuffer(EpisodeBatch):
                 if not self.e_sampled[i]:
                     self.pvalues[i] = self.reward_sum[i]
                     self.e_sampled[i] = 1
-                self.sample_count[i+(self.buffer_counter-self.episodes_in_buffer)] += 1
+                sample_idx = self.buffer_counter - (self.episodes_in_buffer+self.buffer_index-i)%self.episodes_in_buffer
+                self.sample_count[sample_idx] += 1
             return self[ep_ids]        
 
     def __repr__(self):
