@@ -1,7 +1,8 @@
+from sympy import EX
 import torch as th
 import numpy as np
 from types import SimpleNamespace as SN
-
+from copy import deepcopy
 
 class EpisodeBatch:
 
@@ -224,6 +225,10 @@ class ReplayBuffer(EpisodeBatch):
         self.buffer_size = buffer_size  # same as self.batch_size but more explicit
         self.buffer_index = 0
         self.episodes_in_buffer = 0
+        
+        self.buffer_counter = 0
+        self.reward_sum_record = {}
+        self.sample_count = {}
 
     def insert_episode_batch(self, ep_batch):
         if self.buffer_index + ep_batch.batch_size <= self.buffer_size:
@@ -237,7 +242,11 @@ class ReplayBuffer(EpisodeBatch):
             self.episodes_in_buffer = max(self.episodes_in_buffer, self.buffer_index)
             self.buffer_index = self.buffer_index % self.buffer_size
             assert self.buffer_index < self.buffer_size
+            self.reward_sum_record[self.buffer_counter] = th.sum(ep_batch["reward"])
+            self.buffer_counter += ep_batch.batch_size
+            self.sample_count[self.buffer_counter] = 0
         else:
+            print(f' -- Uneaven entry to buffer -- ')
             buffer_left = self.buffer_size - self.buffer_index
             self.insert_episode_batch(ep_batch[0:buffer_left, :])
             self.insert_episode_batch(ep_batch[buffer_left:, :])
@@ -252,6 +261,13 @@ class ReplayBuffer(EpisodeBatch):
         else:
             # Uniform sampling only atm
             ep_ids = np.random.choice(self.episodes_in_buffer, batch_size, replace=False)
+            for i in ep_ids:
+                sample_idx = self.buffer_counter - (self.episodes_in_buffer+self.buffer_index-i)%self.episodes_in_buffer
+                try:
+                    self.sample_count[sample_idx] += 1
+                except KeyError:
+                    print(f'sample idx {sample_idx}, i {i}, buffer_counter {self.buffer_counter}, episodes_in_buffer {self.episodes_in_buffer}, buffer_index {self.buffer_index}')
+                    raise Exception()
             return self[ep_ids]
 
     def __repr__(self):
@@ -260,3 +276,14 @@ class ReplayBuffer(EpisodeBatch):
                                                                         self.scheme.keys(),
                                                                         self.groups.keys())
 
+def save_buffer_logs(buffer, path):
+    """ Saves PER distributions within the directory specified by `path`. 
+    Path should not specify the file name.
+    """
+    print(f'saving buffer (not PER) objects to {path}')
+    reward_sum_record = deepcopy(buffer.reward_sum_record)
+    e_sampled = deepcopy(buffer.sample_count)
+    
+    th.save({"reward_sum_record": reward_sum_record, 
+             "sample_count": e_sampled,}, 
+            "{}/per_objs.th".format(path))

@@ -150,7 +150,7 @@ class RenderEpisodeRunner:
                 continue 
         print('aevents', aevents)
 
-        animate_des(self.env._tm, aevents, rc, rs) # current starts from teh second node visited
+        animate_des(self.env._tm, aevents, rc, rs, starts_and_ends=self.env.map_param("initial")) # current starts from teh second node visited
 
         #env._tm.draw()
         plt.show()

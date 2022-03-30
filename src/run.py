@@ -13,7 +13,7 @@ import numpy as np
 from learners import REGISTRY as le_REGISTRY
 from runners import REGISTRY as r_REGISTRY
 from controllers import REGISTRY as mac_REGISTRY
-from components.episode_buffer import ReplayBuffer
+from components.episode_buffer import ReplayBuffer, save_buffer_logs
 from components.per_buffer import PERBuffer, save_per_distributions
 from components.transforms import OneHot
 
@@ -244,6 +244,8 @@ def run_sequential(args, logger):
             learner.save_models(save_path)
             if args.prioritised_replay:
                 save_per_distributions(buffer, save_path)
+            else:
+                save_buffer_logs(buffer, save_path)
 
         episode += args.batch_size_run
 

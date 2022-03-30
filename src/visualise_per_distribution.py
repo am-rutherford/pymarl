@@ -167,7 +167,17 @@ def run(model_id):
     #fig.update_yaxes(title_text="yaxis 4 title", row=2, col=2)
 
     fig.show()  
-
+    
+    fig2 = go.Figure()
+    fig2.add_trace(
+            go.Scatter(
+                visible=True,
+                line=dict(color="#00CED1", width=1),
+                name="sample count",
+                y=list(per_data[max(timesteps)]["sample_count"].values()),
+            ),
+            )
+    fig2.show()
 
 
 def old_code(per_data):
@@ -245,7 +255,11 @@ if __name__ == "__main__":
     model_id = "qmix__2022-03-22_22-54-53" # bug fix lol lol
     model_id = "qmix__2022-03-23_10-59-42" # bruno
     model_id = "qmix__2022-03-23_11-47-25" # warehouse-midd`le
-    model_id = "qmix__2022-03-24_00-24-47"    
+    model_id = "qmix__2022-03-24_00-24-47"   
+    model_id = "qmix__2022-03-23_18-35-08" 
+    model_id = "qmix__2022-03-28_13-47-25"
+    model_id = "qmix__2022-03-29_10-19-01"
+    
     run(model_id)
     
     

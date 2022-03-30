@@ -67,8 +67,7 @@ class SSS_Runner(AsyncEpisodeRunner):
     
     debug = False
     
-    
-    def __init__(self, args, logger, epsilon_mean=0.3, epsilon_var=0.05):
+    def __init__(self, args, logger, epsilon_mean=0.15, epsilon_var=0.1):
         super().__init__(args, logger)
         
         self.epsilon_mean = epsilon_mean
@@ -179,7 +178,12 @@ class SSS_Runner(AsyncEpisodeRunner):
         return acts
     
     def _draw_epsilon(self):
-        return np.random.normal(self.epsilon_mean, self.epsilon_var)
+        epsilon = np.random.normal(self.epsilon_mean, self.epsilon_var)
+        if epsilon < 0: epsilon = 0
+        return epsilon
+    
+    def episode_makespan(self):
+        return self.env.sim_time()
     
 
 def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=20, log_freq=2000):
@@ -257,14 +261,25 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=2
     if args.use_cuda:
         learner.cuda()
     
+    ## --- Gather Data ---
     logger.console_logger.info(f'...gathering data...')
+    ep_rewards = np.zeros(num_episodes)
+    ep_epsilons = np.zeros(num_episodes)
+    ep_times = np.zeros(num_episodes)
+    ep_step_count = np.zeros(num_episodes)
     for k in range(num_episodes):
         
         episode_batch = sss_runner.run()
         buffer.insert_episode_batch(episode_batch)
+        ep_rewards[k] = th.sum(episode_batch["reward"])
+        ep_epsilons[k] = sss_runner.epsilon
+        ep_times[k] = sss_runner.episode_makespan()
+        ep_step_count[k] = sss_runner.t
         if k % log_freq == 0:
-            logger.console_logger.info(f'...{i} episodes complete...')
+            logger.console_logger.info(f'...{k} episodes complete...')
+    save_curriculum_data([ep_rewards, ep_epsilons, ep_times, ep_step_count])
     
+    ## --- Train Network ---
     logger.console_logger.info(f'...training network...')
     for i in range(train_steps):
         episode_sample = buffer.sample(args.batch_size)
@@ -317,9 +332,15 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=2
     # Save config
     with open(os.path.join(save_path, "config.yaml"), 'w') as outp:  # NOTE this has not been tested
         yaml.dump(args, outp)
+        
+
+def save_curriculum_data(array_to_save):
+    save_path = os.path.join(args.local_results_path, "curriculum", "ep_data", args.unique_token)
+    os.makedirs(save_path, exist_ok=True)
+    np.save('{}/ep_data.npy'.format(save_path), array_to_save, allow_pickle=True)
     
     
-def mean_sss_time(args, logger,  num_episodes, epsilon):
+def mean_sss_time(args, logger,  num_episodes, epsilon_mean):
     """Runs a PyMARL-Camas map using an epsilon greedy shortest path policy
 
     Args:
@@ -329,7 +350,7 @@ def mean_sss_time(args, logger,  num_episodes, epsilon):
     print(' -- Env args', args.env_args)
     start_time = time.time()
     
-    sss_runner = SSS_Runner(args, logger, epsilon=epsilon)
+    sss_runner = SSS_Runner(args, logger, epsilon_mean=epsilon_mean, epsilon_var=0.0)
     
     # Set up schemes and groups
     env_info = sss_runner.get_env_info()
@@ -368,18 +389,17 @@ def mean_sss_time(args, logger,  num_episodes, epsilon):
     if args.use_cuda:
         learner.cuda()
     
-    logger.console_logger.info(f'...running {num_episodes} episodes...')
+    logger.console_logger.info(f'...running {num_episodes*2} episodes...')
     episode_times = []
     step_count = []
-    for i in range(num_episodes):
+    for i in range(num_episodes*2):
         _ = sss_runner.run()
         episode_times.append(sss_runner.env.sim_time())
         step_count.append(sss_runner.t)
         if i % 50 == 0:
             logger.console_logger.info(f'...{i} episodes complete...')
         
-    print(f'Mean sim time for {num_episodes} and an epsilon of {epsilon}: {np.mean(episode_times)} ({np.var(episode_times)}), \
-        mean step count {np.mean(step_count)} ({np.var(step_count)})')    
+    print(f'Mean sim time for {num_episodes*2} on {args.env_args["map_name"]} and an epsilon of {epsilon_mean}: {np.mean(episode_times)} ({np.var(episode_times)}), mean step count {np.mean(step_count)} ({np.var(step_count)})')    
     return np.mean(episode_times), np.mean(step_count)
     
 
@@ -390,8 +410,8 @@ def load_default_params(map_name="bruno"):
     
 if __name__ == "__main__":
 
-    num_episodes = 10000
-    train_steps = 40000
+    num_episodes = 30000
+    train_steps = 50000
     test_episodes = 40
     
     console_logger = getLogger()
@@ -405,9 +425,11 @@ if __name__ == "__main__":
     unique_token = "curriculum_{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     args.unique_token = unique_token
         
-    #mean_sss_time(args, logger, 100, 0)
-    
-    run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes, log_freq=5000)
+    #mean_sss_time(args, logger, 50, 0.8)
+    if num_episodes > args.buffer_size:
+        args.buffer_size = num_episodes
+        
+    run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes, log_freq=10000)
     
 
 
