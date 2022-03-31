@@ -1,4 +1,5 @@
 from json import load
+from time import time
 import yaml
 import os
 import logging
@@ -30,8 +31,31 @@ def _get_(params, arg_name, subfolder):
                 assert False, "{}.yaml error: {}".format(config_name, exc)
         return config_dict
 
+def load_per_objs(model_id):
+    ## load data
+    load_path = os.path.join(os.getcwd(), "results", "models", model_id)
+    if not os.path.isdir(load_path):
+        #logger.console_logger.info("Checkpoint directiory {} doesn't exist".format(args.checkpoint_path))
+        #print(f'{load_path} does not exist')
+        raise Exception(f'{load_path} does not exist')
 
-def run(model_id):
+    # Go through all files in model directory
+    all_timesteps = []
+    for name in os.listdir(load_path):
+        full_name = os.path.join(load_path, name)
+        # Check if they are dirs the names of which are numbers
+        if os.path.isdir(full_name) and name.isdigit():
+            all_timesteps.append(int(name))
+    all_timesteps.sort()
+    timesteps = all_timesteps[1:]
+    t_max = max(timesteps)
+    per_data = {}
+    for t in timesteps:
+        model_path = os.path.join(load_path, str(t))
+        per_data[t] = th.load(os.path.join(model_path, "per_objs.th"))
+    return per_data, timesteps
+
+def run_per(model_id):
     
     def _process_buffer(_per_data, _buffer_size):
         data = {}
@@ -65,29 +89,9 @@ def run(model_id):
     buffer_size = 5000
     
     ## load data
-    load_path = os.path.join(os.getcwd(), "results", "models", model_id)
-    if not os.path.isdir(load_path):
-        #logger.console_logger.info("Checkpoint directiory {} doesn't exist".format(args.checkpoint_path))
-        print(f'{load_path} does not exist')
-        return
-
-    # Go through all files in model directory
-    all_timesteps = []
-    for name in os.listdir(load_path):
-        full_name = os.path.join(load_path, name)
-        # Check if they are dirs the names of which are numbers
-        if os.path.isdir(full_name) and name.isdigit():
-            all_timesteps.append(int(name))
-    all_timesteps.sort()
-    timesteps = all_timesteps[1:]
+    per_data, timesteps = load_per_objs(model_id)
+    per_proccessed = {t: _process_buffer(per_data[t], buffer_size) for t in timesteps}
     t_max = max(timesteps)
-    per_data = {}
-    per_proccessed = {}
-    for t in timesteps:
-        model_path = os.path.join(load_path, str(t))
-        per_data[t] = th.load(os.path.join(model_path, "per_objs.th"))
-        per_proccessed[t] = _process_buffer(per_data[t], buffer_size)
-    
     print('per_data loaded. Keys:', per_data[t_max].keys(), ' epsiodes:', len(per_data[t_max]["reward_sum_record"]))
 
     ## PLOTLY
@@ -179,6 +183,81 @@ def run(model_id):
             )
     fig2.show()
 
+def run_regular(model_id):
+    
+    def _process_data(_data):
+        pdata = {}
+        pdata["rsum_record"] = th.stack(list(_data["reward_sum_record"].values())).cpu().detach().numpy().flatten()
+        pdata["sample_count"] = np.array(list(_data["sample_count"].values()))
+        return pdata
+    
+    buffer_data, timesteps = load_per_objs(model_id)
+    processed_data = {t: _process_data(buffer_data[t]) for t in timesteps}
+    
+    print(f'data {buffer_data[max(timesteps)].keys()}')
+    
+    fig = make_subplots(2, 1,
+                        subplot_titles=("Plot 1", "Plot 2"))
+    
+    # Add traces, one for each slider step     
+    for t in timesteps:
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                #line=dict(color="#00CED1", width=1),
+                mode='markers',
+                name="timestep: " + str(t),
+                y=processed_data[t]["rsum_record"],
+            ),
+            row=1,
+            col=1,
+        )
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                #line=dict(color="#d12600", width=1),
+                mode='markers',
+                name="timestep: " + str(t),
+                y=processed_data[t]["sample_count"],
+            ),
+            row=2,
+            col=1,
+        )
+        
+    # Make 1st trace visible
+    fig.data[0].visible = True
+    fig.data[1].visible = True
+
+    # Create and add slider
+    steps = []
+    for i in range(len(timesteps)):
+        step = dict(
+            method="update",
+            args=[{"visible": [False] * len(fig.data)},
+                {"title": "Slider switched to timestep: " + str(timesteps[i])}],  # layout attribute
+        )
+        step["args"][0]["visible"][2*i] = True  # Toggle i'th trace to "visible"
+        step["args"][0]["visible"][2*i+1] = True
+        steps.append(step)
+
+    sliders = [dict(
+        active=1,
+        currentvalue={"prefix": "Timestep: "},
+        pad={"t": 50},
+        steps=steps
+    )]
+
+    fig.update_layout(
+        sliders=sliders
+    )
+    rmin = min(processed_data[max(timesteps)]["rsum_record"])
+    rmax = max(processed_data[max(timesteps)]["rsum_record"])*1.1
+    #rmax = max([max(processed_data[t]["rsum_record"]) for t in timesteps])*1.1
+    fig.update_yaxes(title_text="yaxis 1 title", range=[rmin, rmax], row=1, col=1)
+    fig.update_yaxes(title_text="yaxis 3 title", range=[0, max(list(processed_data[max(timesteps)]["sample_count"]))*1.1], row=2, col=1)
+    #fig.update_yaxes(title_text="yaxis 4 title", row=2, col=2)
+
+    fig.show()  
 
 def old_code(per_data):
      ## Process data
@@ -260,6 +339,8 @@ if __name__ == "__main__":
     model_id = "qmix__2022-03-28_13-47-25"
     model_id = "qmix__2022-03-29_10-19-01"
     
-    run(model_id)
-    
+    #run_per(model_id)
+    model_id = "qmix__2022-03-30_11-03-11"
+    model_id = "qmix__2022-03-29_10-19-01"
+    run_regular(model_id)
     

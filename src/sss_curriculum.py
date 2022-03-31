@@ -14,10 +14,10 @@ from sympy import EX
 import yaml
 import torch as th
 from types import SimpleNamespace as SN
-from utils.logging import Logger
+from utils.logging import Logger, log_mac_weights
 import numpy as np
 import random
-from logging import getLogger
+from logging import getLogger, INFO
 from rapport_topological.navigation import construct_shortest_path_policy
 from rapport_models.markov.state import State
 from learners import REGISTRY as le_REGISTRY
@@ -186,13 +186,22 @@ class SSS_Runner(AsyncEpisodeRunner):
         return self.env.sim_time()
     
 
-def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=20, log_freq=2000):
+def run_sss_curriculum(args,
+                       logger,
+                       num_episodes,
+                       max_train_steps,
+                       test_makespan_cutoff,
+                       test_episodes=20,
+                       epsilon_mean=0.25,
+                       epsilon_var=0.15,
+                       log_freq=10000,
+                       agent_weight_log_freq=20000):
     """Trains a PyMARL method using shortest path experiences and saves the result 
     to the results/model directory
 
     Args:
         num_episodes (int): number of experience episodes to gather
-        train_steps (int): number of steps to train the model for
+        max_train_steps (int): number of steps to train the model for
         test_episodes (int): number of episodes to evaluate the model on once training is complete
     """
     
@@ -222,7 +231,7 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=2
     args.learner_log_interval = log_freq
     
     main_runner = r_REGISTRY[args.runner](args=args, logger=logger)    
-    sss_runner = SSS_Runner(args, logger)
+    sss_runner = SSS_Runner(args, logger, epsilon_mean=epsilon_mean, epsilon_var=epsilon_var)
     
     # Set up schemes and groups
     env_info = sss_runner.get_env_info()
@@ -278,10 +287,11 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=2
         if k % log_freq == 0:
             logger.console_logger.info(f'...{k} episodes complete...')
     save_curriculum_data([ep_rewards, ep_epsilons, ep_times, ep_step_count])
+    data_gathering_time = time.time() - start_time
     
     ## --- Train Network ---
     logger.console_logger.info(f'...training network...')
-    for i in range(train_steps):
+    for i in range(max_train_steps):
         episode_sample = buffer.sample(args.batch_size)
 
         # Truncate batch to only filled timesteps
@@ -300,27 +310,28 @@ def run_sss_curriculum(args, logger,  num_episodes, train_steps, test_episodes=2
             logger.log_stat("Test_mean_step_count", np.mean(sc), i)
             logger.log_stat("Test_mean_goal_found", np.mean(gc), i)
             
-            logger.tb_logger_hist("agent fc1 weight", mac.agent.fc1.weight.detach().numpy(), i)
-            logger.tb_logger_hist("agent fc1 bias", mac.agent.fc1.bias.detach().numpy(), i)
-            logger.tb_logger_hist("agent gru ih weight", mac.agent.rnn.weight_ih.detach().numpy(), i)
-            logger.tb_logger_hist("agent gru ih bias", mac.agent.rnn.bias_ih.detach().numpy(), i)
-            logger.tb_logger_hist("agent gru hh weight", mac.agent.rnn.weight_hh.detach().numpy(), i)
-            logger.tb_logger_hist("agent gru hh bias", mac.agent.rnn.bias_hh.detach().numpy(), i)
-            logger.tb_logger_hist("agent fc2 weight", mac.agent.fc2.weight.detach().numpy(), i)
-            logger.tb_logger_hist("agent fc2 bias", mac.agent.fc2.bias.detach().numpy(), i)        
+            if np.mean(tt) < test_makespan_cutoff:
+                tt, _, _ = _test_env(main_runner, test_episodes)
+                if np.mean(tt) < test_makespan_cutoff:
+                    logger.console_logger.info(f'Training passed evaluation at step {i}. Mean makespan: {np.mean(tt)}, cutoff: {test_makespan_cutoff}')
+                    break
+        
+        if i % agent_weight_log_freq == 0:
+            log_mac_weights(logger, mac, i)
     
     tdelta = time.time()-start_time
     logger.console_logger.info(f'...time taken for training: {datetime.timedelta(seconds=tdelta)}...')
+    logger.console_logger.info(f'...time taken for data gathering: {datetime.timedelta(seconds=data_gathering_time)}...')
     
-    # Evaluate trained agent
-    logger.console_logger.info(f'...evaluating...')
+    ## --- Evaluate final agent ---
+    logger.console_logger.info(f'...evaluating final agent...')
     tt, sc, gc = _test_env(main_runner, test_episodes)
     logger.log_stat("Test_mean_sim_time", np.mean(tt), i)
     logger.log_stat("Test_mean_step_count", np.mean(sc), i)
     logger.log_stat("Test_mean_goal_found", np.mean(gc), i)
     logger.console_logger.info(f'-- evaluation av test time: {np.mean(tt)} ({np.var(tt)}), av step count {np.mean(sc)} ({np.var(sc)}), percentage at goal {np.mean(gc)} ({np.var(gc)}), {len(sc)} episodes')
     
-    logger.console_logger.info('...saving  model...')
+    logger.console_logger.info('...saving model...')
     save_path = os.path.join("curriculum", args.unique_token, str(main_runner.t_env))
     os.makedirs(save_path, exist_ok=True)
     logger.console_logger.info("Saving models to {}".format(save_path))
@@ -389,17 +400,20 @@ def mean_sss_time(args, logger,  num_episodes, epsilon_mean):
     if args.use_cuda:
         learner.cuda()
     
-    logger.console_logger.info(f'...running {num_episodes*2} episodes...')
+    logger.console_logger.info(f'...running {num_episodes} episodes...')
     episode_times = []
     step_count = []
-    for i in range(num_episodes*2):
-        _ = sss_runner.run()
+    rewards = []
+    for i in range(num_episodes):
+        batch = sss_runner.run()
         episode_times.append(sss_runner.env.sim_time())
         step_count.append(sss_runner.t)
+        rewards.append(th.sum(batch["reward"]))
         if i % 50 == 0:
             logger.console_logger.info(f'...{i} episodes complete...')
         
-    print(f'Mean sim time for {num_episodes*2} on {args.env_args["map_name"]} and an epsilon of {epsilon_mean}: {np.mean(episode_times)} ({np.var(episode_times)}), mean step count {np.mean(step_count)} ({np.var(step_count)})')    
+    print(f'Mean sim time for {num_episodes} on {args.env_args["map_name"]} and an epsilon of {epsilon_mean}: {np.mean(episode_times)} ({np.var(episode_times)})')
+    print(f'mean step count {np.mean(step_count)} ({np.var(step_count)}), mean reward: {np.mean(rewards)} ({np.var(rewards)})')    
     return np.mean(episode_times), np.mean(step_count)
     
 
@@ -410,9 +424,10 @@ def load_default_params(map_name="bruno"):
     
 if __name__ == "__main__":
 
-    num_episodes = 30000
-    train_steps = 50000
-    test_episodes = 40
+    num_episodes = 20000
+    train_steps_max = 100000
+    test_episodes = 20
+    test_makespan_cutoff = 20
     
     console_logger = getLogger()
     logger = Logger(console_logger)
@@ -422,14 +437,18 @@ if __name__ == "__main__":
     args.use_cuda = False
     args.device = "cuda" if args.use_cuda else "cpu"
     
-    unique_token = "curriculum_{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
-    args.unique_token = unique_token
-        
-    #mean_sss_time(args, logger, 50, 0.8)
+    args.unique_token = "curriculum_{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+    
+    #args.batch_size = 64
+    logger.console_logger.setLevel(INFO)
+    
+    mean_sss_time(args, logger, 200, 0.0)
     if num_episodes > args.buffer_size:
         args.buffer_size = num_episodes
+        print(f'Buffer size now {args.buffer_size}')
         
-    run_sss_curriculum(args, logger, num_episodes, train_steps, test_episodes, log_freq=10000)
+    #run_sss_curriculum(args, logger, num_episodes, train_steps_max, test_makespan_cutoff,
+    #                   test_episodes=test_episodes, log_freq=10000, agent_weight_log_freq=20000)
     
 
 

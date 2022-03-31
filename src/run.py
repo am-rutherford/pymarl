@@ -5,7 +5,7 @@ import time
 import threading
 import torch as th
 from types import SimpleNamespace as SN
-from utils.logging import Logger
+from utils.logging import Logger, log_mac_weights
 from utils.timehelper import time_left, time_str
 from os.path import dirname, abspath
 import numpy as np
@@ -246,6 +246,9 @@ def run_sequential(args, logger):
                 save_per_distributions(buffer, save_path)
             else:
                 save_buffer_logs(buffer, save_path)
+                
+            if args.save_mac_weights:
+                log_mac_weights(logger, mac, runner.t_env)
 
         episode += args.batch_size_run
 
