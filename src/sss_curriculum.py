@@ -10,7 +10,7 @@ import datetime
 import os
 from os.path import dirname, abspath
 import time
-from sympy import EX
+#from sympy import EX
 import yaml
 import torch as th
 from types import SimpleNamespace as SN
@@ -429,8 +429,8 @@ def load_default_params(map_name="bruno"):
 if __name__ == "__main__":
 
     ## *** Curriculum specific variables ***
-    num_episodes = 1000
-    train_steps_max = 1000
+    num_episodes = int(6e4)
+    train_steps_max = int(3e5)
     test_episodes = 20
     test_makespan_cutoff = 50
     
@@ -439,13 +439,16 @@ if __name__ == "__main__":
     
     config_dict = load_configs()  # NOTE should sanity check
     args = SN(**config_dict)  # gives attribute access to namespace
-    args.use_cuda = True
+    args.use_cuda = th.cuda.is_available()
     args.device = "cuda" if args.use_cuda else "cpu"
     
     args.unique_token = "curriculum_{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     
     #args.batch_size = 64
     logger.console_logger.setLevel(INFO)
+    if args.prioritised_replay:
+        logger.console_logger.warning('Turning PER off')
+        args.prioritised_replay = False # not implemented
     
     #mean_sss_time(args, logger, 200, 0.0)
     if num_episodes > args.buffer_size:
@@ -453,7 +456,7 @@ if __name__ == "__main__":
         print(f'Buffer size now {args.buffer_size}')
         
     run_sss_curriculum(args, logger, num_episodes, train_steps_max, test_makespan_cutoff,
-                       test_episodes=test_episodes, log_freq=500, agent_weight_log_freq=20000)
+                       test_episodes=test_episodes, log_freq=int(2e4), agent_weight_log_freq=int(4e4))
     
 
 
