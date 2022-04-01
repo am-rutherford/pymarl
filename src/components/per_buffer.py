@@ -23,7 +23,7 @@ class PERBuffer(EpisodeBatch):
         self.buffer_size = buffer_size  # same as self.batch_size but more explicit
         self.buffer_index = 0
         self.episodes_in_buffer = 0
-        self.device = args.device
+        self.device = device
         
         assert (args.per_alpha >= 0) and (args.per_alpha <= 1), "per_alpha is out of bounds, must lie in the range [0, 1]"
         assert args.per_epsilon >= 0, "per_epsilon must be positive"
@@ -66,7 +66,7 @@ class PERBuffer(EpisodeBatch):
         if self.buffer_index + ep_batch.batch_size <= self.buffer_size:  
             ## PER values
             assert ep_batch.batch_size == 1
-            reward = th.sum(ep_batch["reward"])
+            reward = th.sum(ep_batch["reward"]).to(self.device)
             
             if self.use_offset:
                 if reward < -1*self.offset: # reward is lower than any currently in buffer - shift origin
@@ -167,7 +167,7 @@ class PERBuffer(EpisodeBatch):
             
             # Calculate importance sampling weights -- correct for bias introduced
             self.per_beta = self.per_beta_schedule.eval(t)
-            is_weights = th.ones(batch_size, 1, 1) * 1/probs[ep_ids] * 1/self.episodes_in_buffer
+            is_weights = th.ones((batch_size, 1, 1), device=self.device) * 1/probs[ep_ids] * 1/self.episodes_in_buffer
             is_weights = th.pow(is_weights, self.per_beta)
             is_weights = is_weights/th.max(is_weights)  # normalise            
             self.data.transition_data["weights"][ep_ids]= is_weights
