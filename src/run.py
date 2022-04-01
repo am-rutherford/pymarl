@@ -22,6 +22,7 @@ def run(_run, _config, _log):
     _config = args_sanity_check(_config, _log)
     
     args = SN(**_config)  # gives attribute access to namespace
+    args.use_cuda = th.cuda.is_available()
     args.device = "cuda" if args.use_cuda else "cpu"
 
     # setup loggers
