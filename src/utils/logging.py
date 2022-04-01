@@ -67,11 +67,11 @@ def get_logger():
 
 
 def log_mac_weights(logger, mac, idx):
-    logger.tb_logger_hist("agent fc1 weight", mac.agent.fc1.weight.detach().numpy(), idx)
-    logger.tb_logger_hist("agent fc1 bias", mac.agent.fc1.bias.detach().numpy(), idx)
-    logger.tb_logger_hist("agent gru ih weight", mac.agent.rnn.weight_ih.detach().numpy(), idx)
-    logger.tb_logger_hist("agent gru ih bias", mac.agent.rnn.bias_ih.detach().numpy(), idx)
-    logger.tb_logger_hist("agent gru hh weight", mac.agent.rnn.weight_hh.detach().numpy(), idx)
-    logger.tb_logger_hist("agent gru hh bias", mac.agent.rnn.bias_hh.detach().numpy(), idx)
-    logger.tb_logger_hist("agent fc2 weight", mac.agent.fc2.weight.detach().numpy(), idx)
-    logger.tb_logger_hist("agent fc2 bias", mac.agent.fc2.bias.detach().numpy(), idx)   
+    logger.tb_logger_hist("agent fc1 weight", mac.agent.fc1.weight.cpu().detach().numpy(), idx)
+    logger.tb_logger_hist("agent fc1 bias", mac.agent.fc1.bias.cpu().detach().numpy(), idx)
+    logger.tb_logger_hist("agent gru ih weight", mac.agent.rnn.weight_ih.cpu().detach().numpy(), idx)
+    logger.tb_logger_hist("agent gru ih bias", mac.agent.rnn.bias_ih.cpu().detach().numpy(), idx)
+    logger.tb_logger_hist("agent gru hh weight", mac.agent.rnn.weight_hh.cpu().detach().numpy(), idx)
+    logger.tb_logger_hist("agent gru hh bias", mac.agent.rnn.bias_hh.cpu().detach().numpy(), idx)
+    logger.tb_logger_hist("agent fc2 weight", mac.agent.fc2.weight.cpu().detach().numpy(), idx)
+    logger.tb_logger_hist("agent fc2 bias", mac.agent.fc2.bias.cpu().detach().numpy(), idx)   
