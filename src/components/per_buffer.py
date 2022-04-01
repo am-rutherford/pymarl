@@ -53,6 +53,7 @@ class PERBuffer(EpisodeBatch):
         self.buffer_counter = 0
         self.reward_sum_record = {}
         self.sample_count = {}
+        self.buffer_sample_count = {}
 
     def insert_episode_batch(self, ep_batch):
         """Insert episode into replay buffer.
@@ -124,7 +125,11 @@ class PERBuffer(EpisodeBatch):
                 self.reward_sum_record[self.buffer_counter] = th.sum(ep_batch["reward"])
             else:
                 self.reward_sum_record[self.buffer_counter] = (th.sum(ep_batch["reward"]) + self.per_epsilon)**self.per_alpha 
-            self.sample_count[self.buffer_counter] = 0
+            
+            #print(f'buffer idx {self.buffer_index}, ep in buffer {self.episodes_in_buffer}, buffer counter {self.buffer_counter}')
+            if self.buffer_counter >= self.buffer_size:
+                self.sample_count[self.buffer_counter-self.buffer_size] = self.buffer_sample_count[self.buffer_index]
+            self.buffer_sample_count[self.buffer_index] = 0
             self.buffer_counter += ep_batch.batch_size
             
             # increment buffer index
@@ -171,8 +176,7 @@ class PERBuffer(EpisodeBatch):
                 if not self.e_sampled[i]:
                     self.pvalues[i] = self.reward_sum[i]
                     self.e_sampled[i] = 1
-                sample_idx = self.buffer_counter - (self.episodes_in_buffer+self.buffer_index-i)%self.episodes_in_buffer
-                self.sample_count[sample_idx] += 1
+                self.buffer_sample_count[i] += 1
             return self[ep_ids]        
 
     def __repr__(self):
@@ -191,6 +195,7 @@ def save_per_distributions(per_buffer, path):
     reward_sum = th.flatten(per_buffer.reward_sum).cpu().detach().numpy()
     reward_sum_record = deepcopy(per_buffer.reward_sum_record)
     e_sampled = deepcopy(per_buffer.sample_count)
+    b_sampled = deepcopy(per_buffer.buffer_sample_count)
     per_beta = deepcopy(per_buffer.per_beta)
     
     offset = deepcopy(per_buffer.offset)
@@ -201,6 +206,7 @@ def save_per_distributions(per_buffer, path):
              "reward_sum": reward_sum, 
              "reward_sum_record": reward_sum_record, 
              "sample_count": e_sampled, 
+             "buffer_sample_count": b_sampled,
              "per_beta": per_beta,
              "offset": offset,
              "ori": ori,
