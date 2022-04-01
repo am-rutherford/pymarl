@@ -1,7 +1,7 @@
 ## --- Environment ---
 env: camas
 env_args:
-  map_name: "warehouse-large"
+  map_name: "supermarket-small"
   # Number of agents to use in the environment
   #     0: maximum number of agents
   #     Will return an error if number specifed is more than the maximum for the given map.
@@ -34,15 +34,15 @@ env_args:
   seed: Null  # NOTE this would be useful to implement
 
 # -- Runner & Epsilon schedule ---
-t_max: 15010000
+t_max: 8010000
 runner: "timelim"
 gamma: 0.99
-epsilon_start: 0.3
+epsilon_start: 1.0
 epsilon_anneal_time: 2000000
 
 # --- RL Method Edits ---
-train_twice: True  # train for two mini batches after each episode
-grad_norm_clip: 1
+train_twice: False  # train for two mini batches after each episode
+grad_norm_clip: 10
 
 # --- Logging parameters ---
 test_greedy: True
@@ -54,7 +54,7 @@ learner_log_interval: 20000
 save_model: True
 save_model_interval: 500000
 save_mac_weights: True  # save_model must also be True, saves at freq of save_model_interval
-checkpoint_path: "results/models/curriculum_qmix__2022-03-31_23-19-07/" # Load a checkpoint from this path
+#checkpoint_path: "results/models/curriculum_qmix__2022-03-31_23-19-07/" # Load a checkpoint from this path
 
 # --- Prioritised Replay ---
 prioritised_replay: True # Whether to use Prioritised Experience Replay
@@ -62,3 +62,4 @@ per_alpha: 1.0  # defines shape of distribution, must lie in range [0, 1]
 per_epsilon: 0.5  # constant added to reward value to ensure all episodes have a non zero probability of being sampled.
 per_beta: 0.4  # importance sampling exponent, controls how much prioritization to apply. Must lie in the range [0, 1].
 per_beta_anneal: 0.7  # percantage of t_max at which per_beta will be annealed to equal 1.
+per_reward_power: 8 # scale rewards by this factor -- just for determining probabilities
