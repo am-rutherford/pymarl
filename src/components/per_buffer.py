@@ -34,6 +34,7 @@ class PERBuffer(EpisodeBatch):
         self.per_epsilon = args.per_epsilon
         self.per_beta_schedule = RiseThenFlatSchedule(args.per_beta, 1, floor(args.t_max * args.per_beta_anneal), decay="linear")
         self.per_beta = self.per_beta_schedule.eval(0)
+        self.reward_power = args.per_reward_power
         
         print(f'Initialising PER buffer, annealing beta from {args.per_beta} to 1 over {floor(args.t_max * args.per_beta_anneal)} timesteps.')
         
@@ -76,8 +77,8 @@ class PERBuffer(EpisodeBatch):
                     self.reward_sum = th.pow(self.og_reward + self.per_epsilon, self.per_alpha)
                     # calculate new max
                     self.max_reward_idx = th.argmax(self.reward_sum)
-                    self.max_reward_sum = self.reward_sum[self.max_reward_idx]
-                    self.pvalues = deepcopy(self.reward_sum)
+                    self.max_reward_sum = self.reward_sum[self.max_reward_idx] ** self.reward_power
+                    self.pvalues = th.pow(deepcopy(self.reward_sum), self.reward_power)
                     self.pvalues[(self.e_sampled == 0).nonzero()] = self.max_reward_sum
 
                 else:
@@ -91,8 +92,8 @@ class PERBuffer(EpisodeBatch):
                         
                         self.reward_sum = th.pow(self.og_reward + self.per_epsilon, self.per_alpha)
                         self.max_reward_idx = th.argmax(self.reward_sum)
-                        self.max_reward_sum = self.reward_sum[self.max_reward_idx]
-                        self.pvalues = deepcopy(self.reward_sum)
+                        self.max_reward_sum = self.reward_sum[self.max_reward_idx] ** self.reward_power
+                        self.pvalues = th.pow(deepcopy(self.reward_sum), self.reward_power)
                         self.pvalues[(self.e_sampled == 0).nonzero()] = self.max_reward_sum
                     
                     else:
@@ -104,11 +105,11 @@ class PERBuffer(EpisodeBatch):
             
             if self.buffer_index == self.max_reward_idx:  # update max reward if current is overwritten
                 self.max_reward_idx = th.argmax(self.reward_sum)
-                self.max_reward_sum = self.reward_sum[self.max_reward_idx]
+                self.max_reward_sum = self.reward_sum[self.max_reward_idx] ** self.reward_power 
                 # do we then scale the max p values... 
                 
             if self.reward_sum[self.buffer_index] > self.max_reward_sum:
-                self.max_reward_sum = self.reward_sum[self.buffer_index]
+                self.max_reward_sum = self.reward_sum[self.buffer_index] ** self.reward_power
                 self.max_reward_idx = self.buffer_index
             
             self.pvalues[self.buffer_index] = self.max_reward_sum
@@ -174,7 +175,7 @@ class PERBuffer(EpisodeBatch):
             # Update PER values for episodes sampled for first time # NOTE could be made more torchy
             for i in ep_ids:
                 if not self.e_sampled[i]:
-                    self.pvalues[i] = self.reward_sum[i]
+                    self.pvalues[i] = self.reward_sum[i] ** self.reward_power
                     self.e_sampled[i] = 1
                 self.buffer_sample_count[i] += 1
             return self[ep_ids]        

@@ -429,8 +429,8 @@ def load_default_params(map_name="bruno"):
 if __name__ == "__main__":
 
     ## *** Curriculum specific variables ***
-    num_episodes = 50000
-    train_steps_max = 300000
+    num_episodes = 1000
+    train_steps_max = 1000
     test_episodes = 20
     test_makespan_cutoff = 50
     
@@ -439,7 +439,7 @@ if __name__ == "__main__":
     
     config_dict = load_configs()  # NOTE should sanity check
     args = SN(**config_dict)  # gives attribute access to namespace
-    args.use_cuda = False
+    args.use_cuda = True
     args.device = "cuda" if args.use_cuda else "cpu"
     
     args.unique_token = "curriculum_{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
@@ -453,7 +453,7 @@ if __name__ == "__main__":
         print(f'Buffer size now {args.buffer_size}')
         
     run_sss_curriculum(args, logger, num_episodes, train_steps_max, test_makespan_cutoff,
-                       test_episodes=test_episodes, log_freq=10000, agent_weight_log_freq=20000)
+                       test_episodes=test_episodes, log_freq=500, agent_weight_log_freq=20000)
     
 
 
