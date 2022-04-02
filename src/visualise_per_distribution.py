@@ -56,6 +56,174 @@ def load_per_objs(model_id):
     return per_data, timesteps
 
 def run_per(model_id):
+    """ for current format :) """
+    
+    def _process_buffer(_per_data, _buffer_size):
+        data = {}
+        data["rsum_record"] = th.stack(list(_per_data["reward_sum_record"].values())).cpu().detach().numpy().flatten()
+        data["ecount"] = len(data["rsum_record"])
+        
+        if data["ecount"] > _buffer_size:
+            offset = len(_per_data["reward_sum_record"]) % _buffer_size
+        
+            data["pval_record"] = np.concatenate((_per_data["pvalues"][offset:], _per_data["pvalues"][:offset]))  # order pvalues to line up with reward_sum_record
+            x_offset = len(_per_data["reward_sum_record"]) - _buffer_size
+            data["pval_recordx"] = np.arange(x_offset, x_offset + _buffer_size)
+            
+            data["e_in_buffer"] = _buffer_size
+        else:
+            x_offset = 0
+            data["pval_record"] = _per_data["pvalues"][:data["ecount"]]
+            data["pval_recordx"] = np.arange(x_offset, x_offset + _buffer_size)
+            
+            data["e_in_buffer"] = data["ecount"]
+            
+        data["buffer_sample_count"] = np.array(list(_per_data["buffer_sample_count"].values()))
+        data["sample_count"] = np.array(list(_per_data["sample_count"].values()))
+        data["buffer_sortedidx"] = np.argsort(_per_data["reward_sum"][:data["e_in_buffer"]])
+        print(f'len buffer sample count {len(data["buffer_sample_count"])}, len sample count {len(data["sample_count"])}, len r sum record {len(data["rsum_record"])}')
+        return data
+    
+    def _movingaverage(interval, window_size=100):
+        window = np.ones(int(window_size))/float(window_size)
+        return np.convolve(interval, window, 'same')
+    
+    buffer_size = 5000
+    
+    ## --- Load data ---
+    per_data, timesteps = load_per_objs(model_id)
+    per_proccessed = {t: _process_buffer(per_data[t], buffer_size) for t in timesteps}
+    t_max = max(timesteps)
+    print('per_data loaded. Keys:', per_data[t_max].keys(), ' epsiodes:', len(per_data[t_max]["reward_sum_record"]))
+
+    ## --- Figure 1: Buffer statistics
+    #fig = go.Figure()
+    fig = make_subplots(3, 2, subplot_titles=("Plot 1", "Plot 2", "Plot 3", "Plot 4", "Plot 4", "Plot 4"))
+    
+    # Add traces, one for each slider step     
+    for t in timesteps:
+        sorted_indicies = per_proccessed[t]["buffer_sortedidx"]
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#00CED1", width=1),
+                name="timestep: " + str(t),
+                y=per_data[t]["reward_sum"][sorted_indicies],
+            ),
+            row=1,
+            col=1,
+        )
+        npv = per_data[t]["pvalues"][sorted_indicies]
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#d12600", width=1),
+                name="timestep: " + str(t),
+                y=npv/np.sum(npv),#/np.sum(per_data[t]["pvalues"][sorted_indicies]),
+            ),
+            row=2,
+            col=1,
+        )
+        
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#d12600", width=1),
+                name="timestep: " + str(t),
+                y=per_proccessed[t]["buffer_sample_count"][sorted_indicies],
+            ),
+            row=3,
+            col=1,
+        )
+        
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#00CED1", width=1),
+                name="timestep: " + str(t),
+                y=per_data[t]["reward_sum"],
+            ),
+            row=1,
+            col=2,
+        )
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#d12600", width=1),
+                name="timestep: " + str(t),
+                y=per_data[t]["pvalues"]/np.sum(per_data[t]["pvalues"]),
+            ),
+            row=2,
+            col=2,
+        )
+        fig.add_trace(
+            go.Scatter(
+                visible=False,
+                line=dict(color="#d12600", width=1),
+                name="timestep: " + str(t),
+                y=per_proccessed[t]["buffer_sample_count"],
+            ),
+            row=3,
+            col=2,
+        )
+        
+        
+    # Make 1st trace visible
+    c = 6
+    for d in range(c):
+        fig.data[d].visible = True
+
+    # Create and add slider
+    steps = []
+    for i in range(len(timesteps)):
+        step = dict(
+            method="update",
+            args=[{"visible": [False] * len(fig.data)},
+                {"title": "Slider switched to timestep: " + str(timesteps[i])}],  # layout attribute
+        )
+        for d in range(c):
+            step["args"][0]["visible"][c*i+d] = True  # Toggle i'th trace to "visible"
+            #step["args"][0]["visible"][c*i+1] = True
+            #step["args"][0]["visible"][c*i+2] = True
+        steps.append(step)
+
+    sliders = [dict(
+        active=1,
+        currentvalue={"prefix": "Timestep: "},
+        pad={"t": 50},
+        steps=steps
+    )]
+
+    fig.update_layout(
+        sliders=sliders
+    )
+    rmax = max([max(per_data[t]["reward_sum"]) for t in timesteps])*1.1
+    pmax = max([max(per_data[t]["pvalues"][per_proccessed[t]["buffer_sortedidx"]]/np.sum(per_data[t]["pvalues"][per_proccessed[t]["buffer_sortedidx"]])) for t in timesteps])*1.1
+    print('r range', [0, (per_proccessed[t_max]["rsum_record"])])
+    fig.update_yaxes(title_text="yaxis 1 title", range=[0, rmax], row=1, col=1)
+    fig.update_yaxes(title_text="yaxis 1 title", range=[0, rmax], row=1, col=2)
+    #fig.update_yaxes(title_text="yaxis 2 title", range=[0, pmax], row=2, col=1)
+    fig.update_yaxes(title_text="yaxis 2 title", range=[0, pmax], row=2, col=2)
+    #fig.update_yaxes(title_text="yaxis 3 title", range=[0, max(list(per_data[t_max]["sample_count"].values()))*1.1], row=3, col=1)
+    #fig.update_yaxes(title_text="yaxis 3 title", range=[0, max(list(per_data[t_max]["sample_count"].values()))*1.1], row=3, col=2)
+    #fig.update_yaxes(title_text="yaxis 4 title", row=2, col=2)
+
+    fig.show()  
+    
+    fig2 = go.Figure()
+    fig2.add_trace(
+            go.Scatter(
+                visible=True,
+                line=dict(color="#00CED1", width=1),
+                name="sample count",
+                y=list(per_data[max(timesteps)]["sample_count"].values()),
+            ),
+            )
+    fig2.show()
+    
+
+def run_per_old(model_id):
+    """ OLD FORMAT """
     
     def _process_buffer(_per_data, _buffer_size):
         data = {}
@@ -339,8 +507,11 @@ if __name__ == "__main__":
     model_id = "qmix__2022-03-28_13-47-25"
     model_id = "qmix__2022-03-29_10-19-01"
     
-    #run_per(model_id)
+    model_id = "qmix__2022-04-01_10-25-28"
+    model_id = "qmix__2022-04-01_15-13-39"
+    model_id = "qmix__2022-04-01_18-22-36"
+    run_per(model_id)
     model_id = "qmix__2022-03-30_11-03-11"
     model_id = "qmix__2022-03-29_10-19-01"
-    run_regular(model_id)
+    #run_regular(model_id)
     
