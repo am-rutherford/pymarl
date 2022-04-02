@@ -1,0 +1,171 @@
+[INFO 19:13:41] pymarl Running command 'my_main'
+[INFO 19:13:41] pymarl Started run with ID "432"
+[DEBUG 19:13:41] my_main Started
+[INFO 19:13:41] my_main Experiment Parameters:
+[INFO 19:13:41] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': False,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 0,
+                    'goal_reward': 250,
+                    'map_name': 'bruno',
+                    'observation_type': 'context',
+                    'ptd_mean': 1.0,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'time-cost',
+                    'seed': 861781276,
+                    'time_multiplier': -5},
+    'epsilon_anneal_time': 2000000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 20000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 20000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 1.0,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.7,
+    'per_epsilon': 0.5,
+    'per_reward_power': 8,
+    'prioritised_replay': True,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'timelim',
+    'runner_log_interval': 20000,
+    'save_mac_weights': True,
+    'save_model': True,
+    'save_model_interval': 1000,
+    'save_replay': False,
+    'seed': 861781276,
+    't_max': 8010000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 20000,
+    'test_nepisode': 32,
+    'train_twice': False,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 50, 'max_agents': 3, 'initial': {'agent_0': ('n_1_0', 'n_1_3'), 'agent_1': ('n_1_0', 'n_1_3'), 'agent_2': ('n_1_3', 'n_1_0')}, 'generator': 'bruno', 'anna_map': False, 'sss-time': 10, 'top-longest-path': 3, 'time-lim': 100}
+[DEBUG 19:13:41] root Connecting n_0_0 to n_0_1 with n_0_0_n_0_1
+[DEBUG 19:13:41] root Connecting n_0_0 to n_1_0 with n_0_0_n_1_0
+[DEBUG 19:13:41] root Connecting n_0_1 to n_0_2 with n_0_1_n_0_2
+[DEBUG 19:13:41] root Connecting n_0_1 to n_0_0 with n_0_1_n_0_0
+[DEBUG 19:13:41] root Connecting n_0_2 to n_0_3 with n_0_2_n_0_3
+[DEBUG 19:13:41] root Connecting n_0_2 to n_0_1 with n_0_2_n_0_1
+[DEBUG 19:13:41] root Connecting n_0_3 to n_0_2 with n_0_3_n_0_2
+[DEBUG 19:13:41] root Connecting n_0_3 to n_1_3 with n_0_3_n_1_3
+[DEBUG 19:13:41] root Connecting n_1_0 to n_1_1 with n_1_0_n_1_1
+[DEBUG 19:13:41] root Connecting n_1_0 to n_0_0 with n_1_0_n_0_0
+[DEBUG 19:13:41] root Connecting n_1_0 to n_2_0 with n_1_0_n_2_0
+[DEBUG 19:13:41] root Connecting n_1_1 to n_1_2 with n_1_1_n_1_2
+[DEBUG 19:13:41] root Connecting n_1_1 to n_1_0 with n_1_1_n_1_0
+[DEBUG 19:13:41] root Connecting n_1_2 to n_1_3 with n_1_2_n_1_3
+[DEBUG 19:13:41] root Connecting n_1_2 to n_1_1 with n_1_2_n_1_1
+[DEBUG 19:13:41] root Connecting n_1_3 to n_1_2 with n_1_3_n_1_2
+[DEBUG 19:13:41] root Connecting n_1_3 to n_0_3 with n_1_3_n_0_3
+[DEBUG 19:13:41] root Connecting n_1_3 to n_2_3 with n_1_3_n_2_3
+[DEBUG 19:13:41] root Connecting n_2_0 to n_2_1 with n_2_0_n_2_1
+[DEBUG 19:13:41] root Connecting n_2_0 to n_1_0 with n_2_0_n_1_0
+[DEBUG 19:13:41] root Connecting n_2_1 to n_2_2 with n_2_1_n_2_2
+[DEBUG 19:13:41] root Connecting n_2_1 to n_2_0 with n_2_1_n_2_0
+[DEBUG 19:13:41] root Connecting n_2_2 to n_2_3 with n_2_2_n_2_3
+[DEBUG 19:13:41] root Connecting n_2_2 to n_2_1 with n_2_2_n_2_1
+[DEBUG 19:13:41] root Connecting n_2_3 to n_2_2 with n_2_3_n_2_2
+[DEBUG 19:13:41] root Connecting n_2_3 to n_1_3 with n_2_3_n_1_3
+Possible agents ['agent_0', 'agent_1', 'agent_2']
+Goal states {'agent_0': 'n_1_3', 'agent_1': 'n_1_3', 'agent_2': 'n_1_0'} 
+Initial states {'agent_0': 'n_1_0', 'agent_1': 'n_1_0', 'agent_2': 'n_1_3'}
+[INFO 19:13:41] my_main Running Camas time limited episodes with a limit of 100
+[DEBUG 19:13:41] my_main Buffer scheme: {'state': {'vshape': (3,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 3}
+ -- using prioritised replay --
+Initialising PER buffer, annealing beta from 0.4 to 1 over 5607000 timesteps.
+[INFO 19:13:43] my_main Beginning training for 8010000 timesteps
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:118: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+episode lim reached
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:118: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 19:13:43] my_main t_env: 50 / 8010000
+[INFO 19:13:43] my_main Estimated time left: 1 minutes, 24 seconds. Time passed: 0 seconds
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+av test time: 68.66533250731146 (91.07626569088949), av step count 50.0 (0.0), percentage at goal 5.207812499999999 (146.45507958984373) 32 episodes
+[INFO 19:13:47] my_main Saving models to results/models/qmix__2022-04-01_19-13-41/50
+saving PER objects to results/models/qmix__2022-04-01_19-13-41/50
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:13:50] my_main Saving models to results/models/qmix__2022-04-01_19-13-41/1061
+saving PER objects to results/models/qmix__2022-04-01_19-13-41/1061
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
