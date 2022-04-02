@@ -22,8 +22,9 @@ env_args:
   #     i*mean+1, var*(i+1)
   # where i is the congestion band and mean and var are set below.
   # If a Charlie map is used, the congestion bands from congestion_aware_planning are loaded in
-  ptd_mean: 1.0
+  ptd_mean: 2
   ptd_var: 0.1
+  two_bands_only: True
 
   # Rewards
   reward_type: "time-cost"
@@ -34,11 +35,11 @@ env_args:
   seed: Null  # NOTE this would be useful to implement
 
 # -- Runner & Epsilon schedule ---
-t_max: 8010000
-runner: "timelim"
+t_max: 12010000
+runner: "async"
 gamma: 0.99
 epsilon_start: 1.0
-epsilon_anneal_time: 1500000
+epsilon_anneal_time: 2000000
 
 # --- RL Method Edits ---
 train_twice: False  # train for two mini batches after each episode
@@ -47,12 +48,12 @@ grad_norm_clip: 10
 # --- Logging parameters ---
 test_greedy: True
 test_nepisode: 32
-test_interval: 20000 # all used to be 10000
-log_interval: 20000
-runner_log_interval: 20000
-learner_log_interval: 20000
+test_interval: 50000 # all used to be 10000
+log_interval: 50000
+runner_log_interval: 50000
+learner_log_interval: 50000
 save_model: True
-save_model_interval: 1000 #500000
+save_model_interval: 500000
 save_mac_weights: True  # save_model must also be True, saves at freq of save_model_interval
 #checkpoint_path: "results/models/curriculum_qmix__2022-03-31_23-19-07/" # Load a checkpoint from this path
 
