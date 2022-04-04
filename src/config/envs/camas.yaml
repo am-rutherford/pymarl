@@ -16,7 +16,7 @@ env_args:
   dummy_actions: True
 
   # Divide reward by this factor before outputting
-  reward_scaling_factor: 100
+  reward_scaling_factor: 200
 
   # Mean and variance for Phase Type Distributions is calculated as:
   #     i*mean+1, var*(i+1)
@@ -28,14 +28,14 @@ env_args:
 
   # Rewards
   reward_type: "time-cost"
-  goal_reward: 250
-  time_multiplier: -5
+  goal_reward: 400
+  time_multiplier: -3
 
   debug: False
   seed: Null  # NOTE this would be useful to implement
 
 # -- Runner & Epsilon schedule ---
-t_max: 12010000
+t_max: 15010000
 runner: "async"
 gamma: 0.99
 epsilon_start: 1.0
@@ -63,4 +63,4 @@ per_alpha: 1.0  # defines shape of distribution, must lie in range [0, 1]
 per_epsilon: 1.0  # constant added to reward value to ensure all episodes have a non zero probability of being sampled.
 per_beta: 0.4  # importance sampling exponent, controls how much prioritization to apply. Must lie in the range [0, 1].
 per_beta_anneal: 0.7  # percantage of t_max at which per_beta will be annealed to equal 1.
-per_reward_power: 10 # scale rewards by this factor -- just for determining probabilities
+per_reward_power: 8 # scale rewards by this factor -- just for determining probabilities
