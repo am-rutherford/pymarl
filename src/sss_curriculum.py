@@ -429,10 +429,10 @@ def load_default_params(map_name="bruno"):
 if __name__ == "__main__":
 
     ## *** Curriculum specific variables ***
-    num_episodes = int(6e4)
-    train_steps_max = int(3e5)
+    num_episodes = int(1e5)
+    train_steps_max = int(4e5)
     test_episodes = 20
-    test_makespan_cutoff = 50
+    test_makespan_cutoff = 60
     
     console_logger = getLogger()
     logger = Logger(console_logger)
@@ -456,7 +456,7 @@ if __name__ == "__main__":
         print(f'Buffer size now {args.buffer_size}')
         
     run_sss_curriculum(args, logger, num_episodes, train_steps_max, test_makespan_cutoff,
-                       test_episodes=test_episodes, log_freq=int(2e4), agent_weight_log_freq=int(4e4))
+                       test_episodes=test_episodes, log_freq=int(4e4), agent_weight_log_freq=int(8e4))
     
 
 
