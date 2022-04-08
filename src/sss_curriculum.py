@@ -189,6 +189,7 @@ class SSS_Runner(AsyncEpisodeRunner):
 def run_sss_curriculum(args,
                        logger,
                        num_episodes,
+                       cycle_after,
                        max_train_steps,
                        test_makespan_cutoff,
                        test_episodes=20,
@@ -204,6 +205,30 @@ def run_sss_curriculum(args,
         max_train_steps (int): number of steps to train the model for
         test_episodes (int): number of episodes to evaluate the model on once training is complete
     """
+
+    def _gather_data(_num_episodes, _buffer, _sss_runner, _logger, _iteration=0):
+        _start_time = time.time()
+        _logger.console_logger.info(f'...gathering {_num_episodes} of data, iteration: {_iteration}...')
+        ep_rewards = np.zeros(_num_episodes)
+        ep_epsilons = np.zeros(_num_episodes)
+        ep_times = np.zeros(_num_episodes)
+        ep_step_count = np.zeros(_num_episodes)
+        
+        for k in range(_num_episodes):    
+            episode_batch = _sss_runner.run()
+            _buffer.insert_episode_batch(episode_batch)
+            ep_rewards[k] = th.sum(episode_batch["reward"])
+            ep_epsilons[k] = _sss_runner.epsilon
+            ep_times[k] = _sss_runner.episode_makespan()
+            ep_step_count[k] = _sss_runner.t
+            if k % log_freq == 0:
+                _logger.console_logger.info(f'...{k} episodes complete, mean time {np.mean(ep_times)} ({np.std(ep_times)}), mean step count {np.mean(ep_step_count)} ({np.std(ep_step_count)})...')
+                _logger.console_logger.info(f'...mean rewards {np.mean(ep_rewards)} ({np.std(ep_rewards)}), mean epsilon {np.mean(ep_epsilons)} ({np.std(ep_epsilons)})')
+        save_curriculum_data([ep_rewards, ep_epsilons, ep_times, ep_step_count], _iteration)
+        data_gathering_time = time.time() - _start_time
+        _logger.console_logger.info(f'...time to gather {_num_episodes} episodes: {datetime.timedelta(seconds=data_gathering_time)}, mean time {np.mean(ep_times)} ({np.std(ep_times)}), mean step count {np.mean(ep_step_count)} ({np.std(ep_step_count)})...')
+        _logger.console_logger.info(f'...mean rewards {np.mean(ep_rewards)} ({np.std(ep_rewards)}), mean epsilon {np.mean(ep_epsilons)} ({np.std(ep_epsilons)})')
+    
     
     def _test_env(_runner, _test_episdoes):
         """ Test environment using `_runner`
@@ -271,27 +296,7 @@ def run_sss_curriculum(args,
         learner.cuda()
     
     ## --- Gather Data ---
-    logger.console_logger.info(f'...gathering data...')
-    ep_rewards = np.zeros(num_episodes)
-    ep_epsilons = np.zeros(num_episodes)
-    ep_times = np.zeros(num_episodes)
-    ep_step_count = np.zeros(num_episodes)
-    
-    for k in range(num_episodes):    
-        episode_batch = sss_runner.run()
-        buffer.insert_episode_batch(episode_batch)
-        ep_rewards[k] = th.sum(episode_batch["reward"])
-        ep_epsilons[k] = sss_runner.epsilon
-        ep_times[k] = sss_runner.episode_makespan()
-        ep_step_count[k] = sss_runner.t
-        if k % log_freq == 0:
-            logger.console_logger.info(f'...{k} episodes complete, mean time {np.mean(ep_times)} ({np.std(ep_times)}), mean step count {np.mean(ep_step_count)} ({np.std(ep_step_count)})...')
-            logger.console_logger.info(f'...mean rewards {np.mean(ep_rewards)} ({np.std(ep_rewards)}), mean epsilon {np.mean(ep_epsilons)} ({np.std(ep_epsilons)})')
-    save_curriculum_data([ep_rewards, ep_epsilons, ep_times, ep_step_count])
-    data_gathering_time = time.time() - start_time
-    logger.console_logger.info(f'...time to gather {num_episodes} episodes: {datetime.timedelta(seconds=data_gathering_time)}, mean time {np.mean(ep_times)} ({np.std(ep_times)}), mean step count {np.mean(ep_step_count)} ({np.std(ep_step_count)})...')
-    logger.console_logger.info(f'...mean rewards {np.mean(ep_rewards)} ({np.std(ep_rewards)}), mean epsilon {np.mean(ep_epsilons)} ({np.std(ep_epsilons)})')
-    
+    _gather_data(num_episodes, buffer, sss_runner, logger)
     
     ## --- Train Network ---
     logger.console_logger.info(f'...training network...')
@@ -307,6 +312,9 @@ def run_sss_curriculum(args,
 
         learner.train(episode_sample, i, i)
         
+        if (i % cycle_after == 0) and (i > 0):  # Gather new data with freq `cycle_after`
+            _gather_data(num_episodes,  buffer, sss_runner, logger, i/cycle_after)
+
         if i % log_freq == 0:
             tt, sc, gc = _test_env(main_runner, test_episodes)
             logger.log_stat("Test_mean_sim_time", np.mean(tt), i)
@@ -349,10 +357,10 @@ def run_sss_curriculum(args,
         yaml.dump(args, outp)
         
 
-def save_curriculum_data(array_to_save):
+def save_curriculum_data(array_to_save, iteration=0):
     save_path = os.path.join(args.local_results_path, "curriculum", "ep_data", args.unique_token)
     os.makedirs(save_path, exist_ok=True)
-    np.save('{}/ep_data.npy'.format(save_path), array_to_save, allow_pickle=True)
+    np.save('{}/ep_data_{}.npy'.format(save_path, iteration), array_to_save, allow_pickle=True)
     
     
 def mean_sss_time(args, logger,  num_episodes, epsilon_mean):
@@ -429,8 +437,9 @@ def load_default_params(map_name="bruno"):
 if __name__ == "__main__":
 
     ## *** Curriculum specific variables ***
-    num_episodes = int(1e5)
-    train_steps_max = int(4e5)
+    num_episodes = int(1e4)
+    cycle_after = int(5e4)
+    train_steps_max = int(5e5)
     test_episodes = 20
     test_makespan_cutoff = 60
     
@@ -439,8 +448,10 @@ if __name__ == "__main__":
     
     config_dict = load_configs()  # NOTE should sanity check
     args = SN(**config_dict)  # gives attribute access to namespace
-    args.use_cuda = th.cuda.is_available()
+    if args.use_cuda:
+        args.use_cuda = th.cuda.is_available() # Check that cuda is valid
     args.device = "cuda" if args.use_cuda else "cpu"
+    if args.use_cuda: logger.console_logger.info('... Using CUDA...')
     
     args.unique_token = "curriculum_{}__{}".format(args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     
@@ -455,7 +466,7 @@ if __name__ == "__main__":
         args.buffer_size = num_episodes
         print(f'Buffer size now {args.buffer_size}')
         
-    run_sss_curriculum(args, logger, num_episodes, train_steps_max, test_makespan_cutoff,
+    run_sss_curriculum(args, logger, num_episodes, cycle_after, train_steps_max, test_makespan_cutoff,
                        test_episodes=test_episodes, log_freq=int(4e4), agent_weight_log_freq=int(8e4))
     
 
