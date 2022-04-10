@@ -244,6 +244,13 @@ def run_sss_curriculum(args,
             sc.append(_runner.env.step_count())
             gc.append(_runner.env.agents_at_goal())
         return tt, sc, gc
+
+    def _save_model(_args, _logger, _learner, label):
+        _logger.console_logger.info('...saving model...')
+        _save_path = os.path.join("curriculum", _args.unique_token, str(label))
+        os.makedirs(_save_path, exist_ok=True)
+        _logger.console_logger.info("Saving models to {}".format(_save_path))
+        _learner.save_models(_save_path) 
     
     print(' -- Env args', args.env_args)
     start_time = time.time()
@@ -294,6 +301,12 @@ def run_sss_curriculum(args,
     learner = le_REGISTRY[args.learner](mac, buffer.scheme, logger, args)
     if args.use_cuda:
         learner.cuda()
+
+    ## --- Save config ---
+    config_save_path = os.path.join("curriculum", args.unique_token)
+    os.makedirs(config_save_path, exist_ok=True)
+    with open(os.path.join(config_save_path, "config.yaml"), 'w') as outp:  # NOTE this has not been tested
+        yaml.dump(args, outp)
     
     ## --- Gather Data ---
     _gather_data(num_episodes, buffer, sss_runner, logger)
@@ -330,10 +343,11 @@ def run_sss_curriculum(args,
         
         if i % agent_weight_log_freq == 0:
             log_mac_weights(logger, mac, i)
+            _save_model(args, logger, learner, i)
+
     
     tdelta = time.time()-start_time
     logger.console_logger.info(f'...time taken for training: {datetime.timedelta(seconds=tdelta)}...')
-    logger.console_logger.info(f'...time taken for data gathering: {datetime.timedelta(seconds=data_gathering_time)}...')
     
     ## --- Evaluate final agent ---
     logger.console_logger.info(f'...evaluating final agent...')
@@ -343,18 +357,9 @@ def run_sss_curriculum(args,
     logger.log_stat("Test_mean_goal_found", np.mean(gc), i)
     logger.console_logger.info(f'-- evaluation av test time: {np.mean(tt)} ({np.var(tt)}), av step count {np.mean(sc)} ({np.var(sc)}), percentage at goal {np.mean(gc)} ({np.var(gc)}), {len(sc)} episodes')
     
-    logger.console_logger.info('...saving model...')
-    save_path = os.path.join("curriculum", args.unique_token, str(main_runner.t_env))
-    os.makedirs(save_path, exist_ok=True)
-    logger.console_logger.info("Saving models to {}".format(save_path))
-
-    # learner should handle saving/loading -- delegate actor save/load to mac,
-    # use appropriate filenames to do critics, optimizer states
-    learner.save_models(save_path) 
+    _save_model(args, logger, learner, "final")
     
-    # Save config
-    with open(os.path.join(save_path, "config.yaml"), 'w') as outp:  # NOTE this has not been tested
-        yaml.dump(args, outp)
+    
         
 
 def save_curriculum_data(array_to_save, iteration=0):
@@ -437,8 +442,8 @@ def load_default_params(map_name="bruno"):
 if __name__ == "__main__":
 
     ## *** Curriculum specific variables ***
-    num_episodes = int(1e4)
-    cycle_after = int(5e4)
+    num_episodes = int(5e3)
+    cycle_after = int(2.5e4)
     train_steps_max = int(5e5)
     test_episodes = 20
     test_makespan_cutoff = 60
@@ -467,7 +472,7 @@ if __name__ == "__main__":
         print(f'Buffer size now {args.buffer_size}')
         
     run_sss_curriculum(args, logger, num_episodes, cycle_after, train_steps_max, test_makespan_cutoff,
-                       test_episodes=test_episodes, log_freq=int(4e4), agent_weight_log_freq=int(8e4))
+                       test_episodes=test_episodes, log_freq=int(2e4), agent_weight_log_freq=int(4e4))
     
 
 
