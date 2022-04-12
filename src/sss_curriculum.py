@@ -357,7 +357,7 @@ def run_sss_curriculum(args,
     logger.log_stat("Test_mean_goal_found", np.mean(gc), i)
     logger.console_logger.info(f'-- evaluation av test time: {np.mean(tt)} ({np.var(tt)}), av step count {np.mean(sc)} ({np.var(sc)}), percentage at goal {np.mean(gc)} ({np.var(gc)}), {len(sc)} episodes')
     
-    _save_model(args, logger, learner, "final")
+    _save_model(args, logger, learner, i+1)
     
     
         
