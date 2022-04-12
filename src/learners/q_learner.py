@@ -100,6 +100,8 @@ class QLearner:
 
         # 0-out the targets that came from padded data
         masked_td_error = td_error * mask
+        if self.args.prioritised_replay_td:
+            self.update_batch_in_buffer(masked_td_error.detach())
         
         if self.args.prioritised_replay:  # Apply importance sampling weights
             masked_td_error = masked_td_error * batch["weights"][:, :-1]
@@ -152,3 +154,10 @@ class QLearner:
         if self.mixer is not None:
             self.mixer.load_state_dict(th.load("{}/mixer.th".format(path), map_location=lambda storage, loc: storage))
         self.optimiser.load_state_dict(th.load("{}/opt.th".format(path), map_location=lambda storage, loc: storage))
+        
+    def add_buffer(self, buffer):
+        self._buffer = buffer
+        
+    def update_batch_in_buffer(self, _td_error):
+        self._buffer.update_batch_td_errors(_td_error)
+
