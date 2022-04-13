@@ -9,7 +9,8 @@ if __name__ == "__main__":
     dir_path = "results/curriculum/ep_data"
     model_id = "curriculum_qmix__2022-03-29_23-42-30"
     model_id = "curriculum_qmix__2022-03-29_23-48-15"
-    model_id = "curriculum_qmix__2022-03-29_23-51-33"
+    model_id = "curriculum_qmix__2022-03-29_23-53-15"
+    model_id = "curriculum_qmix__2022-03-30_11-04-19"
     load_path = dir_path + "/" + model_id + "/ep_data.npy"
 
     data = np.load(load_path)

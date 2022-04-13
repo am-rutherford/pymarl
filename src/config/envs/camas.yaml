@@ -1,11 +1,11 @@
 ## --- Environment ---
 env: camas
 env_args:
-  map_name: "warehouse-large"
+  map_name: "supermarket-medium"
   # Number of agents to use in the environment
   #     0: maximum number of agents
   #     Will return an error if number specifed is more than the maximum for the given map.
-  agent_count: 10
+  agent_count: 0
   episode_limit: 0
   
   # Possible observation types: 
@@ -24,25 +24,26 @@ env_args:
   # If a Charlie map is used, the congestion bands from congestion_aware_planning are loaded in
   ptd_mean: 1
   ptd_var: 0.1
-  two_bands_only: False
-
+  two_bands_only: True
+  charlie_congestion: False
+  
   # Rewards
   reward_type: "time-cost"
   goal_reward: 200
-  time_multiplier: -30
+  time_multiplier: -20
 
   debug: False
   seed: Null  # NOTE this would be useful to implement
 
 # -- Runner & Epsilon schedule ---
-t_max: 12010000
+t_max: 20010000
 runner: "timelim"
 gamma: 0.99
 epsilon_start: 1.0
-epsilon_anneal_time: 2000000
+epsilon_anneal_time: 5000000
 
 # --- RL Method Edits ---
-train_twice: False  # train for two mini batches after each episode
+train_twice: True  # train for two mini batches after each episode
 grad_norm_clip: 10
 
 # --- Logging parameters ---
@@ -59,6 +60,7 @@ save_mac_weights: True  # save_model must also be True, saves at freq of save_mo
 
 # --- Prioritised Replay ---
 prioritised_replay: False # Whether to use Prioritised Experience Replay
+prioritised_replay_td: False  # True to use TD error as the PER metric, false to use episode reward
 per_alpha: 1.0  # defines shape of distribution, must lie in range [0, 1]
 per_epsilon: 1.0  # constant added to reward value to ensure all episodes have a non zero probability of being sampled.
 per_beta: 0.4  # importance sampling exponent, controls how much prioritization to apply. Must lie in the range [0, 1].
