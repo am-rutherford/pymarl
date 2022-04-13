@@ -1,0 +1,384 @@
+[INFO 13:34:34] pymarl Running command 'my_main'
+[INFO 13:34:34] pymarl Started run with ID "458"
+[DEBUG 13:34:34] my_main Started
+[INFO 13:34:34] my_main Experiment Parameters:
+[INFO 13:34:34] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': False,
+    'buffer_size': 5000,
+    'checkpoint_path': 'curriculum/curriculum_qmix__2022-04-10_22-13-34/',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 10,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 0,
+                    'goal_reward': 200,
+                    'map_name': 'warehouse-large',
+                    'observation_type': 'context',
+                    'ptd_mean': 1,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'time-cost',
+                    'seed': 654426674,
+                    'time_multiplier': -25,
+                    'two_bands_only': False},
+    'epsilon_anneal_time': 2000000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 0.3,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 50000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 50000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 1.0,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.7,
+    'per_epsilon': 1.0,
+    'per_reward_power': 8,
+    'prioritised_replay': False,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'timelim',
+    'runner_log_interval': 50000,
+    'save_mac_weights': True,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 654426674,
+    't_max': 15010000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 50000,
+    'test_nepisode': 32,
+    'train_twice': False,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 1000, 'max_agents': 15, 'initial': {'agent_0': ('WayPoint1', 'WayPoint59'), 'agent_1': ('WayPoint29', 'WayPoint118'), 'agent_2': ('WayPoint32', 'WayPoint82'), 'agent_3': ('WayPoint79', 'WayPoint17'), 'agent_4': ('WayPoint56', 'WayPoint62'), 'agent_5': ('WayPoint98', 'WayPoint32'), 'agent_6': ('WayPoint76', 'WayPoint59'), 'agent_7': ('WayPoint90', 'WayPoint96'), 'agent_8': ('WayPoint59', 'WayPoint1'), 'agent_9': ('WayPoint1', 'WayPoint10'), 'agent_10': ('WayPoint11', 'WayPoint2'), 'agent_11': ('WayPoint17', 'WayPoint79'), 'agent_12': ('WayPoint118', 'WayPoint29'), 'agent_13': ('WayPoint44', 'WayPoint85'), 'agent_14': ('WayPoint111', 'WayPoint49')}, 'generator': 'warehouse', 'size': 11, 'anna_map': False, 'time-lim': 100}
+map_name warehouse-large
+[DEBUG 13:34:34] root Connecting WayPoint1 to WayPoint2 with WayPoint1_WayPoint2
+[DEBUG 13:34:34] root Connecting WayPoint2 to WayPoint1 with WayPoint2_WayPoint1
+[DEBUG 13:34:34] root Connecting WayPoint2 to WayPoint3 with WayPoint2_WayPoint3
+[DEBUG 13:34:34] root Connecting WayPoint3 to WayPoint2 with WayPoint3_WayPoint2
+[DEBUG 13:34:34] root Connecting WayPoint3 to WayPoint4 with WayPoint3_WayPoint4
+[DEBUG 13:34:34] root Connecting WayPoint4 to WayPoint3 with WayPoint4_WayPoint3
+[DEBUG 13:34:34] root Connecting WayPoint4 to WayPoint5 with WayPoint4_WayPoint5
+[DEBUG 13:34:34] root Connecting WayPoint5 to WayPoint4 with WayPoint5_WayPoint4
+[DEBUG 13:34:34] root Connecting WayPoint5 to WayPoint6 with WayPoint5_WayPoint6
+[DEBUG 13:34:34] root Connecting WayPoint6 to WayPoint5 with WayPoint6_WayPoint5
+[DEBUG 13:34:34] root Connecting WayPoint6 to WayPoint7 with WayPoint6_WayPoint7
+[DEBUG 13:34:34] root Connecting WayPoint7 to WayPoint6 with WayPoint7_WayPoint6
+[DEBUG 13:34:34] root Connecting WayPoint7 to WayPoint8 with WayPoint7_WayPoint8
+[DEBUG 13:34:34] root Connecting WayPoint8 to WayPoint7 with WayPoint8_WayPoint7
+[DEBUG 13:34:34] root Connecting WayPoint8 to WayPoint9 with WayPoint8_WayPoint9
+[DEBUG 13:34:34] root Connecting WayPoint9 to WayPoint8 with WayPoint9_WayPoint8
+[DEBUG 13:34:34] root Connecting WayPoint9 to WayPoint10 with WayPoint9_WayPoint10
+[DEBUG 13:34:34] root Connecting WayPoint10 to WayPoint9 with WayPoint10_WayPoint9
+[DEBUG 13:34:34] root Connecting WayPoint10 to WayPoint11 with WayPoint10_WayPoint11
+[DEBUG 13:34:34] root Connecting WayPoint11 to WayPoint10 with WayPoint11_WayPoint10
+[DEBUG 13:34:34] root Connecting WayPoint56 to WayPoint57 with WayPoint56_WayPoint57
+[DEBUG 13:34:34] root Connecting WayPoint57 to WayPoint56 with WayPoint57_WayPoint56
+[DEBUG 13:34:34] root Connecting WayPoint57 to WayPoint58 with WayPoint57_WayPoint58
+[DEBUG 13:34:34] root Connecting WayPoint58 to WayPoint57 with WayPoint58_WayPoint57
+[DEBUG 13:34:34] root Connecting WayPoint58 to WayPoint59 with WayPoint58_WayPoint59
+[DEBUG 13:34:34] root Connecting WayPoint59 to WayPoint58 with WayPoint59_WayPoint58
+[DEBUG 13:34:34] root Connecting WayPoint59 to WayPoint60 with WayPoint59_WayPoint60
+[DEBUG 13:34:34] root Connecting WayPoint60 to WayPoint59 with WayPoint60_WayPoint59
+[DEBUG 13:34:34] root Connecting WayPoint60 to WayPoint61 with WayPoint60_WayPoint61
+[DEBUG 13:34:34] root Connecting WayPoint61 to WayPoint60 with WayPoint61_WayPoint60
+[DEBUG 13:34:34] root Connecting WayPoint61 to WayPoint62 with WayPoint61_WayPoint62
+[DEBUG 13:34:34] root Connecting WayPoint62 to WayPoint61 with WayPoint62_WayPoint61
+[DEBUG 13:34:34] root Connecting WayPoint62 to WayPoint63 with WayPoint62_WayPoint63
+[DEBUG 13:34:34] root Connecting WayPoint63 to WayPoint62 with WayPoint63_WayPoint62
+[DEBUG 13:34:34] root Connecting WayPoint63 to WayPoint64 with WayPoint63_WayPoint64
+[DEBUG 13:34:34] root Connecting WayPoint64 to WayPoint63 with WayPoint64_WayPoint63
+[DEBUG 13:34:34] root Connecting WayPoint64 to WayPoint65 with WayPoint64_WayPoint65
+[DEBUG 13:34:34] root Connecting WayPoint65 to WayPoint64 with WayPoint65_WayPoint64
+[DEBUG 13:34:34] root Connecting WayPoint65 to WayPoint66 with WayPoint65_WayPoint66
+[DEBUG 13:34:34] root Connecting WayPoint66 to WayPoint65 with WayPoint66_WayPoint65
+[DEBUG 13:34:34] root Connecting WayPoint111 to WayPoint112 with WayPoint111_WayPoint112
+[DEBUG 13:34:34] root Connecting WayPoint112 to WayPoint111 with WayPoint112_WayPoint111
+[DEBUG 13:34:34] root Connecting WayPoint112 to WayPoint113 with WayPoint112_WayPoint113
+[DEBUG 13:34:34] root Connecting WayPoint113 to WayPoint112 with WayPoint113_WayPoint112
+[DEBUG 13:34:34] root Connecting WayPoint113 to WayPoint114 with WayPoint113_WayPoint114
+[DEBUG 13:34:34] root Connecting WayPoint114 to WayPoint113 with WayPoint114_WayPoint113
+[DEBUG 13:34:34] root Connecting WayPoint114 to WayPoint115 with WayPoint114_WayPoint115
+[DEBUG 13:34:34] root Connecting WayPoint115 to WayPoint114 with WayPoint115_WayPoint114
+[DEBUG 13:34:34] root Connecting WayPoint115 to WayPoint116 with WayPoint115_WayPoint116
+[DEBUG 13:34:34] root Connecting WayPoint116 to WayPoint115 with WayPoint116_WayPoint115
+[DEBUG 13:34:34] root Connecting WayPoint116 to WayPoint117 with WayPoint116_WayPoint117
+[DEBUG 13:34:34] root Connecting WayPoint117 to WayPoint116 with WayPoint117_WayPoint116
+[DEBUG 13:34:34] root Connecting WayPoint117 to WayPoint118 with WayPoint117_WayPoint118
+[DEBUG 13:34:34] root Connecting WayPoint118 to WayPoint117 with WayPoint118_WayPoint117
+[DEBUG 13:34:34] root Connecting WayPoint118 to WayPoint119 with WayPoint118_WayPoint119
+[DEBUG 13:34:34] root Connecting WayPoint119 to WayPoint118 with WayPoint119_WayPoint118
+[DEBUG 13:34:34] root Connecting WayPoint119 to WayPoint120 with WayPoint119_WayPoint120
+[DEBUG 13:34:34] root Connecting WayPoint120 to WayPoint119 with WayPoint120_WayPoint119
+[DEBUG 13:34:34] root Connecting WayPoint120 to WayPoint121 with WayPoint120_WayPoint121
+[DEBUG 13:34:34] root Connecting WayPoint121 to WayPoint120 with WayPoint121_WayPoint120
+[DEBUG 13:34:34] root Connecting WayPoint1 to WayPoint12 with WayPoint1_WayPoint12
+[DEBUG 13:34:34] root Connecting WayPoint12 to WayPoint1 with WayPoint12_WayPoint1
+[DEBUG 13:34:34] root Connecting WayPoint12 to WayPoint23 with WayPoint12_WayPoint23
+[DEBUG 13:34:34] root Connecting WayPoint23 to WayPoint12 with WayPoint23_WayPoint12
+[DEBUG 13:34:34] root Connecting WayPoint23 to WayPoint34 with WayPoint23_WayPoint34
+[DEBUG 13:34:34] root Connecting WayPoint34 to WayPoint23 with WayPoint34_WayPoint23
+[DEBUG 13:34:34] root Connecting WayPoint34 to WayPoint45 with WayPoint34_WayPoint45
+[DEBUG 13:34:34] root Connecting WayPoint45 to WayPoint34 with WayPoint45_WayPoint34
+[DEBUG 13:34:34] root Connecting WayPoint45 to WayPoint56 with WayPoint45_WayPoint56
+[DEBUG 13:34:34] root Connecting WayPoint56 to WayPoint45 with WayPoint56_WayPoint45
+[DEBUG 13:34:34] root Connecting WayPoint56 to WayPoint67 with WayPoint56_WayPoint67
+[DEBUG 13:34:34] root Connecting WayPoint67 to WayPoint56 with WayPoint67_WayPoint56
+[DEBUG 13:34:34] root Connecting WayPoint67 to WayPoint78 with WayPoint67_WayPoint78
+[DEBUG 13:34:34] root Connecting WayPoint78 to WayPoint67 with WayPoint78_WayPoint67
+[DEBUG 13:34:34] root Connecting WayPoint78 to WayPoint89 with WayPoint78_WayPoint89
+[DEBUG 13:34:34] root Connecting WayPoint89 to WayPoint78 with WayPoint89_WayPoint78
+[DEBUG 13:34:34] root Connecting WayPoint89 to WayPoint100 with WayPoint89_WayPoint100
+[DEBUG 13:34:34] root Connecting WayPoint100 to WayPoint89 with WayPoint100_WayPoint89
+[DEBUG 13:34:34] root Connecting WayPoint100 to WayPoint111 with WayPoint100_WayPoint111
+[DEBUG 13:34:34] root Connecting WayPoint111 to WayPoint100 with WayPoint111_WayPoint100
+[DEBUG 13:34:34] root Connecting WayPoint2 to WayPoint13 with WayPoint2_WayPoint13
+[DEBUG 13:34:34] root Connecting WayPoint13 to WayPoint2 with WayPoint13_WayPoint2
+[DEBUG 13:34:34] root Connecting WayPoint13 to WayPoint24 with WayPoint13_WayPoint24
+[DEBUG 13:34:34] root Connecting WayPoint24 to WayPoint13 with WayPoint24_WayPoint13
+[DEBUG 13:34:34] root Connecting WayPoint24 to WayPoint35 with WayPoint24_WayPoint35
+[DEBUG 13:34:34] root Connecting WayPoint35 to WayPoint24 with WayPoint35_WayPoint24
+[DEBUG 13:34:34] root Connecting WayPoint35 to WayPoint46 with WayPoint35_WayPoint46
+[DEBUG 13:34:34] root Connecting WayPoint46 to WayPoint35 with WayPoint46_WayPoint35
+[DEBUG 13:34:34] root Connecting WayPoint46 to WayPoint57 with WayPoint46_WayPoint57
+[DEBUG 13:34:34] root Connecting WayPoint57 to WayPoint46 with WayPoint57_WayPoint46
+[DEBUG 13:34:34] root Connecting WayPoint57 to WayPoint68 with WayPoint57_WayPoint68
+[DEBUG 13:34:34] root Connecting WayPoint68 to WayPoint57 with WayPoint68_WayPoint57
+[DEBUG 13:34:34] root Connecting WayPoint68 to WayPoint79 with WayPoint68_WayPoint79
+[DEBUG 13:34:34] root Connecting WayPoint79 to WayPoint68 with WayPoint79_WayPoint68
+[DEBUG 13:34:34] root Connecting WayPoint79 to WayPoint90 with WayPoint79_WayPoint90
+[DEBUG 13:34:34] root Connecting WayPoint90 to WayPoint79 with WayPoint90_WayPoint79
+[DEBUG 13:34:34] root Connecting WayPoint90 to WayPoint101 with WayPoint90_WayPoint101
+[DEBUG 13:34:34] root Connecting WayPoint101 to WayPoint90 with WayPoint101_WayPoint90
+[DEBUG 13:34:34] root Connecting WayPoint101 to WayPoint112 with WayPoint101_WayPoint112
+[DEBUG 13:34:34] root Connecting WayPoint112 to WayPoint101 with WayPoint112_WayPoint101
+[DEBUG 13:34:34] root Connecting WayPoint3 to WayPoint14 with WayPoint3_WayPoint14
+[DEBUG 13:34:34] root Connecting WayPoint14 to WayPoint3 with WayPoint14_WayPoint3
+[DEBUG 13:34:34] root Connecting WayPoint14 to WayPoint25 with WayPoint14_WayPoint25
+[DEBUG 13:34:34] root Connecting WayPoint25 to WayPoint14 with WayPoint25_WayPoint14
+[DEBUG 13:34:34] root Connecting WayPoint25 to WayPoint36 with WayPoint25_WayPoint36
+[DEBUG 13:34:34] root Connecting WayPoint36 to WayPoint25 with WayPoint36_WayPoint25
+[DEBUG 13:34:34] root Connecting WayPoint36 to WayPoint47 with WayPoint36_WayPoint47
+[DEBUG 13:34:34] root Connecting WayPoint47 to WayPoint36 with WayPoint47_WayPoint36
+[DEBUG 13:34:34] root Connecting WayPoint47 to WayPoint58 with WayPoint47_WayPoint58
+[DEBUG 13:34:34] root Connecting WayPoint58 to WayPoint47 with WayPoint58_WayPoint47
+[DEBUG 13:34:34] root Connecting WayPoint58 to WayPoint69 with WayPoint58_WayPoint69
+[DEBUG 13:34:34] root Connecting WayPoint69 to WayPoint58 with WayPoint69_WayPoint58
+[DEBUG 13:34:34] root Connecting WayPoint69 to WayPoint80 with WayPoint69_WayPoint80
+[DEBUG 13:34:34] root Connecting WayPoint80 to WayPoint69 with WayPoint80_WayPoint69
+[DEBUG 13:34:34] root Connecting WayPoint80 to WayPoint91 with WayPoint80_WayPoint91
+[DEBUG 13:34:34] root Connecting WayPoint91 to WayPoint80 with WayPoint91_WayPoint80
+[DEBUG 13:34:34] root Connecting WayPoint91 to WayPoint102 with WayPoint91_WayPoint102
+[DEBUG 13:34:34] root Connecting WayPoint102 to WayPoint91 with WayPoint102_WayPoint91
+[DEBUG 13:34:34] root Connecting WayPoint102 to WayPoint113 with WayPoint102_WayPoint113
+[DEBUG 13:34:34] root Connecting WayPoint113 to WayPoint102 with WayPoint113_WayPoint102
+[DEBUG 13:34:34] root Connecting WayPoint4 to WayPoint15 with WayPoint4_WayPoint15
+[DEBUG 13:34:34] root Connecting WayPoint15 to WayPoint4 with WayPoint15_WayPoint4
+[DEBUG 13:34:34] root Connecting WayPoint15 to WayPoint26 with WayPoint15_WayPoint26
+[DEBUG 13:34:34] root Connecting WayPoint26 to WayPoint15 with WayPoint26_WayPoint15
+[DEBUG 13:34:34] root Connecting WayPoint26 to WayPoint37 with WayPoint26_WayPoint37
+[DEBUG 13:34:34] root Connecting WayPoint37 to WayPoint26 with WayPoint37_WayPoint26
+[DEBUG 13:34:34] root Connecting WayPoint37 to WayPoint48 with WayPoint37_WayPoint48
+[DEBUG 13:34:34] root Connecting WayPoint48 to WayPoint37 with WayPoint48_WayPoint37
+[DEBUG 13:34:34] root Connecting WayPoint48 to WayPoint59 with WayPoint48_WayPoint59
+[DEBUG 13:34:34] root Connecting WayPoint59 to WayPoint48 with WayPoint59_WayPoint48
+[DEBUG 13:34:34] root Connecting WayPoint59 to WayPoint70 with WayPoint59_WayPoint70
+[DEBUG 13:34:34] root Connecting WayPoint70 to WayPoint59 with WayPoint70_WayPoint59
+[DEBUG 13:34:34] root Connecting WayPoint70 to WayPoint81 with WayPoint70_WayPoint81
+[DEBUG 13:34:34] root Connecting WayPoint81 to WayPoint70 with WayPoint81_WayPoint70
+[DEBUG 13:34:34] root Connecting WayPoint81 to WayPoint92 with WayPoint81_WayPoint92
+[DEBUG 13:34:34] root Connecting WayPoint92 to WayPoint81 with WayPoint92_WayPoint81
+[DEBUG 13:34:34] root Connecting WayPoint92 to WayPoint103 with WayPoint92_WayPoint103
+[DEBUG 13:34:34] root Connecting WayPoint103 to WayPoint92 with WayPoint103_WayPoint92
+[DEBUG 13:34:34] root Connecting WayPoint103 to WayPoint114 with WayPoint103_WayPoint114
+[DEBUG 13:34:34] root Connecting WayPoint114 to WayPoint103 with WayPoint114_WayPoint103
+[DEBUG 13:34:34] root Connecting WayPoint5 to WayPoint16 with WayPoint5_WayPoint16
+[DEBUG 13:34:34] root Connecting WayPoint16 to WayPoint5 with WayPoint16_WayPoint5
+[DEBUG 13:34:34] root Connecting WayPoint16 to WayPoint27 with WayPoint16_WayPoint27
+[DEBUG 13:34:34] root Connecting WayPoint27 to WayPoint16 with WayPoint27_WayPoint16
+[DEBUG 13:34:34] root Connecting WayPoint27 to WayPoint38 with WayPoint27_WayPoint38
+[DEBUG 13:34:34] root Connecting WayPoint38 to WayPoint27 with WayPoint38_WayPoint27
+[DEBUG 13:34:34] root Connecting WayPoint38 to WayPoint49 with WayPoint38_WayPoint49
+[DEBUG 13:34:34] root Connecting WayPoint49 to WayPoint38 with WayPoint49_WayPoint38
+[DEBUG 13:34:34] root Connecting WayPoint49 to WayPoint60 with WayPoint49_WayPoint60
+[DEBUG 13:34:34] root Connecting WayPoint60 to WayPoint49 with WayPoint60_WayPoint49
+[DEBUG 13:34:34] root Connecting WayPoint60 to WayPoint71 with WayPoint60_WayPoint71
+[DEBUG 13:34:34] root Connecting WayPoint71 to WayPoint60 with WayPoint71_WayPoint60
+[DEBUG 13:34:34] root Connecting WayPoint71 to WayPoint82 with WayPoint71_WayPoint82
+[DEBUG 13:34:34] root Connecting WayPoint82 to WayPoint71 with WayPoint82_WayPoint71
+[DEBUG 13:34:34] root Connecting WayPoint82 to WayPoint93 with WayPoint82_WayPoint93
+[DEBUG 13:34:34] root Connecting WayPoint93 to WayPoint82 with WayPoint93_WayPoint82
+[DEBUG 13:34:34] root Connecting WayPoint93 to WayPoint104 with WayPoint93_WayPoint104
+[DEBUG 13:34:34] root Connecting WayPoint104 to WayPoint93 with WayPoint104_WayPoint93
+[DEBUG 13:34:34] root Connecting WayPoint104 to WayPoint115 with WayPoint104_WayPoint115
+[DEBUG 13:34:34] root Connecting WayPoint115 to WayPoint104 with WayPoint115_WayPoint104
+[DEBUG 13:34:34] root Connecting WayPoint6 to WayPoint17 with WayPoint6_WayPoint17
+[DEBUG 13:34:34] root Connecting WayPoint17 to WayPoint6 with WayPoint17_WayPoint6
+[DEBUG 13:34:34] root Connecting WayPoint17 to WayPoint28 with WayPoint17_WayPoint28
+[DEBUG 13:34:34] root Connecting WayPoint28 to WayPoint17 with WayPoint28_WayPoint17
+[DEBUG 13:34:34] root Connecting WayPoint28 to WayPoint39 with WayPoint28_WayPoint39
+[DEBUG 13:34:34] root Connecting WayPoint39 to WayPoint28 with WayPoint39_WayPoint28
+[DEBUG 13:34:34] root Connecting WayPoint39 to WayPoint50 with WayPoint39_WayPoint50
+[DEBUG 13:34:34] root Connecting WayPoint50 to WayPoint39 with WayPoint50_WayPoint39
+[DEBUG 13:34:34] root Connecting WayPoint50 to WayPoint61 with WayPoint50_WayPoint61
+[DEBUG 13:34:34] root Connecting WayPoint61 to WayPoint50 with WayPoint61_WayPoint50
+[DEBUG 13:34:34] root Connecting WayPoint61 to WayPoint72 with WayPoint61_WayPoint72
+[DEBUG 13:34:34] root Connecting WayPoint72 to WayPoint61 with WayPoint72_WayPoint61
+[DEBUG 13:34:34] root Connecting WayPoint72 to WayPoint83 with WayPoint72_WayPoint83
+[DEBUG 13:34:34] root Connecting WayPoint83 to WayPoint72 with WayPoint83_WayPoint72
+[DEBUG 13:34:34] root Connecting WayPoint83 to WayPoint94 with WayPoint83_WayPoint94
+[DEBUG 13:34:34] root Connecting WayPoint94 to WayPoint83 with WayPoint94_WayPoint83
+[DEBUG 13:34:34] root Connecting WayPoint94 to WayPoint105 with WayPoint94_WayPoint105
+[DEBUG 13:34:34] root Connecting WayPoint105 to WayPoint94 with WayPoint105_WayPoint94
+[DEBUG 13:34:34] root Connecting WayPoint105 to WayPoint116 with WayPoint105_WayPoint116
+[DEBUG 13:34:34] root Connecting WayPoint116 to WayPoint105 with WayPoint116_WayPoint105
+[DEBUG 13:34:34] root Connecting WayPoint7 to WayPoint18 with WayPoint7_WayPoint18
+[DEBUG 13:34:34] root Connecting WayPoint18 to WayPoint7 with WayPoint18_WayPoint7
+[DEBUG 13:34:34] root Connecting WayPoint18 to WayPoint29 with WayPoint18_WayPoint29
+[DEBUG 13:34:34] root Connecting WayPoint29 to WayPoint18 with WayPoint29_WayPoint18
+[DEBUG 13:34:34] root Connecting WayPoint29 to WayPoint40 with WayPoint29_WayPoint40
+[DEBUG 13:34:34] root Connecting WayPoint40 to WayPoint29 with WayPoint40_WayPoint29
+[DEBUG 13:34:34] root Connecting WayPoint40 to WayPoint51 with WayPoint40_WayPoint51
+[DEBUG 13:34:34] root Connecting WayPoint51 to WayPoint40 with WayPoint51_WayPoint40
+[DEBUG 13:34:34] root Connecting WayPoint51 to WayPoint62 with WayPoint51_WayPoint62
+[DEBUG 13:34:34] root Connecting WayPoint62 to WayPoint51 with WayPoint62_WayPoint51
+[DEBUG 13:34:34] root Connecting WayPoint62 to WayPoint73 with WayPoint62_WayPoint73
+[DEBUG 13:34:34] root Connecting WayPoint73 to WayPoint62 with WayPoint73_WayPoint62
+[DEBUG 13:34:34] root Connecting WayPoint73 to WayPoint84 with WayPoint73_WayPoint84
+[DEBUG 13:34:34] root Connecting WayPoint84 to WayPoint73 with WayPoint84_WayPoint73
+[DEBUG 13:34:34] root Connecting WayPoint84 to WayPoint95 with WayPoint84_WayPoint95
+[DEBUG 13:34:34] root Connecting WayPoint95 to WayPoint84 with WayPoint95_WayPoint84
+[DEBUG 13:34:34] root Connecting WayPoint95 to WayPoint106 with WayPoint95_WayPoint106
+[DEBUG 13:34:34] root Connecting WayPoint106 to WayPoint95 with WayPoint106_WayPoint95
+[DEBUG 13:34:34] root Connecting WayPoint106 to WayPoint117 with WayPoint106_WayPoint117
+[DEBUG 13:34:34] root Connecting WayPoint117 to WayPoint106 with WayPoint117_WayPoint106
+[DEBUG 13:34:34] root Connecting WayPoint8 to WayPoint19 with WayPoint8_WayPoint19
+[DEBUG 13:34:34] root Connecting WayPoint19 to WayPoint8 with WayPoint19_WayPoint8
+[DEBUG 13:34:34] root Connecting WayPoint19 to WayPoint30 with WayPoint19_WayPoint30
+[DEBUG 13:34:34] root Connecting WayPoint30 to WayPoint19 with WayPoint30_WayPoint19
+[DEBUG 13:34:34] root Connecting WayPoint30 to WayPoint41 with WayPoint30_WayPoint41
+[DEBUG 13:34:34] root Connecting WayPoint41 to WayPoint30 with WayPoint41_WayPoint30
+[DEBUG 13:34:34] root Connecting WayPoint41 to WayPoint52 with WayPoint41_WayPoint52
+[DEBUG 13:34:34] root Connecting WayPoint52 to WayPoint41 with WayPoint52_WayPoint41
+[DEBUG 13:34:34] root Connecting WayPoint52 to WayPoint63 with WayPoint52_WayPoint63
+[DEBUG 13:34:34] root Connecting WayPoint63 to WayPoint52 with WayPoint63_WayPoint52
+[DEBUG 13:34:34] root Connecting WayPoint63 to WayPoint74 with WayPoint63_WayPoint74
+[DEBUG 13:34:34] root Connecting WayPoint74 to WayPoint63 with WayPoint74_WayPoint63
+[DEBUG 13:34:34] root Connecting WayPoint74 to WayPoint85 with WayPoint74_WayPoint85
+[DEBUG 13:34:34] root Connecting WayPoint85 to WayPoint74 with WayPoint85_WayPoint74
+[DEBUG 13:34:34] root Connecting WayPoint85 to WayPoint96 with WayPoint85_WayPoint96
+[DEBUG 13:34:34] root Connecting WayPoint96 to WayPoint85 with WayPoint96_WayPoint85
+[DEBUG 13:34:34] root Connecting WayPoint96 to WayPoint107 with WayPoint96_WayPoint107
+[DEBUG 13:34:34] root Connecting WayPoint107 to WayPoint96 with WayPoint107_WayPoint96
+[DEBUG 13:34:34] root Connecting WayPoint107 to WayPoint118 with WayPoint107_WayPoint118
+[DEBUG 13:34:34] root Connecting WayPoint118 to WayPoint107 with WayPoint118_WayPoint107
+[DEBUG 13:34:34] root Connecting WayPoint9 to WayPoint20 with WayPoint9_WayPoint20
+[DEBUG 13:34:34] root Connecting WayPoint20 to WayPoint9 with WayPoint20_WayPoint9
+[DEBUG 13:34:34] root Connecting WayPoint20 to WayPoint31 with WayPoint20_WayPoint31
+[DEBUG 13:34:34] root Connecting WayPoint31 to WayPoint20 with WayPoint31_WayPoint20
+[DEBUG 13:34:34] root Connecting WayPoint31 to WayPoint42 with WayPoint31_WayPoint42
+[DEBUG 13:34:34] root Connecting WayPoint42 to WayPoint31 with WayPoint42_WayPoint31
+[DEBUG 13:34:34] root Connecting WayPoint42 to WayPoint53 with WayPoint42_WayPoint53
+[DEBUG 13:34:34] root Connecting WayPoint53 to WayPoint42 with WayPoint53_WayPoint42
+[DEBUG 13:34:34] root Connecting WayPoint53 to WayPoint64 with WayPoint53_WayPoint64
+[DEBUG 13:34:34] root Connecting WayPoint64 to WayPoint53 with WayPoint64_WayPoint53
+[DEBUG 13:34:34] root Connecting WayPoint64 to WayPoint75 with WayPoint64_WayPoint75
+[DEBUG 13:34:34] root Connecting WayPoint75 to WayPoint64 with WayPoint75_WayPoint64
+[DEBUG 13:34:34] root Connecting WayPoint75 to WayPoint86 with WayPoint75_WayPoint86
+[DEBUG 13:34:34] root Connecting WayPoint86 to WayPoint75 with WayPoint86_WayPoint75
+[DEBUG 13:34:34] root Connecting WayPoint86 to WayPoint97 with WayPoint86_WayPoint97
+[DEBUG 13:34:34] root Connecting WayPoint97 to WayPoint86 with WayPoint97_WayPoint86
+[DEBUG 13:34:34] root Connecting WayPoint97 to WayPoint108 with WayPoint97_WayPoint108
+[DEBUG 13:34:34] root Connecting WayPoint108 to WayPoint97 with WayPoint108_WayPoint97
+[DEBUG 13:34:34] root Connecting WayPoint108 to WayPoint119 with WayPoint108_WayPoint119
+[DEBUG 13:34:34] root Connecting WayPoint119 to WayPoint108 with WayPoint119_WayPoint108
+[DEBUG 13:34:34] root Connecting WayPoint10 to WayPoint21 with WayPoint10_WayPoint21
+[DEBUG 13:34:34] root Connecting WayPoint21 to WayPoint10 with WayPoint21_WayPoint10
+[DEBUG 13:34:34] root Connecting WayPoint21 to WayPoint32 with WayPoint21_WayPoint32
+[DEBUG 13:34:34] root Connecting WayPoint32 to WayPoint21 with WayPoint32_WayPoint21
+[DEBUG 13:34:34] root Connecting WayPoint32 to WayPoint43 with WayPoint32_WayPoint43
+[DEBUG 13:34:34] root Connecting WayPoint43 to WayPoint32 with WayPoint43_WayPoint32
+[DEBUG 13:34:34] root Connecting WayPoint43 to WayPoint54 with WayPoint43_WayPoint54
+[DEBUG 13:34:34] root Connecting WayPoint54 to WayPoint43 with WayPoint54_WayPoint43
+[DEBUG 13:34:34] root Connecting WayPoint54 to WayPoint65 with WayPoint54_WayPoint65
+[DEBUG 13:34:34] root Connecting WayPoint65 to WayPoint54 with WayPoint65_WayPoint54
+[DEBUG 13:34:34] root Connecting WayPoint65 to WayPoint76 with WayPoint65_WayPoint76
+[DEBUG 13:34:34] root Connecting WayPoint76 to WayPoint65 with WayPoint76_WayPoint65
+[DEBUG 13:34:34] root Connecting WayPoint76 to WayPoint87 with WayPoint76_WayPoint87
+[DEBUG 13:34:34] root Connecting WayPoint87 to WayPoint76 with WayPoint87_WayPoint76
+[DEBUG 13:34:34] root Connecting WayPoint87 to WayPoint98 with WayPoint87_WayPoint98
+[DEBUG 13:34:34] root Connecting WayPoint98 to WayPoint87 with WayPoint98_WayPoint87
+[DEBUG 13:34:34] root Connecting WayPoint98 to WayPoint109 with WayPoint98_WayPoint109
+[DEBUG 13:34:34] root Connecting WayPoint109 to WayPoint98 with WayPoint109_WayPoint98
+[DEBUG 13:34:34] root Connecting WayPoint109 to WayPoint120 with WayPoint109_WayPoint120
+[DEBUG 13:34:34] root Connecting WayPoint120 to WayPoint109 with WayPoint120_WayPoint109
+[DEBUG 13:34:34] root Connecting WayPoint11 to WayPoint22 with WayPoint11_WayPoint22
+[DEBUG 13:34:34] root Connecting WayPoint22 to WayPoint11 with WayPoint22_WayPoint11
+[DEBUG 13:34:34] root Connecting WayPoint22 to WayPoint33 with WayPoint22_WayPoint33
+[DEBUG 13:34:34] root Connecting WayPoint33 to WayPoint22 with WayPoint33_WayPoint22
+[DEBUG 13:34:34] root Connecting WayPoint33 to WayPoint44 with WayPoint33_WayPoint44
+[DEBUG 13:34:34] root Connecting WayPoint44 to WayPoint33 with WayPoint44_WayPoint33
+[DEBUG 13:34:34] root Connecting WayPoint44 to WayPoint55 with WayPoint44_WayPoint55
+[DEBUG 13:34:34] root Connecting WayPoint55 to WayPoint44 with WayPoint55_WayPoint44
+[DEBUG 13:34:34] root Connecting WayPoint55 to WayPoint66 with WayPoint55_WayPoint66
+[DEBUG 13:34:34] root Connecting WayPoint66 to WayPoint55 with WayPoint66_WayPoint55
+[DEBUG 13:34:34] root Connecting WayPoint66 to WayPoint77 with WayPoint66_WayPoint77
+[DEBUG 13:34:34] root Connecting WayPoint77 to WayPoint66 with WayPoint77_WayPoint66
+[DEBUG 13:34:34] root Connecting WayPoint77 to WayPoint88 with WayPoint77_WayPoint88
+[DEBUG 13:34:34] root Connecting WayPoint88 to WayPoint77 with WayPoint88_WayPoint77
+[DEBUG 13:34:34] root Connecting WayPoint88 to WayPoint99 with WayPoint88_WayPoint99
+[DEBUG 13:34:34] root Connecting WayPoint99 to WayPoint88 with WayPoint99_WayPoint88
+[DEBUG 13:34:34] root Connecting WayPoint99 to WayPoint110 with WayPoint99_WayPoint110
+[DEBUG 13:34:34] root Connecting WayPoint110 to WayPoint99 with WayPoint110_WayPoint99
+[DEBUG 13:34:34] root Connecting WayPoint110 to WayPoint121 with WayPoint110_WayPoint121
+[DEBUG 13:34:34] root Connecting WayPoint121 to WayPoint110 with WayPoint121_WayPoint110
+Returning warehouse-large with 121 nodes and 280 edges.
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4', 'agent_5', 'agent_6', 'agent_7', 'agent_8', 'agent_9']
+Goal states {'agent_0': 'WayPoint59', 'agent_1': 'WayPoint118', 'agent_2': 'WayPoint82', 'agent_3': 'WayPoint17', 'agent_4': 'WayPoint62', 'agent_5': 'WayPoint32', 'agent_6': 'WayPoint59', 'agent_7': 'WayPoint96', 'agent_8': 'WayPoint1', 'agent_9': 'WayPoint10'} 
+Initial states {'agent_0': 'WayPoint1', 'agent_1': 'WayPoint29', 'agent_2': 'WayPoint32', 'agent_3': 'WayPoint79', 'agent_4': 'WayPoint56', 'agent_5': 'WayPoint98', 'agent_6': 'WayPoint76', 'agent_7': 'WayPoint90', 'agent_8': 'WayPoint59', 'agent_9': 'WayPoint1'}
+[INFO 13:34:34] my_main Running Camas time limited episodes with a limit of 100
+[DEBUG 13:34:34] my_main Buffer scheme: {'state': {'vshape': (10,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 10}
+timesteps [120000, 80000, 40000, 0]
+[INFO 13:34:35] my_main Loading model from curriculum/curriculum_qmix__2022-04-10_22-13-34/120000
+[INFO 13:34:35] my_main Beginning training for 15010000 timesteps
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:118: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:118: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 13:34:36] my_main t_env: 120278 / 15010000
+[INFO 13:34:36] my_main Estimated time left: 52 seconds. Time passed: 0 seconds
+av test time: 111.86856441392821 (9.217163577002843), av step count 207.5625 (1311.18359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 13:34:48] my_main Saving models to results/models/qmix__2022-04-11_13-34-34/120278
+saving buffer (not PER) objects to results/models/qmix__2022-04-11_13-34-34/120278
+[INFO 13:34:48] my_main Recent Stats | t_env:     120278 | Episode:        1
+ep_length_mean:          278.0000	epsilon:                   0.2850	return_mean:              -7.2185	return_std:                0.0000
+test_ep_length_mean:     207.5625	test_reached_goal:       100.0000	test_return_mean:         -7.9671	test_return_std:           0.7590
+test_sim_time:           111.8686	
