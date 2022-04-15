@@ -345,6 +345,29 @@ def run_sss_curriculum(args,
             log_mac_weights(logger, mac, i)
             _save_model(args, logger, learner, i)
 
+    _gather_data(num_episodes,  buffer, sss_runner, logger, 1000)
+    # -- Train for 20e3 more steps -- 
+    for i in range(20000):
+        episode_sample = buffer.sample(args.batch_size)
+
+        # Truncate batch to only filled timesteps
+        max_ep_t = episode_sample.max_t_filled()
+        episode_sample = episode_sample[:, :max_ep_t]
+
+        if episode_sample.device != args.device:
+            episode_sample.to(args.device)
+
+        learner.train(episode_sample, i, i)
+        
+        if i % log_freq == 0:
+            tt, sc, gc = _test_env(main_runner, test_episodes)
+            logger.log_stat("Test_mean_sim_time", np.mean(tt), i)
+            logger.log_stat("Test_mean_step_count", np.mean(sc), i)
+            logger.log_stat("Test_mean_goal_found", np.mean(gc), i)
+            logger.console_logger.info(f'...logging at step {i}, mean sim time {np.mean(tt)}...')
+        
+        if i % agent_weight_log_freq == 0:
+            log_mac_weights(logger, mac, i)
     
     tdelta = time.time()-start_time
     logger.console_logger.info(f'...time taken for training: {datetime.timedelta(seconds=tdelta)}...')
@@ -360,8 +383,6 @@ def run_sss_curriculum(args,
     _save_model(args, logger, learner, i+1)
     
     
-        
-
 def save_curriculum_data(array_to_save, iteration=0):
     save_path = os.path.join(args.local_results_path, "curriculum", "ep_data", args.unique_token)
     os.makedirs(save_path, exist_ok=True)
