@@ -1,0 +1,190 @@
+[INFO 22:46:47] pymarl Running command 'my_main'
+[INFO 22:46:47] pymarl Started run with ID "472"
+[DEBUG 22:46:47] pymarl Starting Heartbeat
+[DEBUG 22:46:47] my_main Started
+[WARNING 22:46:47] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 22:46:47] my_main Experiment Parameters:
+[INFO 22:46:47] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': False,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'charlie_congestion': False,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 0,
+                    'goal_reward': 200,
+                    'map_name': 'supermarket-medium',
+                    'observation_type': 'context',
+                    'ptd_mean': 1,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'time-cost',
+                    'seed': 633395558,
+                    'time_multiplier': -20,
+                    'two_bands_only': True},
+    'epsilon_anneal_time': 3000000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 50000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 50000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 1.0,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.7,
+    'per_epsilon': 1.0,
+    'per_reward_power': 8,
+    'prioritised_replay': True,
+    'prioritised_replay_td': True,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'timelim',
+    'runner_log_interval': 50000,
+    'save_mac_weights': True,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 633395558,
+    't_max': 20010000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 50000,
+    'test_nepisode': 32,
+    'train_twice': True,
+    'use_cuda': False,
+    'use_tensorboard': True}
+
+[DEBUG 22:46:54] tensorflow Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+[DEBUG 22:46:54] h5py._conv Creating converter from 7 to 5
+[DEBUG 22:46:54] h5py._conv Creating converter from 5 to 7
+[DEBUG 22:46:54] h5py._conv Creating converter from 7 to 5
+[DEBUG 22:46:54] h5py._conv Creating converter from 5 to 7
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 1000, 'max_agents': 8, 'initial': {'agent_0': ('(0, 0)', '(4, 2)'), 'agent_1': ('(0, 0)', '(4, 0)'), 'agent_2': ('(1, 6)', '(3, 5)'), 'agent_3': ('(4, 5)', '(0, 6)'), 'agent_4': ('(0, 4)', '(4, 3)'), 'agent_5': ('(4, 7)', '(0, 6)'), 'agent_6': ('(4, 2)', '(0, 0)'), 'agent_7': ('(0, 3)', '(4, 4)')}, 'generator': 'supermarket', 'size': (8, 5), 'anna_map': True, 'time-lim': 150}
+[DEBUG 22:46:55] root Connecting (0, 0) to (0, 1) with e_(0, 0)_(0, 1)
+[DEBUG 22:46:55] root Connecting (0, 0) to (1, 0) with e_(0, 0)_(1, 0)
+[DEBUG 22:46:55] root Connecting (0, 1) to (0, 0) with e_(0, 1)_(0, 0)
+[DEBUG 22:46:55] root Connecting (0, 1) to (0, 2) with e_(0, 1)_(0, 2)
+[DEBUG 22:46:55] root Connecting (0, 1) to (1, 1) with e_(0, 1)_(1, 1)
+[DEBUG 22:46:55] root Connecting (0, 2) to (0, 1) with e_(0, 2)_(0, 1)
+[DEBUG 22:46:55] root Connecting (0, 2) to (0, 3) with e_(0, 2)_(0, 3)
+[DEBUG 22:46:55] root Connecting (0, 2) to (1, 2) with e_(0, 2)_(1, 2)
+[DEBUG 22:46:55] root Connecting (0, 3) to (0, 2) with e_(0, 3)_(0, 2)
+[DEBUG 22:46:55] root Connecting (0, 3) to (0, 4) with e_(0, 3)_(0, 4)
+[DEBUG 22:46:55] root Connecting (0, 3) to (1, 3) with e_(0, 3)_(1, 3)
+[DEBUG 22:46:55] root Connecting (0, 4) to (0, 3) with e_(0, 4)_(0, 3)
+[DEBUG 22:46:55] root Connecting (0, 4) to (0, 5) with e_(0, 4)_(0, 5)
+[DEBUG 22:46:55] root Connecting (0, 4) to (1, 4) with e_(0, 4)_(1, 4)
+[DEBUG 22:46:55] root Connecting (0, 5) to (0, 4) with e_(0, 5)_(0, 4)
+[DEBUG 22:46:55] root Connecting (0, 5) to (0, 6) with e_(0, 5)_(0, 6)
+[DEBUG 22:46:55] root Connecting (0, 5) to (1, 5) with e_(0, 5)_(1, 5)
+[DEBUG 22:46:55] root Connecting (0, 6) to (0, 5) with e_(0, 6)_(0, 5)
+[DEBUG 22:46:55] root Connecting (0, 6) to (0, 7) with e_(0, 6)_(0, 7)
+[DEBUG 22:46:55] root Connecting (0, 6) to (1, 6) with e_(0, 6)_(1, 6)
+[DEBUG 22:46:55] root Connecting (0, 7) to (0, 6) with e_(0, 7)_(0, 6)
+[DEBUG 22:46:55] root Connecting (0, 7) to (1, 7) with e_(0, 7)_(1, 7)
+[DEBUG 22:46:55] root Connecting (1, 0) to (0, 0) with e_(1, 0)_(0, 0)
+[DEBUG 22:46:55] root Connecting (1, 0) to (2, 0) with e_(1, 0)_(2, 0)
+[DEBUG 22:46:55] root Connecting (1, 1) to (0, 1) with e_(1, 1)_(0, 1)
+[DEBUG 22:46:55] root Connecting (1, 1) to (2, 1) with e_(1, 1)_(2, 1)
+[DEBUG 22:46:55] root Connecting (1, 2) to (0, 2) with e_(1, 2)_(0, 2)
+[DEBUG 22:46:55] root Connecting (1, 2) to (2, 2) with e_(1, 2)_(2, 2)
+[DEBUG 22:46:55] root Connecting (1, 3) to (0, 3) with e_(1, 3)_(0, 3)
+[DEBUG 22:46:55] root Connecting (1, 3) to (2, 3) with e_(1, 3)_(2, 3)
+[DEBUG 22:46:55] root Connecting (1, 4) to (0, 4) with e_(1, 4)_(0, 4)
+[DEBUG 22:46:55] root Connecting (1, 4) to (2, 4) with e_(1, 4)_(2, 4)
+[DEBUG 22:46:55] root Connecting (1, 5) to (0, 5) with e_(1, 5)_(0, 5)
+[DEBUG 22:46:55] root Connecting (1, 5) to (2, 5) with e_(1, 5)_(2, 5)
+[DEBUG 22:46:55] root Connecting (1, 6) to (0, 6) with e_(1, 6)_(0, 6)
+[DEBUG 22:46:55] root Connecting (1, 6) to (2, 6) with e_(1, 6)_(2, 6)
+[DEBUG 22:46:55] root Connecting (1, 7) to (0, 7) with e_(1, 7)_(0, 7)
+[DEBUG 22:46:55] root Connecting (1, 7) to (2, 7) with e_(1, 7)_(2, 7)
+[DEBUG 22:46:55] root Connecting (2, 0) to (1, 0) with e_(2, 0)_(1, 0)
+[DEBUG 22:46:55] root Connecting (2, 0) to (3, 0) with e_(2, 0)_(3, 0)
+[DEBUG 22:46:55] root Connecting (2, 1) to (1, 1) with e_(2, 1)_(1, 1)
+[DEBUG 22:46:55] root Connecting (2, 1) to (3, 1) with e_(2, 1)_(3, 1)
+[DEBUG 22:46:55] root Connecting (2, 2) to (1, 2) with e_(2, 2)_(1, 2)
+[DEBUG 22:46:55] root Connecting (2, 2) to (3, 2) with e_(2, 2)_(3, 2)
+[DEBUG 22:46:55] root Connecting (2, 3) to (1, 3) with e_(2, 3)_(1, 3)
+[DEBUG 22:46:55] root Connecting (2, 3) to (3, 3) with e_(2, 3)_(3, 3)
+[DEBUG 22:46:55] root Connecting (2, 4) to (1, 4) with e_(2, 4)_(1, 4)
+[DEBUG 22:46:55] root Connecting (2, 4) to (3, 4) with e_(2, 4)_(3, 4)
+[DEBUG 22:46:55] root Connecting (2, 5) to (1, 5) with e_(2, 5)_(1, 5)
+[DEBUG 22:46:55] root Connecting (2, 5) to (3, 5) with e_(2, 5)_(3, 5)
+[DEBUG 22:46:55] root Connecting (2, 6) to (1, 6) with e_(2, 6)_(1, 6)
+[DEBUG 22:46:55] root Connecting (2, 6) to (3, 6) with e_(2, 6)_(3, 6)
+[DEBUG 22:46:55] root Connecting (2, 7) to (1, 7) with e_(2, 7)_(1, 7)
+[DEBUG 22:46:55] root Connecting (2, 7) to (3, 7) with e_(2, 7)_(3, 7)
+[DEBUG 22:46:55] root Connecting (3, 0) to (2, 0) with e_(3, 0)_(2, 0)
+[DEBUG 22:46:55] root Connecting (3, 0) to (4, 0) with e_(3, 0)_(4, 0)
+[DEBUG 22:46:55] root Connecting (3, 1) to (2, 1) with e_(3, 1)_(2, 1)
+[DEBUG 22:46:55] root Connecting (3, 1) to (4, 1) with e_(3, 1)_(4, 1)
+[DEBUG 22:46:55] root Connecting (3, 2) to (2, 2) with e_(3, 2)_(2, 2)
+[DEBUG 22:46:55] root Connecting (3, 2) to (4, 2) with e_(3, 2)_(4, 2)
+[DEBUG 22:46:55] root Connecting (3, 3) to (2, 3) with e_(3, 3)_(2, 3)
+[DEBUG 22:46:55] root Connecting (3, 3) to (4, 3) with e_(3, 3)_(4, 3)
+[DEBUG 22:46:55] root Connecting (3, 4) to (2, 4) with e_(3, 4)_(2, 4)
+[DEBUG 22:46:55] root Connecting (3, 4) to (4, 4) with e_(3, 4)_(4, 4)
+[DEBUG 22:46:55] root Connecting (3, 5) to (2, 5) with e_(3, 5)_(2, 5)
+[DEBUG 22:46:55] root Connecting (3, 5) to (4, 5) with e_(3, 5)_(4, 5)
+[DEBUG 22:46:55] root Connecting (3, 6) to (2, 6) with e_(3, 6)_(2, 6)
+[DEBUG 22:46:55] root Connecting (3, 6) to (4, 6) with e_(3, 6)_(4, 6)
+[DEBUG 22:46:55] root Connecting (3, 7) to (2, 7) with e_(3, 7)_(2, 7)
+[DEBUG 22:46:55] root Connecting (3, 7) to (4, 7) with e_(3, 7)_(4, 7)
+[DEBUG 22:46:55] root Connecting (4, 0) to (3, 0) with e_(4, 0)_(3, 0)
+[DEBUG 22:46:55] root Connecting (4, 0) to (4, 1) with e_(4, 0)_(4, 1)
+[DEBUG 22:46:55] root Connecting (4, 1) to (3, 1) with e_(4, 1)_(3, 1)
+[DEBUG 22:46:55] root Connecting (4, 1) to (4, 0) with e_(4, 1)_(4, 0)
+[DEBUG 22:46:55] root Connecting (4, 1) to (4, 2) with e_(4, 1)_(4, 2)
+Only creating two congestion bands per edge
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4', 'agent_5', 'agent_6', 'agent_7']
+Goal states {'agent_0': '(4, 2)', 'agent_1': '(4, 0)', 'agent_2': '(3, 5)', 'agent_3': '(0, 6)', 'agent_4': '(4, 3)', 'agent_5': '(0, 6)', 'agent_6': '(0, 0)', 'agent_7': '(4, 4)'} 
+Initial states {'agent_0': '(0, 0)', 'agent_1': '(0, 0)', 'agent_2': '(1, 6)', 'agent_3': '(4, 5)', 'agent_4': '(0, 4)', 'agent_5': '(4, 7)', 'agent_6': '(4, 2)', 'agent_7': '(0, 3)'}
+[DEBUG 22:46:55] root Connecting (4, 2) to (3, 2) with e_(4, 2)_(3, 2)
+[DEBUG 22:46:55] root Connecting (4, 2) to (4, 1) with e_(4, 2)_(4, 1)
+[DEBUG 22:46:55] root Connecting (4, 2) to (4, 3) with e_(4, 2)_(4, 3)
+[DEBUG 22:46:55] root Connecting (4, 3) to (3, 3) with e_(4, 3)_(3, 3)
+[DEBUG 22:46:55] root Connecting (4, 3) to (4, 2) with e_(4, 3)_(4, 2)
+[DEBUG 22:46:55] root Connecting (4, 3) to (4, 4) with e_(4, 3)_(4, 4)
+[DEBUG 22:46:55] root Connecting (4, 4) to (3, 4) with e_(4, 4)_(3, 4)
+[DEBUG 22:46:55] root Connecting (4, 4) to (4, 3) with e_(4, 4)_(4, 3)
+[DEBUG 22:46:55] root Connecting (4, 4) to (4, 5) with e_(4, 4)_(4, 5)
+[DEBUG 22:46:55] root Connecting (4, 5) to (3, 5) with e_(4, 5)_(3, 5)
+[DEBUG 22:46:55] root Connecting (4, 5) to (4, 4) with e_(4, 5)_(4, 4)
+[DEBUG 22:46:55] root Connecting (4, 5) to (4, 6) with e_(4, 5)_(4, 6)
+[DEBUG 22:46:55] root Connecting (4, 6) to (3, 6) with e_(4, 6)_(3, 6)
+[DEBUG 22:46:55] root Connecting (4, 6) to (4, 5) with e_(4, 6)_(4, 5)
+[DEBUG 22:46:55] root Connecting (4, 6) to (4, 7) with e_(4, 6)_(4, 7)
+[DEBUG 22:46:55] root Connecting (4, 7) to (3, 7) with e_(4, 7)_(3, 7)
+[DEBUG 22:46:55] root Connecting (4, 7) to (4, 6) with e_(4, 7)_(4, 6)
+[INFO 22:46:55] my_main Running Camas time limited episodes with a limit of 150
+** Training twice after each episode **
+[DEBUG 22:46:56] my_main Buffer scheme: {'state': {'vshape': (8,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 8}
+ -- using prioritised replay --
