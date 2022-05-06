@@ -1,0 +1,1806 @@
+[INFO 19:21:02] pymarl Running command 'my_main'
+[INFO 19:21:02] pymarl Started run with ID "510"
+[DEBUG 19:21:02] my_main Started
+[INFO 19:21:02] my_main Experiment Parameters:
+[INFO 19:21:02] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': False,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'critic_lr': 0.0005,
+    'double_q': True,
+    'env': 'camas',
+    'env_args': {   'agent_count': 0,
+                    'charlie_congestion': False,
+                    'congestion': True,
+                    'debug': False,
+                    'dummy_actions': True,
+                    'episode_limit': 200,
+                    'goal_reward': 200,
+                    'map_name': 'grid-small',
+                    'observation_type': 'context',
+                    'ptd_mean': 1.0,
+                    'ptd_var': 0.1,
+                    'reward_scaling_factor': 100,
+                    'reward_type': 'time-cost',
+                    'seed': 422862513,
+                    'time_multiplier': -20,
+                    'two_bands_only': False},
+    'epsilon_anneal_time': 1000000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 50000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 50000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_last_action': True,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'per_alpha': 1.0,
+    'per_beta': 0.4,
+    'per_beta_anneal': 0.7,
+    'per_epsilon': 1.0,
+    'per_reward_power': 8,
+    'prioritised_replay': False,
+    'prioritised_replay_td': False,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'timelim',
+    'runner_log_interval': 50000,
+    'save_mac_weights': True,
+    'save_model': True,
+    'save_model_interval': 500000,
+    'save_replay': False,
+    'seed': 422862513,
+    't_max': 6000000,
+    'target_update_interval': 200,
+    'test_greedy': True,
+    'test_interval': 50000,
+    'test_nepisode': 32,
+    'train_twice': False,
+    'use_cuda': True,
+    'use_tensorboard': True}
+
+*** Creating Camas Zoo Env ***
+Map parameters: {'episode_timestep_limit': 200, 'max_agents': 10, 'initial': {'agent_0': ('(3, 4)', '(4, 2)'), 'agent_1': ('(4, 1)', '(4, 4)'), 'agent_2': ('(0, 4)', '(2, 0)'), 'agent_3': ('(1, 1)', '(2, 2)'), 'agent_4': ('(2, 1)', '(3, 3)'), 'agent_5': ('(3, 3)', '(0, 0)'), 'agent_6': ('(4, 2)', '(1, 2)'), 'agent_7': ('(0, 4)', '(4, 3)'), 'agent_8': ('(0, 1)', '(2, 4)'), 'agent_9': ('(4, 2)', '(1, 2)')}, 'generator': 'grid', 'size': (5, 5), 'anna_map': True, 'time-lim': 80}
+[DEBUG 19:21:02] root Connecting (0, 0) to (0, 1) with e_(0, 0)_(0, 1)
+[DEBUG 19:21:02] root Connecting (0, 0) to (1, 0) with e_(0, 0)_(1, 0)
+[DEBUG 19:21:02] root Connecting (0, 1) to (0, 0) with e_(0, 1)_(0, 0)
+[DEBUG 19:21:02] root Connecting (0, 1) to (0, 2) with e_(0, 1)_(0, 2)
+[DEBUG 19:21:02] root Connecting (0, 1) to (1, 1) with e_(0, 1)_(1, 1)
+[DEBUG 19:21:02] root Connecting (0, 2) to (0, 1) with e_(0, 2)_(0, 1)
+[DEBUG 19:21:02] root Connecting (0, 2) to (0, 3) with e_(0, 2)_(0, 3)
+[DEBUG 19:21:02] root Connecting (0, 2) to (1, 2) with e_(0, 2)_(1, 2)
+[DEBUG 19:21:02] root Connecting (0, 3) to (0, 2) with e_(0, 3)_(0, 2)
+[DEBUG 19:21:02] root Connecting (0, 3) to (0, 4) with e_(0, 3)_(0, 4)
+[DEBUG 19:21:02] root Connecting (0, 3) to (1, 3) with e_(0, 3)_(1, 3)
+[DEBUG 19:21:02] root Connecting (0, 4) to (0, 3) with e_(0, 4)_(0, 3)
+[DEBUG 19:21:02] root Connecting (0, 4) to (1, 4) with e_(0, 4)_(1, 4)
+[DEBUG 19:21:02] root Connecting (1, 0) to (0, 0) with e_(1, 0)_(0, 0)
+[DEBUG 19:21:02] root Connecting (1, 0) to (1, 1) with e_(1, 0)_(1, 1)
+[DEBUG 19:21:02] root Connecting (1, 0) to (2, 0) with e_(1, 0)_(2, 0)
+[DEBUG 19:21:02] root Connecting (1, 1) to (0, 1) with e_(1, 1)_(0, 1)
+[DEBUG 19:21:02] root Connecting (1, 1) to (1, 0) with e_(1, 1)_(1, 0)
+[DEBUG 19:21:02] root Connecting (1, 1) to (1, 2) with e_(1, 1)_(1, 2)
+[DEBUG 19:21:02] root Connecting (1, 1) to (2, 1) with e_(1, 1)_(2, 1)
+[DEBUG 19:21:02] root Connecting (1, 2) to (0, 2) with e_(1, 2)_(0, 2)
+[DEBUG 19:21:02] root Connecting (1, 2) to (1, 1) with e_(1, 2)_(1, 1)
+[DEBUG 19:21:02] root Connecting (1, 2) to (1, 3) with e_(1, 2)_(1, 3)
+[DEBUG 19:21:02] root Connecting (1, 2) to (2, 2) with e_(1, 2)_(2, 2)
+[DEBUG 19:21:02] root Connecting (1, 3) to (0, 3) with e_(1, 3)_(0, 3)
+[DEBUG 19:21:02] root Connecting (1, 3) to (1, 2) with e_(1, 3)_(1, 2)
+[DEBUG 19:21:02] root Connecting (1, 3) to (1, 4) with e_(1, 3)_(1, 4)
+[DEBUG 19:21:02] root Connecting (1, 3) to (2, 3) with e_(1, 3)_(2, 3)
+[DEBUG 19:21:02] root Connecting (1, 4) to (0, 4) with e_(1, 4)_(0, 4)
+[DEBUG 19:21:02] root Connecting (1, 4) to (1, 3) with e_(1, 4)_(1, 3)
+[DEBUG 19:21:02] root Connecting (1, 4) to (2, 4) with e_(1, 4)_(2, 4)
+[DEBUG 19:21:02] root Connecting (2, 0) to (1, 0) with e_(2, 0)_(1, 0)
+[DEBUG 19:21:02] root Connecting (2, 0) to (2, 1) with e_(2, 0)_(2, 1)
+[DEBUG 19:21:02] root Connecting (2, 0) to (3, 0) with e_(2, 0)_(3, 0)
+[DEBUG 19:21:02] root Connecting (2, 1) to (1, 1) with e_(2, 1)_(1, 1)
+[DEBUG 19:21:02] root Connecting (2, 1) to (2, 0) with e_(2, 1)_(2, 0)
+[DEBUG 19:21:02] root Connecting (2, 1) to (2, 2) with e_(2, 1)_(2, 2)
+[DEBUG 19:21:02] root Connecting (2, 1) to (3, 1) with e_(2, 1)_(3, 1)
+[DEBUG 19:21:02] root Connecting (2, 2) to (1, 2) with e_(2, 2)_(1, 2)
+[DEBUG 19:21:02] root Connecting (2, 2) to (2, 1) with e_(2, 2)_(2, 1)
+[DEBUG 19:21:02] root Connecting (2, 2) to (2, 3) with e_(2, 2)_(2, 3)
+[DEBUG 19:21:02] root Connecting (2, 2) to (3, 2) with e_(2, 2)_(3, 2)
+[DEBUG 19:21:02] root Connecting (2, 3) to (1, 3) with e_(2, 3)_(1, 3)
+[DEBUG 19:21:02] root Connecting (2, 3) to (2, 2) with e_(2, 3)_(2, 2)
+[DEBUG 19:21:02] root Connecting (2, 3) to (2, 4) with e_(2, 3)_(2, 4)
+[DEBUG 19:21:02] root Connecting (2, 3) to (3, 3) with e_(2, 3)_(3, 3)
+[DEBUG 19:21:02] root Connecting (2, 4) to (1, 4) with e_(2, 4)_(1, 4)
+[DEBUG 19:21:02] root Connecting (2, 4) to (2, 3) with e_(2, 4)_(2, 3)
+[DEBUG 19:21:02] root Connecting (2, 4) to (3, 4) with e_(2, 4)_(3, 4)
+[DEBUG 19:21:02] root Connecting (3, 0) to (2, 0) with e_(3, 0)_(2, 0)
+[DEBUG 19:21:02] root Connecting (3, 0) to (3, 1) with e_(3, 0)_(3, 1)
+[DEBUG 19:21:02] root Connecting (3, 0) to (4, 0) with e_(3, 0)_(4, 0)
+[DEBUG 19:21:02] root Connecting (3, 1) to (2, 1) with e_(3, 1)_(2, 1)
+[DEBUG 19:21:02] root Connecting (3, 1) to (3, 0) with e_(3, 1)_(3, 0)
+[DEBUG 19:21:02] root Connecting (3, 1) to (3, 2) with e_(3, 1)_(3, 2)
+[DEBUG 19:21:02] root Connecting (3, 1) to (4, 1) with e_(3, 1)_(4, 1)
+[DEBUG 19:21:02] root Connecting (3, 2) to (2, 2) with e_(3, 2)_(2, 2)
+[DEBUG 19:21:02] root Connecting (3, 2) to (3, 1) with e_(3, 2)_(3, 1)
+[DEBUG 19:21:02] root Connecting (3, 2) to (3, 3) with e_(3, 2)_(3, 3)
+[DEBUG 19:21:02] root Connecting (3, 2) to (4, 2) with e_(3, 2)_(4, 2)
+[DEBUG 19:21:02] root Connecting (3, 3) to (2, 3) with e_(3, 3)_(2, 3)
+[DEBUG 19:21:02] root Connecting (3, 3) to (3, 2) with e_(3, 3)_(3, 2)
+[DEBUG 19:21:02] root Connecting (3, 3) to (3, 4) with e_(3, 3)_(3, 4)
+[DEBUG 19:21:02] root Connecting (3, 3) to (4, 3) with e_(3, 3)_(4, 3)
+[DEBUG 19:21:02] root Connecting (3, 4) to (2, 4) with e_(3, 4)_(2, 4)
+[DEBUG 19:21:02] root Connecting (3, 4) to (3, 3) with e_(3, 4)_(3, 3)
+[DEBUG 19:21:02] root Connecting (3, 4) to (4, 4) with e_(3, 4)_(4, 4)
+[DEBUG 19:21:02] root Connecting (4, 0) to (3, 0) with e_(4, 0)_(3, 0)
+[DEBUG 19:21:02] root Connecting (4, 0) to (4, 1) with e_(4, 0)_(4, 1)
+[DEBUG 19:21:02] root Connecting (4, 1) to (3, 1) with e_(4, 1)_(3, 1)
+[DEBUG 19:21:02] root Connecting (4, 1) to (4, 0) with e_(4, 1)_(4, 0)
+[DEBUG 19:21:02] root Connecting (4, 1) to (4, 2) with e_(4, 1)_(4, 2)
+[DEBUG 19:21:02] root Connecting (4, 2) to (3, 2) with e_(4, 2)_(3, 2)
+[DEBUG 19:21:02] root Connecting (4, 2) to (4, 1) with e_(4, 2)_(4, 1)
+[DEBUG 19:21:02] root Connecting (4, 2) to (4, 3) with e_(4, 2)_(4, 3)
+[DEBUG 19:21:02] root Connecting (4, 3) to (3, 3) with e_(4, 3)_(3, 3)
+[DEBUG 19:21:02] root Connecting (4, 3) to (4, 2) with e_(4, 3)_(4, 2)
+[DEBUG 19:21:02] root Connecting (4, 3) to (4, 4) with e_(4, 3)_(4, 4)
+[DEBUG 19:21:02] root Connecting (4, 4) to (3, 4) with e_(4, 4)_(3, 4)
+[DEBUG 19:21:02] root Connecting (4, 4) to (4, 3) with e_(4, 4)_(4, 3)
+Possible agents ['agent_0', 'agent_1', 'agent_2', 'agent_3', 'agent_4', 'agent_5', 'agent_6', 'agent_7', 'agent_8', 'agent_9']
+Goal states {'agent_0': '(4, 2)', 'agent_1': '(4, 4)', 'agent_2': '(2, 0)', 'agent_3': '(2, 2)', 'agent_4': '(3, 3)', 'agent_5': '(0, 0)', 'agent_6': '(1, 2)', 'agent_7': '(4, 3)', 'agent_8': '(2, 4)', 'agent_9': '(1, 2)'} 
+Initial states {'agent_0': '(3, 4)', 'agent_1': '(4, 1)', 'agent_2': '(0, 4)', 'agent_3': '(1, 1)', 'agent_4': '(2, 1)', 'agent_5': '(3, 3)', 'agent_6': '(4, 2)', 'agent_7': '(0, 4)', 'agent_8': '(0, 1)', 'agent_9': '(4, 2)'}
+[INFO 19:21:02] my_main Running Camas time limited episodes with a limit of 80
+[DEBUG 19:21:02] my_main Buffer scheme: {'state': {'vshape': (10,)}, 'obs': {'vshape': 5, 'group': 'agents'}, 'actions': {'vshape': (1,), 'group': 'agents', 'dtype': torch.int64}, 'avail_actions': {'vshape': (5,), 'group': 'agents', 'dtype': torch.int32}, 'reward': {'vshape': (1,)}, 'terminated': {'vshape': (1,), 'dtype': torch.uint8}}, groups: {'agents': 10}
+[INFO 19:21:03] my_main Beginning training for 6000000 timesteps
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:118: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+/home/am-rutherford/repos/pymarl/src/components/episode_buffer.py:118: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+[INFO 19:21:04] my_main t_env: 176 / 6000000
+[INFO 19:21:04] my_main Estimated time left: 1 minutes, 4 seconds. Time passed: 0 seconds
+av test time: 195.78656179736697 (1683.12079202103), av step count 146.0625 (170.62109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:21:16] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/176
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/176
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:23:18] my_main Updated target network
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:24:10] my_main Recent Stats | t_env:      50108 | Episode:      284
+ep_length_mean:          176.0000	epsilon:                   1.0000	grad_norm:                 0.4066	loss:                      0.8416
+q_taken_mean:              0.0299	return_mean:              -1.2252	return_std:                0.0000	target_mean:               0.0276
+td_error_abs:              0.2907	test/reached_goal:       100.0000	test/sim_time_mean:      195.7866	test/sim_time_var:       1683.1208
+test_ep_length_mean:     146.0625	test_return_mean:        -19.1573	test_return_std:           8.2052	
+episode lim reached
+[INFO 19:24:10] my_main t_env: 50308 / 6000000
+[INFO 19:24:10] my_main Estimated time left: 6 hours, 8 minutes, 36 seconds. Time passed: 3 minutes, 6 seconds
+av test time: 128.04638644362035 (1808.9530993798596), av step count 155.4375 (221.05859375), percentage at goal 100.0 (0.0) 32 episodes
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:25:36] my_main Updated target network
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:27:21] my_main Recent Stats | t_env:     100156 | Episode:      574
+ep_length_mean:          176.2606	epsilon:                   0.9524	grad_norm:                 1.3915	loss:                      0.7771
+q_taken_mean:              0.0266	return_mean:              -6.6413	return_std:                5.0824	target_mean:               0.0213
+td_error_abs:              0.2735	test/reached_goal:       100.0000	test/sim_time_mean:      161.9165	test/sim_time_var:       1746.0369
+test_ep_length_mean:     150.7500	test_return_mean:        -12.3833	test_return_std:           8.3558	
+[INFO 19:27:22] my_main t_env: 100488 / 6000000
+[INFO 19:27:22] my_main Estimated time left: 6 hours, 15 minutes, 46 seconds. Time passed: 6 minutes, 18 seconds
+av test time: 101.4475664999426 (118.40959468450805), av step count 131.125 (138.734375), percentage at goal 100.0 (0.0) 32 episodes
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:27:48] my_main Updated target network
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:29:48] my_main Updated target network
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:30:31] my_main Recent Stats | t_env:     150268 | Episode:      872
+ep_length_mean:          174.9870	epsilon:                   0.9047	grad_norm:                 1.3530	loss:                      0.6710
+q_taken_mean:              0.0196	return_mean:              -8.0463	return_std:                6.8669	target_mean:               0.0150
+td_error_abs:              0.2596	test/reached_goal:       100.0000	test/sim_time_mean:      141.7602	test/sim_time_var:       1203.4945
+test_ep_length_mean:     144.2083	test_return_mean:         -8.3520	test_return_std:           6.2960	
+[INFO 19:30:32] my_main t_env: 150602 / 6000000
+[INFO 19:30:32] my_main Estimated time left: 6 hours, 9 minutes, 48 seconds. Time passed: 9 minutes, 28 seconds
+av test time: 158.3575941809013 (3126.039815794206), av step count 111.5625 (118.43359375), percentage at goal 100.0 (0.0) 32 episodes
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:31:57] my_main Updated target network
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:33:41] my_main Recent Stats | t_env:     200436 | Episode:     1178
+ep_length_mean:          173.2822	epsilon:                   0.8571	grad_norm:                 1.0747	loss:                      0.6664
+q_taken_mean:              0.0134	return_mean:              -8.4477	return_std:                7.8324	target_mean:               0.0101
+td_error_abs:              0.2518	test/reached_goal:       100.0000	test/sim_time_mean:      145.9095	test/sim_time_var:       1684.1308
+test_ep_length_mean:     136.0469	test_return_mean:         -9.1819	test_return_std:           7.5175	
+[INFO 19:33:42] my_main t_env: 200700 / 6000000
+[INFO 19:33:42] my_main Estimated time left: 6 hours, 5 minutes, 41 seconds. Time passed: 12 minutes, 38 seconds
+av test time: 199.85523187327288 (2597.759440232083), av step count 102.25 (190.9375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:34:03] my_main Updated target network
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:35:59] my_main Updated target network
+episode lim reached
+episode lim reached
+[INFO 19:36:50] my_main Recent Stats | t_env:     250604 | Episode:     1490
+ep_length_mean:          171.3695	epsilon:                   0.8095	grad_norm:                 1.0130	loss:                      0.6005
+q_taken_mean:              0.0088	return_mean:              -8.7079	return_std:                8.4218	target_mean:               0.0058
+td_error_abs:              0.2443	test/reached_goal:       100.0000	test/sim_time_mean:      156.6987	test/sim_time_var:       1866.8565
+test_ep_length_mean:     129.2875	test_return_mean:        -11.3397	test_return_std:           8.0527	
+[INFO 19:36:50] my_main t_env: 250754 / 6000000
+[INFO 19:36:50] my_main Estimated time left: 6 hours, 1 minutes, 11 seconds. Time passed: 15 minutes, 46 seconds
+av test time: 222.20070835005282 (2308.277677928818), av step count 110.4375 (60.93359375), percentage at goal 100.0 (0.0) 32 episodes
+episode lim reached
+episode lim reached
+[INFO 19:38:01] my_main Updated target network
+episode lim reached
+episode lim reached
+episode lim reached
+episode lim reached
+[INFO 19:39:54] my_main Updated target network
+episode lim reached
+[INFO 19:40:00] my_main Recent Stats | t_env:     300636 | Episode:     1810
+ep_length_mean:          168.3586	epsilon:                   0.7619	grad_norm:                 1.0171	loss:                      0.6238
+q_taken_mean:              0.0001	return_mean:             -11.0689	return_std:               10.9038	target_mean:              -0.0023
+td_error_abs:              0.2368	test/reached_goal:       100.0000	test/sim_time_mean:      161.9815	test/sim_time_var:       1991.8879
+test_ep_length_mean:     122.1625	test_return_mean:        -12.3963	test_return_std:           8.3335	
+[INFO 19:40:00] my_main t_env: 300806 / 6000000
+[INFO 19:40:00] my_main Estimated time left: 6 hours, 44 seconds. Time passed: 18 minutes, 57 seconds
+av test time: 210.34498566542197 (4297.0176038205655), av step count 106.875 (128.734375), percentage at goal 100.0 (0.0) 32 episodes
+episode lim reached
+episode lim reached
+[INFO 19:41:54] my_main Updated target network
+episode lim reached
+[INFO 19:43:10] my_main t_env: 350810 / 6000000
+[INFO 19:43:10] my_main Estimated time left: 5 hours, 57 minutes, 8 seconds. Time passed: 22 minutes, 6 seconds
+av test time: 171.2584570601452 (1729.2990453074967), av step count 117.5625 (121.68359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:43:20] my_main Recent Stats | t_env:     350810 | Episode:     2139
+ep_length_mean:          160.3392	epsilon:                   0.6669	grad_norm:                 0.6404	loss:                      0.5561
+q_taken_mean:             -0.0093	return_mean:             -12.1905	return_std:               11.7362	target_mean:              -0.0100
+td_error_abs:              0.2387	test/reached_goal:       100.0000	test/sim_time_mean:      192.4034	test/sim_time_var:       2811.6787
+test_ep_length_mean:     109.7375	test_return_mean:        -18.4807	test_return_std:          10.4824	
+episode lim reached
+[INFO 19:43:53] my_main Updated target network
+episode lim reached
+episode lim reached
+[INFO 19:45:41] my_main Updated target network
+episode lim reached
+[INFO 19:46:23] my_main t_env: 400896 / 6000000
+[INFO 19:46:23] my_main Estimated time left: 5 hours, 59 minutes, 26 seconds. Time passed: 25 minutes, 19 seconds
+av test time: 129.2268478568073 (2626.4935409977797), av step count 119.8125 (213.33984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:46:32] my_main Recent Stats | t_env:     400896 | Episode:     2480
+ep_length_mean:          156.0816	epsilon:                   0.6193	grad_norm:                 0.9176	loss:                      0.5705
+q_taken_mean:             -0.0199	return_mean:             -12.9467	return_std:               12.0198	target_mean:              -0.0190
+td_error_abs:              0.2474	test/reached_goal:       100.0000	test/sim_time_mean:      186.5772	test/sim_time_var:       2711.7695
+test_ep_length_mean:     111.3875	test_return_mean:        -17.3154	test_return_std:          10.2959	
+[INFO 19:47:35] my_main Updated target network
+[INFO 19:49:22] my_main Updated target network
+[INFO 19:49:37] my_main t_env: 450940 / 6000000
+[INFO 19:49:37] my_main Estimated time left: 5 hours, 58 minutes, 26 seconds. Time passed: 28 minutes, 33 seconds
+av test time: 108.38335150792491 (740.055131505485), av step count 125.0625 (79.74609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:49:46] my_main Recent Stats | t_env:     450940 | Episode:     2828
+ep_length_mean:          152.0987	epsilon:                   0.5717	grad_norm:                 1.2691	loss:                      0.5576
+q_taken_mean:             -0.0318	return_mean:             -13.0898	return_std:               12.0561	target_mean:              -0.0318
+td_error_abs:              0.2627	test/reached_goal:       100.0000	test/sim_time_mean:      168.2829	test/sim_time_var:       2340.2286
+test_ep_length_mean:     115.9500	test_return_mean:        -13.6566	test_return_std:           9.3454	
+[INFO 19:51:17] my_main Updated target network
+[INFO 19:52:49] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/500242
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/500242
+[INFO 19:52:52] my_main t_env: 501012 / 6000000
+[INFO 19:52:52] my_main Estimated time left: 5 hours, 56 minutes, 57 seconds. Time passed: 31 minutes, 48 seconds
+av test time: 97.46844020717253 (37.82014802737165), av step count 128.25 (297.1875), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:53:02] my_main Recent Stats | t_env:     501012 | Episode:     3180
+ep_length_mean:          148.3596	epsilon:                   0.5242	grad_norm:                 1.4650	loss:                      0.6014
+q_taken_mean:             -0.0444	return_mean:             -11.8403	return_std:               11.6889	target_mean:              -0.0433
+td_error_abs:              0.2819	test/reached_goal:       100.0000	test/sim_time_mean:      143.3364	test/sim_time_var:       1886.1371
+test_ep_length_mean:     119.5125	test_return_mean:         -8.6673	test_return_std:           7.6696	
+episode lim reached
+[INFO 19:53:13] my_main Updated target network
+[INFO 19:55:01] my_main Updated target network
+episode lim reached
+[INFO 19:56:07] my_main t_env: 551136 / 6000000
+[INFO 19:56:07] my_main Estimated time left: 5 hours, 53 minutes, 33 seconds. Time passed: 35 minutes, 3 seconds
+av test time: 104.2198443538377 (367.23779266723), av step count 140.625 (292.859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:56:18] my_main Recent Stats | t_env:     551136 | Episode:     3524
+ep_length_mean:          146.2190	epsilon:                   0.4765	grad_norm:                 2.2796	loss:                      0.5223
+q_taken_mean:             -0.0595	return_mean:              -9.5979	return_std:               10.8059	target_mean:              -0.0557
+td_error_abs:              0.2953	test/reached_goal:       100.0000	test/sim_time_mean:      122.1114	test/sim_time_var:       1100.1811
+test_ep_length_mean:     126.2625	test_return_mean:         -4.4223	test_return_std:           5.8141	
+[INFO 19:57:01] my_main Updated target network
+[INFO 19:58:46] my_main Updated target network
+[INFO 19:59:25] my_main t_env: 601276 / 6000000
+[INFO 19:59:25] my_main Estimated time left: 5 hours, 54 minutes, 24 seconds. Time passed: 38 minutes, 21 seconds
+av test time: 96.55012306556844 (295.77049605047756), av step count 120.25 (229.9375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 19:59:35] my_main Recent Stats | t_env:     601276 | Episode:     3877
+ep_length_mean:          144.1367	epsilon:                   0.4289	grad_norm:                 2.9913	loss:                      0.5469
+q_taken_mean:             -0.0628	return_mean:              -7.2239	return_std:                9.6929	target_mean:              -0.0620
+td_error_abs:              0.3172	test/reached_goal:       100.0000	test/sim_time_mean:      107.1697	test/sim_time_var:       813.4754
+test_ep_length_mean:     126.8000	test_return_mean:         -1.4339	test_return_std:           4.8386	
+[INFO 20:00:41] my_main Updated target network
+[INFO 20:02:23] my_main Updated target network
+[INFO 20:02:41] my_main t_env: 651358 / 6000000
+[INFO 20:02:41] my_main Estimated time left: 5 hours, 50 minutes, 7 seconds. Time passed: 41 minutes, 37 seconds
+av test time: 97.13403144521945 (20.820533390052844), av step count 150.5 (165.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:02:55] my_main Recent Stats | t_env:     651358 | Episode:     4236
+ep_length_mean:          142.6615	epsilon:                   0.3813	grad_norm:                 2.8023	loss:                      0.5178
+q_taken_mean:             -0.0660	return_mean:              -4.8462	return_std:                8.6731	target_mean:              -0.0655
+td_error_abs:              0.3196	test/reached_goal:       100.0000	test/sim_time_mean:      100.7512	test/sim_time_var:       292.3408
+test_ep_length_mean:     132.9375	test_return_mean:         -0.1502	test_return_std:           2.9711	
+[INFO 20:04:21] my_main Updated target network
+[INFO 20:06:01] my_main Updated target network
+[INFO 20:06:01] my_main t_env: 701388 / 6000000
+[INFO 20:06:01] my_main Estimated time left: 5 hours, 53 minutes, 9 seconds. Time passed: 44 minutes, 58 seconds
+av test time: 97.67095663169198 (71.86958655852843), av step count 145.875 (290.984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:06:15] my_main Recent Stats | t_env:     701388 | Episode:     4601
+ep_length_mean:          141.3143	epsilon:                   0.3338	grad_norm:                 2.9070	loss:                      0.5302
+q_taken_mean:             -0.0651	return_mean:              -3.0955	return_std:                7.8242	target_mean:              -0.0651
+td_error_abs:              0.3258	test/reached_goal:       100.0000	test/sim_time_mean:       98.6087	test/sim_time_var:       158.7037
+test_ep_length_mean:     137.1000	test_return_mean:          0.2783	test_return_std:           2.2221	
+[INFO 20:07:58] my_main Updated target network
+[INFO 20:09:23] my_main t_env: 751392 / 6000000
+[INFO 20:09:23] my_main Estimated time left: 5 hours, 53 minutes, 31 seconds. Time passed: 48 minutes, 20 seconds
+av test time: 92.01206991567956 (222.56516178580793), av step count 117.0625 (329.74609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:09:33] my_main Recent Stats | t_env:     751392 | Episode:     4977
+ep_length_mean:          139.4622	epsilon:                   0.2863	grad_norm:                 4.0020	loss:                      0.5156
+q_taken_mean:             -0.0659	return_mean:              -1.9534	return_std:                6.8620	target_mean:              -0.0624
+td_error_abs:              0.3329	test/reached_goal:       100.0000	test/sim_time_mean:       97.5174	test/sim_time_var:       195.6527
+test_ep_length_mean:     134.8625	test_return_mean:          0.4965	test_return_std:           2.5728	
+[INFO 20:09:43] my_main Updated target network
+[INFO 20:11:19] my_main Updated target network
+[INFO 20:12:45] my_main t_env: 801444 / 6000000
+[INFO 20:12:45] my_main Estimated time left: 5 hours, 49 minutes, 28 seconds. Time passed: 51 minutes, 42 seconds
+av test time: 100.20287438879863 (367.00825816677656), av step count 121.375 (207.859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:12:55] my_main Recent Stats | t_env:     801444 | Episode:     5381
+ep_length_mean:          135.0986	epsilon:                   0.2387	grad_norm:                 4.3053	loss:                      0.5065
+q_taken_mean:             -0.0691	return_mean:              -1.6879	return_std:                6.9510	target_mean:              -0.0654
+td_error_abs:              0.3401	test/reached_goal:       100.0000	test/sim_time_mean:       96.7140	test/sim_time_var:       195.6068
+test_ep_length_mean:     131.0125	test_return_mean:          0.6572	test_return_std:           2.5726	
+[INFO 20:13:06] my_main Updated target network
+[INFO 20:14:36] my_main Updated target network
+[INFO 20:16:05] my_main Updated target network
+[INFO 20:16:08] my_main t_env: 851446 / 6000000
+[INFO 20:16:08] my_main Estimated time left: 5 hours, 48 minutes, 17 seconds. Time passed: 55 minutes, 4 seconds
+av test time: 98.46419088844854 (733.7638593435231), av step count 93.4375 (319.55859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:16:17] my_main Recent Stats | t_env:     851446 | Episode:     5809
+ep_length_mean:          130.0560	epsilon:                   0.1912	grad_norm:                 4.1230	loss:                      0.5525
+q_taken_mean:             -0.0757	return_mean:              -1.6028	return_std:                7.1382	target_mean:              -0.0711
+td_error_abs:              0.3388	test/reached_goal:       100.0000	test/sim_time_mean:       97.0968	test/sim_time_var:       283.2055
+test_ep_length_mean:     125.6500	test_return_mean:          0.5806	test_return_std:           2.9682	
+[INFO 20:17:40] my_main Updated target network
+[INFO 20:19:06] my_main Updated target network
+[INFO 20:19:32] my_main t_env: 901540 / 6000000
+[INFO 20:19:32] my_main Estimated time left: 5 hours, 46 minutes, 12 seconds. Time passed: 58 minutes, 29 seconds
+av test time: 118.57002954191178 (2608.780565082422), av step count 95.375 (341.609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:19:41] my_main Recent Stats | t_env:     901540 | Episode:     6263
+ep_length_mean:          124.2231	epsilon:                   0.1436	grad_norm:                 4.3692	loss:                      0.5630
+q_taken_mean:             -0.0792	return_mean:              -1.5810	return_std:                7.2622	target_mean:              -0.0737
+td_error_abs:              0.3486	test/reached_goal:       100.0000	test/sim_time_mean:      101.3840	test/sim_time_var:       800.7975
+test_ep_length_mean:     114.6250	test_return_mean:         -0.2768	test_return_std:           4.8287	
+[INFO 20:20:38] my_main Updated target network
+[INFO 20:21:56] my_main Updated target network
+[INFO 20:23:02] my_main t_env: 951576 / 6000000
+[INFO 20:23:02] my_main Estimated time left: 5 hours, 52 minutes, 21 seconds. Time passed: 1 hours, 1 minutes, 58 seconds
+av test time: 104.62414741271553 (1821.4301231668678), av step count 78.0625 (272.62109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:23:08] my_main Recent Stats | t_env:     951576 | Episode:     6778
+ep_length_mean:          116.2408	epsilon:                   0.0961	grad_norm:                 4.3632	loss:                      0.5637
+q_taken_mean:             -0.0962	return_mean:              -1.4554	return_std:                7.6070	target_mean:              -0.0878
+td_error_abs:              0.3564	test/reached_goal:       100.0000	test/sim_time_mean:      102.7747	test/sim_time_var:       1150.7096
+test_ep_length_mean:     101.0625	test_return_mean:         -0.5549	test_return_std:           6.1967	
+[INFO 20:23:17] my_main Updated target network
+[INFO 20:24:28] my_main Updated target network
+[INFO 20:25:41] my_main Updated target network
+[INFO 20:26:29] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/1000310
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/1000310
+[INFO 20:26:35] my_main t_env: 1001616 / 6000000
+[INFO 20:26:35] my_main Estimated time left: 5 hours, 55 minutes, 10 seconds. Time passed: 1 hours, 5 minutes, 31 seconds
+av test time: 112.80054642157467 (1548.8842887086519), av step count 92.9375 (181.74609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:26:43] my_main Recent Stats | t_env:    1001616 | Episode:     7349
+ep_length_mean:          107.1701	epsilon:                   0.0500	grad_norm:                 3.1972	loss:                      0.5522
+q_taken_mean:             -0.0776	return_mean:              -1.5239	return_std:                8.2854	target_mean:              -0.0727
+td_error_abs:              0.3596	test/reached_goal:       100.0000	test/sim_time_mean:      106.9324	test/sim_time_var:       1415.9734
+test_ep_length_mean:      96.2375	test_return_mean:         -1.3865	test_return_std:           7.1742	
+[INFO 20:27:03] my_main Updated target network
+[INFO 20:28:11] my_main Updated target network
+[INFO 20:29:20] my_main Updated target network
+[INFO 20:30:09] my_main t_env: 1051624 / 6000000
+[INFO 20:30:09] my_main Estimated time left: 5 hours, 52 minutes, 4 seconds. Time passed: 1 hours, 9 minutes, 5 seconds
+av test time: 69.5314264692487 (365.40552603726553), av step count 81.25 (81.6875), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:30:15] my_main Recent Stats | t_env:    1051624 | Episode:     7941
+ep_length_mean:           99.2865	epsilon:                   0.0500	grad_norm:                 2.3297	loss:                      0.5815
+q_taken_mean:             -0.0489	return_mean:              -0.9125	return_std:                8.2626	target_mean:              -0.0478
+td_error_abs:              0.3643	test/reached_goal:       100.0000	test/sim_time_mean:      100.7981	test/sim_time_var:       1415.6529
+test_ep_length_mean:      88.2125	test_return_mean:         -0.1596	test_return_std:           7.1726	
+[INFO 20:30:36] my_main Updated target network
+[INFO 20:31:45] my_main Updated target network
+[INFO 20:32:52] my_main Updated target network
+[INFO 20:33:45] my_main t_env: 1101628 / 6000000
+[INFO 20:33:45] my_main Estimated time left: 5 hours, 52 minutes, 43 seconds. Time passed: 1 hours, 12 minutes, 41 seconds
+av test time: 63.16861883441104 (332.76017721704216), av step count 74.0625 (48.87109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:33:51] my_main Recent Stats | t_env:    1101628 | Episode:     8558
+ep_length_mean:           92.1298	epsilon:                   0.0500	grad_norm:                 2.2967	loss:                      0.5371
+q_taken_mean:             -0.0245	return_mean:               0.4662	return_std:                7.8415	target_mean:              -0.0226
+td_error_abs:              0.3674	test/reached_goal:       100.0000	test/sim_time_mean:       93.7390	test/sim_time_var:       1335.4521
+test_ep_length_mean:      84.3375	test_return_mean:          1.2522	test_return_std:           6.8187	
+[INFO 20:34:04] my_main Updated target network
+[INFO 20:35:10] my_main Updated target network
+[INFO 20:36:15] my_main Updated target network
+[INFO 20:37:18] my_main Updated target network
+[INFO 20:37:20] my_main t_env: 1151636 / 6000000
+[INFO 20:37:20] my_main Estimated time left: 5 hours, 48 minutes, 3 seconds. Time passed: 1 hours, 16 minutes, 16 seconds
+av test time: 61.710351557353576 (605.7309230439749), av step count 72.3125 (58.52734375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:37:28] my_main Recent Stats | t_env:    1151636 | Episode:     9207
+ep_length_mean:           85.4727	epsilon:                   0.0500	grad_norm:                 2.9185	loss:                      0.5552
+q_taken_mean:              0.0026	return_mean:               2.0837	return_std:                7.4357	target_mean:               0.0001
+td_error_abs:              0.3883	test/reached_goal:       100.0000	test/sim_time_mean:       82.3670	test/sim_time_var:       934.8422
+test_ep_length_mean:      79.7250	test_return_mean:          3.5266	test_return_std:           5.7601	
+[INFO 20:38:29] my_main Updated target network
+[INFO 20:39:32] my_main Updated target network
+[INFO 20:40:34] my_main Updated target network
+[INFO 20:40:56] my_main t_env: 1201638 / 6000000
+[INFO 20:40:56] my_main Estimated time left: 5 hours, 45 minutes, 49 seconds. Time passed: 1 hours, 19 minutes, 53 seconds
+av test time: 49.8815707133351 (407.19186097558793), av step count 68.25 (72.1875), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:41:02] my_main Recent Stats | t_env:    1201638 | Episode:     9871
+ep_length_mean:           81.1021	epsilon:                   0.0500	grad_norm:                 4.1015	loss:                      0.5369
+q_taken_mean:              0.0519	return_mean:               3.7889	return_std:                6.7414	target_mean:               0.0440
+td_error_abs:              0.4021	test/reached_goal:       100.0000	test/sim_time_mean:       71.4185	test/sim_time_var:       651.9946
+test_ep_length_mean:      77.7625	test_return_mean:          5.7163	test_return_std:           4.8602	
+[INFO 20:41:42] my_main Updated target network
+[INFO 20:42:40] my_main Updated target network
+[INFO 20:43:39] my_main Updated target network
+[INFO 20:44:32] my_main t_env: 1251640 / 6000000
+[INFO 20:44:32] my_main Estimated time left: 5 hours, 41 minutes, 32 seconds. Time passed: 1 hours, 23 minutes, 28 seconds
+av test time: 42.40592147633422 (194.4436730571658), av step count 59.375 (18.609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:44:38] my_main Recent Stats | t_env:    1251640 | Episode:    10593
+ep_length_mean:           77.4259	epsilon:                   0.0500	grad_norm:                 4.9057	loss:                      0.5489
+q_taken_mean:              0.0658	return_mean:               5.7804	return_std:                5.9840	target_mean:               0.0547
+td_error_abs:              0.4116	test/reached_goal:       100.0000	test/sim_time_mean:       57.3396	test/sim_time_var:       381.1064
+test_ep_length_mean:      71.0500	test_return_mean:          8.5321	test_return_std:           3.8437	
+[INFO 20:44:40] my_main Updated target network
+[INFO 20:45:36] my_main Updated target network
+[INFO 20:46:30] my_main Updated target network
+[INFO 20:47:22] my_main Updated target network
+[INFO 20:48:05] my_main t_env: 1301676 / 6000000
+[INFO 20:48:05] my_main Estimated time left: 5 hours, 33 minutes, 50 seconds. Time passed: 1 hours, 27 minutes, 2 seconds
+av test time: 47.583081475126875 (196.26551408785747), av step count 61.375 (53.109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:48:10] my_main Recent Stats | t_env:    1301676 | Episode:    11369
+ep_length_mean:           73.4272	epsilon:                   0.0500	grad_norm:                 4.9186	loss:                      0.4731
+q_taken_mean:              0.0817	return_mean:               7.4534	return_std:                5.4160	target_mean:               0.0707
+td_error_abs:              0.4051	test/reached_goal:       100.0000	test/sim_time_mean:       52.9499	test/sim_time_var:       347.2784
+test_ep_length_mean:      67.0750	test_return_mean:          9.4100	test_return_std:           3.6394	
+[INFO 20:48:20] my_main Updated target network
+[INFO 20:49:10] my_main Updated target network
+[INFO 20:50:04] my_main Updated target network
+[INFO 20:50:57] my_main Updated target network
+[INFO 20:51:27] my_main t_env: 1351702 / 6000000
+[INFO 20:51:27] my_main Estimated time left: 5 hours, 12 minutes, 35 seconds. Time passed: 1 hours, 30 minutes, 24 seconds
+av test time: 45.92252612285174 (304.816269206366), av step count 59.25 (23.4375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:51:32] my_main Recent Stats | t_env:    1351702 | Episode:    12116
+ep_length_mean:           70.6123	epsilon:                   0.0500	grad_norm:                 4.9422	loss:                      0.4617
+q_taken_mean:              0.0902	return_mean:               8.0283	return_std:                5.4871	target_mean:               0.0793
+td_error_abs:              0.3995	test/reached_goal:       100.0000	test/sim_time_mean:       49.5007	test/sim_time_var:       341.6896
+test_ep_length_mean:      64.1125	test_return_mean:         10.0999	test_return_std:           3.6081	
+[INFO 20:51:54] my_main Updated target network
+[INFO 20:52:47] my_main Updated target network
+[INFO 20:53:38] my_main Updated target network
+[INFO 20:54:25] my_main Updated target network
+[INFO 20:54:49] my_main t_env: 1401720 / 6000000
+[INFO 20:54:49] my_main Estimated time left: 5 hours, 8 minutes, 49 seconds. Time passed: 1 hours, 33 minutes, 45 seconds
+av test time: 43.53140493462354 (166.14873998176685), av step count 56.8125 (14.21484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:54:54] my_main Recent Stats | t_env:    1401720 | Episode:    12898
+ep_length_mean:           67.9939	epsilon:                   0.0500	grad_norm:                 4.5229	loss:                      0.4552
+q_taken_mean:              0.1211	return_mean:               8.4586	return_std:                5.4157	target_mean:               0.1116
+td_error_abs:              0.3791	test/reached_goal:       100.0000	test/sim_time_mean:       45.8649	test/sim_time_var:       253.7732
+test_ep_length_mean:      61.0125	test_return_mean:         10.8270	test_return_std:           3.1393	
+[INFO 20:55:18] my_main Updated target network
+[INFO 20:56:07] my_main Updated target network
+[INFO 20:56:55] my_main Updated target network
+[INFO 20:57:42] my_main Updated target network
+[INFO 20:58:11] my_main t_env: 1451776 / 6000000
+[INFO 20:58:11] my_main Estimated time left: 5 hours, 6 minutes, 4 seconds. Time passed: 1 hours, 37 minutes, 7 seconds
+av test time: 46.0852811467137 (424.9370551862346), av step count 58.0625 (23.37109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 20:58:17] my_main Recent Stats | t_env:    1451776 | Episode:    13722
+ep_length_mean:           65.0825	epsilon:                   0.0500	grad_norm:                 3.4036	loss:                      0.4181
+q_taken_mean:              0.1527	return_mean:               9.1022	return_std:                5.1516	target_mean:               0.1471
+td_error_abs:              0.3587	test/reached_goal:       100.0000	test/sim_time_mean:       45.1056	test/sim_time_var:       257.3223
+test_ep_length_mean:      58.9750	test_return_mean:         10.9789	test_return_std:           3.1567	
+[INFO 20:58:34] my_main Updated target network
+[INFO 20:59:22] my_main Updated target network
+[INFO 21:00:10] my_main Updated target network
+[INFO 21:00:54] my_main Updated target network
+[INFO 21:01:24] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/1500346
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/1500346
+[INFO 21:01:32] my_main t_env: 1501790 / 6000000
+[INFO 21:01:32] my_main Estimated time left: 5 hours, 44 seconds. Time passed: 1 hours, 40 minutes, 28 seconds
+av test time: 43.73390815027118 (160.83008650184792), av step count 56.0625 (23.37109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:01:37] my_main Recent Stats | t_env:    1501790 | Episode:    14560
+ep_length_mean:           63.1681	epsilon:                   0.0500	grad_norm:                 3.6210	loss:                      0.3634
+q_taken_mean:              0.2016	return_mean:               9.4763	return_std:                4.9149	target_mean:               0.1956
+td_error_abs:              0.3417	test/reached_goal:       100.0000	test/sim_time_mean:       45.3712	test/sim_time_var:       250.5995
+test_ep_length_mean:      58.3125	test_return_mean:         10.9258	test_return_std:           3.1062	
+[INFO 21:01:46] my_main Updated target network
+[INFO 21:02:33] my_main Updated target network
+[INFO 21:03:17] my_main Updated target network
+[INFO 21:04:03] my_main Updated target network
+[INFO 21:04:47] my_main Updated target network
+[INFO 21:04:48] my_main t_env: 1551836 / 6000000
+[INFO 21:04:48] my_main Estimated time left: 4 hours, 51 minutes, 3 seconds. Time passed: 1 hours, 43 minutes, 44 seconds
+av test time: 36.71431362052546 (148.4080803540926), av step count 54.625 (7.109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:04:53] my_main Recent Stats | t_env:    1551836 | Episode:    15407
+ep_length_mean:           62.0894	epsilon:                   0.0500	grad_norm:                 4.8143	loss:                      0.3654
+q_taken_mean:              0.2409	return_mean:               9.7466	return_std:                4.6082	target_mean:               0.2389
+td_error_abs:              0.3394	test/reached_goal:       100.0000	test/sim_time_mean:       43.1975	test/sim_time_var:       241.0280
+test_ep_length_mean:      56.9625	test_return_mean:         11.3605	test_return_std:           3.0331	
+[INFO 21:05:35] my_main Updated target network
+[INFO 21:06:19] my_main Updated target network
+[INFO 21:07:01] my_main Updated target network
+[INFO 21:07:45] my_main Updated target network
+[INFO 21:08:01] my_main t_env: 1601858 / 6000000
+[INFO 21:08:01] my_main Estimated time left: 4 hours, 42 minutes, 19 seconds. Time passed: 1 hours, 46 minutes, 57 seconds
+av test time: 39.614152232300356 (207.71385165946916), av step count 52.6875 (8.65234375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:08:06] my_main Recent Stats | t_env:    1601858 | Episode:    16283
+ep_length_mean:           60.1161	epsilon:                   0.0500	grad_norm:                 5.3914	loss:                      0.3291
+q_taken_mean:              0.2942	return_mean:              10.2560	return_std:                4.2081	target_mean:               0.2908
+td_error_abs:              0.3317	test/reached_goal:       100.0000	test/sim_time_mean:       41.9358	test/sim_time_var:       221.6076
+test_ep_length_mean:      55.6500	test_return_mean:         11.6128	test_return_std:           2.9112	
+[INFO 21:08:31] my_main Updated target network
+[INFO 21:09:14] my_main Updated target network
+[INFO 21:09:56] my_main Updated target network
+[INFO 21:10:38] my_main Updated target network
+[INFO 21:11:14] my_main t_env: 1651902 / 6000000
+[INFO 21:11:14] my_main Estimated time left: 4 hours, 39 minutes, 53 seconds. Time passed: 1 hours, 50 minutes, 10 seconds
+av test time: 50.782073938832156 (692.7591892558125), av step count 51.5625 (4.68359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:11:18] my_main Recent Stats | t_env:    1651902 | Episode:    17178
+ep_length_mean:           58.5068	epsilon:                   0.0500	grad_norm:                 6.4294	loss:                      0.2879
+q_taken_mean:              0.3502	return_mean:              10.6507	return_std:                4.0615	target_mean:               0.3445
+td_error_abs:              0.3282	test/reached_goal:       100.0000	test/sim_time_mean:       43.3859	test/sim_time_var:       326.9297
+test_ep_length_mean:      54.6000	test_return_mean:         11.3228	test_return_std:           3.4484	
+[INFO 21:11:24] my_main Updated target network
+[INFO 21:12:05] my_main Updated target network
+[INFO 21:12:45] my_main Updated target network
+[INFO 21:13:27] my_main Updated target network
+[INFO 21:14:07] my_main Updated target network
+[INFO 21:14:25] my_main t_env: 1701926 / 6000000
+[INFO 21:14:25] my_main Estimated time left: 4 hours, 33 minutes, 43 seconds. Time passed: 1 hours, 53 minutes, 21 seconds
+av test time: 32.85241166236598 (24.612502166538782), av step count 52.1875 (2.33984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:14:29] my_main Recent Stats | t_env:    1701926 | Episode:    18087
+ep_length_mean:           57.3637	epsilon:                   0.0500	grad_norm:                 7.2543	loss:                      0.2458
+q_taken_mean:              0.4045	return_mean:              10.7991	return_std:                4.1206	target_mean:               0.3960
+td_error_abs:              0.3165	test/reached_goal:       100.0000	test/sim_time_mean:       40.7394	test/sim_time_var:       246.8647
+test_ep_length_mean:      53.4250	test_return_mean:         11.8521	test_return_std:           2.8223	
+[INFO 21:14:53] my_main Updated target network
+[INFO 21:15:34] my_main Updated target network
+[INFO 21:16:16] my_main Updated target network
+[INFO 21:16:57] my_main Updated target network
+[INFO 21:17:35] my_main t_env: 1751958 / 6000000
+[INFO 21:17:35] my_main Estimated time left: 4 hours, 29 minutes, 13 seconds. Time passed: 1 hours, 56 minutes, 32 seconds
+av test time: 36.00080681233175 (156.7001379025752), av step count 52.0625 (8.37109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:17:40] my_main Recent Stats | t_env:    1751958 | Episode:    18988
+ep_length_mean:           56.5331	epsilon:                   0.0500	grad_norm:                 7.2172	loss:                      0.2511
+q_taken_mean:              0.4418	return_mean:              11.1669	return_std:                3.8596	target_mean:               0.4333
+td_error_abs:              0.3087	test/reached_goal:       100.0000	test/sim_time_mean:       39.1928	test/sim_time_var:       246.0388
+test_ep_length_mean:      52.6250	test_return_mean:         12.1614	test_return_std:           2.8158	
+[INFO 21:17:42] my_main Updated target network
+[INFO 21:18:23] my_main Updated target network
+[INFO 21:19:04] my_main Updated target network
+[INFO 21:19:43] my_main Updated target network
+[INFO 21:20:25] my_main Updated target network
+[INFO 21:20:44] my_main t_env: 1801974 / 6000000
+[INFO 21:20:44] my_main Estimated time left: 4 hours, 23 minutes, 4 seconds. Time passed: 1 hours, 59 minutes, 40 seconds
+av test time: 34.95057254420847 (119.11527992259568), av step count 52.0625 (2.62109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:20:49] my_main Recent Stats | t_env:    1801974 | Episode:    19897
+ep_length_mean:           55.7204	epsilon:                   0.0500	grad_norm:                 6.6761	loss:                      0.2324
+q_taken_mean:              0.4841	return_mean:              11.4738	return_std:                3.6391	target_mean:               0.4702
+td_error_abs:              0.2936	test/reached_goal:       100.0000	test/sim_time_mean:       38.8400	test/sim_time_var:       240.1802
+test_ep_length_mean:      52.1125	test_return_mean:         12.2320	test_return_std:           2.7650	
+[INFO 21:21:09] my_main Updated target network
+[INFO 21:21:50] my_main Updated target network
+[INFO 21:22:29] my_main Updated target network
+[INFO 21:23:10] my_main Updated target network
+[INFO 21:23:50] my_main Updated target network
+[INFO 21:23:52] my_main t_env: 1852016 / 6000000
+[INFO 21:23:52] my_main Estimated time left: 4 hours, 20 minutes, 59 seconds. Time passed: 2 hours, 2 minutes, 49 seconds
+av test time: 31.901470147115923 (59.57954495407971), av step count 51.0 (1.25), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:23:57] my_main Recent Stats | t_env:    1852016 | Episode:    20815
+ep_length_mean:           55.2023	epsilon:                   0.0500	grad_norm:                 6.0702	loss:                      0.2016
+q_taken_mean:              0.5328	return_mean:              11.8471	return_std:                3.3219	target_mean:               0.5228
+td_error_abs:              0.2731	test/reached_goal:       100.0000	test/sim_time_mean:       37.2975	test/sim_time_var:       210.5533
+test_ep_length_mean:      51.7750	test_return_mean:         12.5405	test_return_std:           2.4973	
+[INFO 21:24:33] my_main Updated target network
+[INFO 21:25:13] my_main Updated target network
+[INFO 21:25:52] my_main Updated target network
+[INFO 21:26:33] my_main Updated target network
+[INFO 21:26:59] my_main t_env: 1902064 / 6000000
+[INFO 21:26:59] my_main Estimated time left: 4 hours, 14 minutes, 42 seconds. Time passed: 2 hours, 5 minutes, 55 seconds
+av test time: 33.99330535190305 (110.49445561752356), av step count 51.125 (1.484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:27:04] my_main Recent Stats | t_env:    1902064 | Episode:    21740
+ep_length_mean:           54.8405	epsilon:                   0.0500	grad_norm:                 5.6427	loss:                      0.1756
+q_taken_mean:              0.5726	return_mean:              12.2283	return_std:                2.8426	target_mean:               0.5635
+td_error_abs:              0.2579	test/reached_goal:       100.0000	test/sim_time_mean:       33.9397	test/sim_time_var:        94.1004
+test_ep_length_mean:      51.6875	test_return_mean:         13.2121	test_return_std:           1.8649	
+[INFO 21:27:14] my_main Updated target network
+[INFO 21:27:56] my_main Updated target network
+[INFO 21:28:34] my_main Updated target network
+[INFO 21:29:12] my_main Updated target network
+[INFO 21:29:53] my_main Updated target network
+[INFO 21:30:04] my_main t_env: 1952072 / 6000000
+[INFO 21:30:04] my_main Estimated time left: 4 hours, 9 minutes, 37 seconds. Time passed: 2 hours, 9 minutes, 0 seconds
+av test time: 34.602474665226666 (50.76869663625645), av step count 52.0625 (2.12109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:30:09] my_main Recent Stats | t_env:    1952072 | Episode:    22663
+ep_length_mean:           54.6701	epsilon:                   0.0500	grad_norm:                 5.8620	loss:                      0.1771
+q_taken_mean:              0.5878	return_mean:              12.4290	return_std:                2.6056	target_mean:               0.5854
+td_error_abs:              0.2604	test/reached_goal:       100.0000	test/sim_time_mean:       34.2897	test/sim_time_var:        99.3316
+test_ep_length_mean:      51.6625	test_return_mean:         13.1421	test_return_std:           1.9515	
+[INFO 21:30:36] my_main Updated target network
+[INFO 21:31:16] my_main Updated target network
+[INFO 21:31:54] my_main Updated target network
+[INFO 21:32:36] my_main Updated target network
+[INFO 21:33:06] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/2000352
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/2000352
+[INFO 21:33:13] my_main t_env: 2002112 / 6000000
+[INFO 21:33:13] my_main Estimated time left: 4 hours, 11 minutes, 58 seconds. Time passed: 2 hours, 12 minutes, 10 seconds
+av test time: 36.73461593641978 (113.91746874516541), av step count 52.1875 (2.08984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:33:17] my_main Recent Stats | t_env:    2002112 | Episode:    23585
+ep_length_mean:           54.4188	epsilon:                   0.0500	grad_norm:                 5.6699	loss:                      0.1582
+q_taken_mean:              0.6178	return_mean:              12.4245	return_std:                2.5555	target_mean:               0.6156
+td_error_abs:              0.2501	test/reached_goal:       100.0000	test/sim_time_mean:       34.4365	test/sim_time_var:        90.7751
+test_ep_length_mean:      51.6875	test_return_mean:         13.1127	test_return_std:           1.8777	
+[INFO 21:33:21] my_main Updated target network
+[INFO 21:34:01] my_main Updated target network
+[INFO 21:34:39] my_main Updated target network
+[INFO 21:35:19] my_main Updated target network
+[INFO 21:35:58] my_main Updated target network
+[INFO 21:36:19] my_main t_env: 2052154 / 6000000
+[INFO 21:36:19] my_main Estimated time left: 4 hours, 3 minutes, 46 seconds. Time passed: 2 hours, 15 minutes, 15 seconds
+av test time: 35.92565876965838 (94.15553033021837), av step count 52.0 (2.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:36:24] my_main Recent Stats | t_env:    2052154 | Episode:    24508
+ep_length_mean:           54.2576	epsilon:                   0.0500	grad_norm:                 5.4920	loss:                      0.1387
+q_taken_mean:              0.6447	return_mean:              12.4259	return_std:                2.5405	target_mean:               0.6465
+td_error_abs:              0.2377	test/reached_goal:       100.0000	test/sim_time_mean:       34.6315	test/sim_time_var:        85.7831
+test_ep_length_mean:      51.6750	test_return_mean:         13.0737	test_return_std:           1.8293	
+[INFO 21:36:41] my_main Updated target network
+[INFO 21:37:21] my_main Updated target network
+[INFO 21:38:00] my_main Updated target network
+[INFO 21:38:39] my_main Updated target network
+[INFO 21:39:18] my_main Updated target network
+[INFO 21:39:24] my_main t_env: 2102198 / 6000000
+[INFO 21:39:24] my_main Estimated time left: 4 hours, 12 seconds. Time passed: 2 hours, 18 minutes, 20 seconds
+av test time: 32.21793944268687 (19.884060338486357), av step count 51.4375 (2.05859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:39:29] my_main Recent Stats | t_env:    2102198 | Episode:    25431
+ep_length_mean:           54.1989	epsilon:                   0.0500	grad_norm:                 6.0295	loss:                      0.1380
+q_taken_mean:              0.6599	return_mean:              12.4256	return_std:                2.5796	target_mean:               0.6633
+td_error_abs:              0.2378	test/reached_goal:       100.0000	test/sim_time_mean:       34.6948	test/sim_time_var:        77.8440
+test_ep_length_mean:      51.7625	test_return_mean:         13.0610	test_return_std:           1.6989	
+[INFO 21:40:03] my_main Updated target network
+[INFO 21:40:41] my_main Updated target network
+[INFO 21:41:19] my_main Updated target network
+[INFO 21:42:00] my_main Updated target network
+[INFO 21:42:30] my_main t_env: 2152204 / 6000000
+[INFO 21:42:30] my_main Estimated time left: 3 hours, 58 minutes, 19 seconds. Time passed: 2 hours, 21 minutes, 26 seconds
+av test time: 32.27764718431645 (37.7756904683455), av step count 51.9375 (2.37109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:42:34] my_main Recent Stats | t_env:    2152204 | Episode:    26351
+ep_length_mean:           54.2486	epsilon:                   0.0500	grad_norm:                 5.3312	loss:                      0.1215
+q_taken_mean:              0.6631	return_mean:              12.4050	return_std:                2.5934	target_mean:               0.6674
+td_error_abs:              0.2276	test/reached_goal:       100.0000	test/sim_time_mean:       34.3517	test/sim_time_var:        63.3003
+test_ep_length_mean:      51.9250	test_return_mean:         13.1297	test_return_std:           1.5243	
+[INFO 21:42:43] my_main Updated target network
+[INFO 21:43:23] my_main Updated target network
+[INFO 21:44:02] my_main Updated target network
+[INFO 21:44:43] my_main Updated target network
+[INFO 21:45:23] my_main Updated target network
+[INFO 21:45:32] my_main t_env: 2202232 / 6000000
+[INFO 21:45:32] my_main Estimated time left: 3 hours, 51 minutes, 1 seconds. Time passed: 2 hours, 24 minutes, 28 seconds
+av test time: 33.99956462667483 (65.62204848239921), av step count 53.375 (6.859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:45:38] my_main Recent Stats | t_env:    2202232 | Episode:    27254
+ep_length_mean:           54.4930	epsilon:                   0.0500	grad_norm:                 5.0668	loss:                      0.1101
+q_taken_mean:              0.6804	return_mean:              12.4354	return_std:                2.4398	target_mean:               0.6771
+td_error_abs:              0.2186	test/reached_goal:       100.0000	test/sim_time_mean:       34.2311	test/sim_time_var:        66.2710
+test_ep_length_mean:      52.1875	test_return_mean:         13.1538	test_return_std:           1.5633	
+[INFO 21:46:08] my_main Updated target network
+[INFO 21:46:48] my_main Updated target network
+[INFO 21:47:28] my_main Updated target network
+[INFO 21:48:07] my_main Updated target network
+[INFO 21:48:38] my_main t_env: 2252278 / 6000000
+[INFO 21:48:38] my_main Estimated time left: 3 hours, 51 minutes, 35 seconds. Time passed: 2 hours, 27 minutes, 34 seconds
+av test time: 31.163941996163377 (34.20610677412931), av step count 52.8125 (4.21484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:48:42] my_main Recent Stats | t_env:    2252278 | Episode:    28154
+ep_length_mean:           54.7597	epsilon:                   0.0500	grad_norm:                 4.5762	loss:                      0.1001
+q_taken_mean:              0.6896	return_mean:              12.5137	return_std:                2.2956	target_mean:               0.6875
+td_error_abs:              0.2087	test/reached_goal:       100.0000	test/sim_time_mean:       33.1170	test/sim_time_var:        50.3287
+test_ep_length_mean:      52.3125	test_return_mean:         13.3766	test_return_std:           1.3703	
+[INFO 21:48:51] my_main Updated target network
+[INFO 21:49:32] my_main Updated target network
+[INFO 21:50:11] my_main Updated target network
+[INFO 21:50:52] my_main Updated target network
+[INFO 21:51:31] my_main Updated target network
+[INFO 21:51:43] my_main t_env: 2302310 / 6000000
+[INFO 21:51:43] my_main Estimated time left: 3 hours, 48 minutes, 20 seconds. Time passed: 2 hours, 30 minutes, 39 seconds
+av test time: 32.08836798491861 (34.7215321858894), av step count 52.5 (3.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:51:48] my_main Recent Stats | t_env:    2302310 | Episode:    29062
+ep_length_mean:           54.9366	epsilon:                   0.0500	grad_norm:                 4.6084	loss:                      0.0961
+q_taken_mean:              0.6911	return_mean:              12.6162	return_std:                2.2171	target_mean:               0.6894
+td_error_abs:              0.2084	test/reached_goal:       100.0000	test/sim_time_mean:       32.3495	test/sim_time_var:        38.4419
+test_ep_length_mean:      52.4125	test_return_mean:         13.5301	test_return_std:           1.2179	
+[INFO 21:52:16] my_main Updated target network
+[INFO 21:52:54] my_main Updated target network
+[INFO 21:53:33] my_main Updated target network
+[INFO 21:54:14] my_main Updated target network
+[INFO 21:54:48] my_main t_env: 2352342 / 6000000
+[INFO 21:54:48] my_main Estimated time left: 3 hours, 44 minutes, 4 seconds. Time passed: 2 hours, 33 minutes, 44 seconds
+av test time: 31.066764121923544 (44.03833539365976), av step count 51.375 (3.359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:54:52] my_main Recent Stats | t_env:    2352342 | Episode:    29975
+ep_length_mean:           55.0528	epsilon:                   0.0500	grad_norm:                 4.0920	loss:                      0.0905
+q_taken_mean:              0.7070	return_mean:              12.6846	return_std:                2.0805	target_mean:               0.7014
+td_error_abs:              0.2015	test/reached_goal:       100.0000	test/sim_time_mean:       32.1193	test/sim_time_var:        43.2727
+test_ep_length_mean:      52.4000	test_return_mean:         13.5761	test_return_std:           1.3050	
+[INFO 21:54:56] my_main Updated target network
+[INFO 21:55:36] my_main Updated target network
+[INFO 21:56:15] my_main Updated target network
+[INFO 21:56:55] my_main Updated target network
+[INFO 21:57:34] my_main Updated target network
+[INFO 21:57:52] my_main t_env: 2402354 / 6000000
+[INFO 21:57:52] my_main Estimated time left: 3 hours, 40 minutes, 48 seconds. Time passed: 2 hours, 36 minutes, 48 seconds
+av test time: 30.237113199777657 (36.095184535363835), av step count 51.6875 (3.02734375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 21:57:57] my_main Recent Stats | t_env:    2402354 | Episode:    30893
+ep_length_mean:           55.0778	epsilon:                   0.0500	grad_norm:                 3.9321	loss:                      0.0900
+q_taken_mean:              0.7161	return_mean:              12.8051	return_std:                1.9760	target_mean:               0.7109
+td_error_abs:              0.1974	test/reached_goal:       100.0000	test/sim_time_mean:       31.7112	test/sim_time_var:        42.9366
+test_ep_length_mean:      52.3500	test_return_mean:         13.6578	test_return_std:           1.2994	
+[INFO 21:58:18] my_main Updated target network
+[INFO 21:58:59] my_main Updated target network
+[INFO 21:59:38] my_main Updated target network
+[INFO 22:00:18] my_main Updated target network
+[INFO 22:00:56] my_main Updated target network
+[INFO 22:00:59] my_main t_env: 2452398 / 6000000
+[INFO 22:00:59] my_main Estimated time left: 3 hours, 40 minutes, 59 seconds. Time passed: 2 hours, 39 minutes, 55 seconds
+av test time: 29.670667127640385 (26.476238293742014), av step count 50.625 (1.109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:01:03] my_main Recent Stats | t_env:    2452398 | Episode:    31814
+ep_length_mean:           54.8647	epsilon:                   0.0500	grad_norm:                 3.1587	loss:                      0.0840
+q_taken_mean:              0.7308	return_mean:              12.9088	return_std:                1.9641	target_mean:               0.7275
+td_error_abs:              0.1846	test/reached_goal:       100.0000	test/sim_time_mean:       30.8454	test/sim_time_var:        35.1075
+test_ep_length_mean:      51.8000	test_return_mean:         13.8309	test_return_std:           1.1812	
+[INFO 22:01:41] my_main Updated target network
+[INFO 22:02:19] my_main Updated target network
+[INFO 22:02:57] my_main Updated target network
+[INFO 22:03:38] my_main Updated target network
+[INFO 22:03:58] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/2500402
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/2500402
+[INFO 22:04:08] my_main t_env: 2502434 / 6000000
+[INFO 22:04:08] my_main Estimated time left: 3 hours, 40 minutes, 43 seconds. Time passed: 2 hours, 43 minutes, 4 seconds
+av test time: 30.70410557081158 (19.079079957413903), av step count 51.125 (2.734375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:04:12] my_main Recent Stats | t_env:    2502434 | Episode:    32743
+ep_length_mean:           54.5154	epsilon:                   0.0500	grad_norm:                 3.0733	loss:                      0.0778
+q_taken_mean:              0.7422	return_mean:              12.9961	return_std:                1.9859	target_mean:               0.7418
+td_error_abs:              0.1817	test/reached_goal:       100.0000	test/sim_time_mean:       30.7534	test/sim_time_var:        32.0821
+test_ep_length_mean:      51.4625	test_return_mean:         13.8493	test_return_std:           1.1220	
+[INFO 22:04:22] my_main Updated target network
+[INFO 22:05:02] my_main Updated target network
+[INFO 22:05:41] my_main Updated target network
+[INFO 22:06:20] my_main Updated target network
+[INFO 22:06:59] my_main Updated target network
+[INFO 22:07:11] my_main t_env: 2552468 / 6000000
+[INFO 22:07:11] my_main Estimated time left: 3 hours, 30 minutes, 21 seconds. Time passed: 2 hours, 46 minutes, 8 seconds
+av test time: 29.60189140434289 (24.660477594992585), av step count 50.875 (1.984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:07:16] my_main Recent Stats | t_env:    2552468 | Episode:    33672
+ep_length_mean:           54.2667	epsilon:                   0.0500	grad_norm:                 3.5899	loss:                      0.0832
+q_taken_mean:              0.7773	return_mean:              13.0543	return_std:                1.9067	target_mean:               0.7704
+td_error_abs:              0.1909	test/reached_goal:       100.0000	test/sim_time_mean:       30.2561	test/sim_time_var:        30.0699
+test_ep_length_mean:      51.1375	test_return_mean:         13.9488	test_return_std:           1.0849	
+[INFO 22:07:41] my_main Updated target network
+[INFO 22:08:22] my_main Updated target network
+[INFO 22:09:00] my_main Updated target network
+[INFO 22:09:38] my_main Updated target network
+[INFO 22:10:18] my_main t_env: 2602484 / 6000000
+[INFO 22:10:18] my_main Estimated time left: 3 hours, 31 minutes, 11 seconds. Time passed: 2 hours, 49 minutes, 14 seconds
+av test time: 29.831708468712648 (21.026415953855725), av step count 51.5 (2.5), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:10:22] my_main Recent Stats | t_env:    2602484 | Episode:    34597
+ep_length_mean:           54.1210	epsilon:                   0.0500	grad_norm:                 3.9514	loss:                      0.0845
+q_taken_mean:              0.7932	return_mean:              13.1281	return_std:                1.8422	target_mean:               0.7845
+td_error_abs:              0.1964	test/reached_goal:       100.0000	test/sim_time_mean:       30.0091	test/sim_time_var:        25.4675
+test_ep_length_mean:      51.1625	test_return_mean:         13.9982	test_return_std:           1.0029	
+[INFO 22:10:23] my_main Updated target network
+[INFO 22:11:02] my_main Updated target network
+[INFO 22:11:40] my_main Updated target network
+[INFO 22:12:19] my_main Updated target network
+[INFO 22:12:59] my_main Updated target network
+[INFO 22:13:22] my_main t_env: 2652496 / 6000000
+[INFO 22:13:22] my_main Estimated time left: 3 hours, 25 minutes, 15 seconds. Time passed: 2 hours, 52 minutes, 18 seconds
+av test time: 32.832328634575035 (68.5626960171488), av step count 51.25 (2.4375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:13:27] my_main Recent Stats | t_env:    2652496 | Episode:    35521
+ep_length_mean:           54.0503	epsilon:                   0.0500	grad_norm:                 3.9100	loss:                      0.0789
+q_taken_mean:              0.8070	return_mean:              13.1097	return_std:                1.9494	target_mean:               0.7985
+td_error_abs:              0.1924	test/reached_goal:       100.0000	test/sim_time_mean:       30.5281	test/sim_time_var:        31.9610
+test_ep_length_mean:      51.0750	test_return_mean:         13.8944	test_return_std:           1.0938	
+[INFO 22:13:43] my_main Updated target network
+[INFO 22:14:20] my_main Updated target network
+[INFO 22:15:01] my_main Updated target network
+[INFO 22:15:39] my_main Updated target network
+[INFO 22:16:18] my_main Updated target network
+[INFO 22:16:27] my_main t_env: 2702524 / 6000000
+[INFO 22:16:27] my_main Estimated time left: 3 hours, 23 minutes, 49 seconds. Time passed: 2 hours, 55 minutes, 24 seconds
+av test time: 30.732763098503376 (21.15242010980988), av step count 51.75 (3.4375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:16:31] my_main Recent Stats | t_env:    2702524 | Episode:    36443
+ep_length_mean:           54.0350	epsilon:                   0.0500	grad_norm:                 3.6405	loss:                      0.0738
+q_taken_mean:              0.8079	return_mean:              13.0792	return_std:                1.9418	target_mean:               0.8017
+td_error_abs:              0.1848	test/reached_goal:       100.0000	test/sim_time_mean:       30.7406	test/sim_time_var:        30.8962
+test_ep_length_mean:      51.3000	test_return_mean:         13.8519	test_return_std:           1.0720	
+[INFO 22:17:02] my_main Updated target network
+[INFO 22:17:42] my_main Updated target network
+[INFO 22:18:22] my_main Updated target network
+[INFO 22:19:00] my_main Updated target network
+[INFO 22:19:31] my_main t_env: 2752536 / 6000000
+[INFO 22:19:31] my_main Estimated time left: 3 hours, 19 minutes, 7 seconds. Time passed: 2 hours, 58 minutes, 28 seconds
+av test time: 36.25969584011432 (140.19721210909816), av step count 52.1875 (5.33984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:19:37] my_main Recent Stats | t_env:    2752536 | Episode:    37359
+ep_length_mean:           54.1827	epsilon:                   0.0500	grad_norm:                 3.7421	loss:                      0.0721
+q_taken_mean:              0.8040	return_mean:              12.9636	return_std:                2.0209	target_mean:               0.7984
+td_error_abs:              0.1844	test/reached_goal:       100.0000	test/sim_time_mean:       31.8517	test/sim_time_var:        55.1198
+test_ep_length_mean:      51.5125	test_return_mean:         13.6297	test_return_std:           1.3709	
+[INFO 22:19:46] my_main Updated target network
+[INFO 22:20:25] my_main Updated target network
+[INFO 22:21:06] my_main Updated target network
+[INFO 22:21:47] my_main Updated target network
+[INFO 22:22:27] my_main Updated target network
+[INFO 22:22:37] my_main t_env: 2802548 / 6000000
+[INFO 22:22:37] my_main Estimated time left: 3 hours, 17 minutes, 23 seconds. Time passed: 3 hours, 1 minutes, 33 seconds
+av test time: 31.937994418521683 (35.865527347659786), av step count 51.0 (1.5), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:22:41] my_main Recent Stats | t_env:    2802548 | Episode:    38251
+ep_length_mean:           54.6245	epsilon:                   0.0500	grad_norm:                 2.6599	loss:                      0.0638
+q_taken_mean:              0.7958	return_mean:              12.7766	return_std:                2.1132	target_mean:               0.7949
+td_error_abs:              0.1700	test/reached_goal:       100.0000	test/sim_time_mean:       32.3189	test/sim_time_var:        57.3609
+test_ep_length_mean:      51.5375	test_return_mean:         13.5362	test_return_std:           1.4118	
+[INFO 22:23:10] my_main Updated target network
+[INFO 22:23:49] my_main Updated target network
+[INFO 22:24:29] my_main Updated target network
+[INFO 22:25:08] my_main Updated target network
+[INFO 22:25:42] my_main t_env: 2852598 / 6000000
+[INFO 22:25:42] my_main Estimated time left: 3 hours, 13 minutes, 41 seconds. Time passed: 3 hours, 4 minutes, 38 seconds
+av test time: 32.87770941492053 (84.82909952007867), av step count 50.8125 (1.71484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:25:47] my_main Recent Stats | t_env:    2852598 | Episode:    39178
+ep_length_mean:           54.6085	epsilon:                   0.0500	grad_norm:                 2.1686	loss:                      0.0601
+q_taken_mean:              0.7827	return_mean:              12.8191	return_std:                2.0556	target_mean:               0.7864
+td_error_abs:              0.1632	test/reached_goal:       100.0000	test/sim_time_mean:       32.9281	test/sim_time_var:        70.1214
+test_ep_length_mean:      51.4000	test_return_mean:         13.4144	test_return_std:           1.5968	
+[INFO 22:25:52] my_main Updated target network
+[INFO 22:26:31] my_main Updated target network
+[INFO 22:27:10] my_main Updated target network
+[INFO 22:27:50] my_main Updated target network
+[INFO 22:28:28] my_main Updated target network
+[INFO 22:28:48] my_main t_env: 2902606 / 6000000
+[INFO 22:28:48] my_main Estimated time left: 3 hours, 12 minutes, 48 seconds. Time passed: 3 hours, 7 minutes, 45 seconds
+av test time: 29.743924528330687 (27.036277516196662), av step count 51.5 (3.0), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:28:52] my_main Recent Stats | t_env:    2902606 | Episode:    40102
+ep_length_mean:           54.6077	epsilon:                   0.0500	grad_norm:                 1.9831	loss:                      0.0655
+q_taken_mean:              0.7704	return_mean:              12.8541	return_std:                1.9756	target_mean:               0.7744
+td_error_abs:              0.1655	test/reached_goal:       100.0000	test/sim_time_mean:       32.3104	test/sim_time_var:        61.8161
+test_ep_length_mean:      51.4500	test_return_mean:         13.5379	test_return_std:           1.4735	
+[INFO 22:29:13] my_main Updated target network
+[INFO 22:29:51] my_main Updated target network
+[INFO 22:30:29] my_main Updated target network
+[INFO 22:31:10] my_main Updated target network
+[INFO 22:31:48] my_main Updated target network
+[INFO 22:31:53] my_main t_env: 2952612 / 6000000
+[INFO 22:31:53] my_main Estimated time left: 3 hours, 7 minutes, 53 seconds. Time passed: 3 hours, 10 minutes, 50 seconds
+av test time: 30.3005790292476 (18.150112461445623), av step count 51.0625 (1.74609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:31:59] my_main Recent Stats | t_env:    2952612 | Episode:    41026
+ep_length_mean:           54.5794	epsilon:                   0.0500	grad_norm:                 2.7672	loss:                      0.0729
+q_taken_mean:              0.7634	return_mean:              12.9329	return_std:                1.8891	target_mean:               0.7705
+td_error_abs:              0.1842	test/reached_goal:       100.0000	test/sim_time_mean:       32.2240	test/sim_time_var:        61.2156
+test_ep_length_mean:      51.3125	test_return_mean:         13.5552	test_return_std:           1.4600	
+[INFO 22:32:33] my_main Updated target network
+[INFO 22:33:11] my_main Updated target network
+[INFO 22:33:52] my_main Updated target network
+[INFO 22:34:30] my_main Updated target network
+[INFO 22:34:52] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/3000446
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/3000446
+[INFO 22:35:03] my_main t_env: 3002656 / 6000000
+[INFO 22:35:03] my_main Estimated time left: 3 hours, 9 minutes, 6 seconds. Time passed: 3 hours, 13 minutes, 59 seconds
+av test time: 30.404213918749647 (20.50974761107011), av step count 51.75 (3.4375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:35:06] my_main Recent Stats | t_env:    3002656 | Episode:    41949
+ep_length_mean:           54.5035	epsilon:                   0.0500	grad_norm:                 2.7400	loss:                      0.0738
+q_taken_mean:              0.7771	return_mean:              13.1025	return_std:                1.7052	target_mean:               0.7803
+td_error_abs:              0.1828	test/reached_goal:       100.0000	test/sim_time_mean:       31.0529	test/sim_time_var:        37.2782
+test_ep_length_mean:      51.2250	test_return_mean:         13.7894	test_return_std:           1.1675	
+[INFO 22:35:18] my_main Updated target network
+[INFO 22:35:57] my_main Updated target network
+[INFO 22:36:37] my_main Updated target network
+[INFO 22:37:17] my_main Updated target network
+[INFO 22:37:55] my_main Updated target network
+[INFO 22:38:09] my_main t_env: 3052666 / 6000000
+[INFO 22:38:09] my_main Estimated time left: 3 hours, 2 minutes, 58 seconds. Time passed: 3 hours, 17 minutes, 5 seconds
+av test time: 30.547616390617343 (15.660886238626485), av step count 51.25 (2.6875), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:38:13] my_main Recent Stats | t_env:    3052666 | Episode:    42868
+ep_length_mean:           54.1737	epsilon:                   0.0500	grad_norm:                 2.6919	loss:                      0.0733
+q_taken_mean:              0.7750	return_mean:              13.3449	return_std:                1.5214	target_mean:               0.7767
+td_error_abs:              0.1795	test/reached_goal:       100.0000	test/sim_time_mean:       30.7748	test/sim_time_var:        33.2372
+test_ep_length_mean:      51.2750	test_return_mean:         13.8450	test_return_std:           1.0863	
+[INFO 22:38:39] my_main Updated target network
+[INFO 22:39:18] my_main Updated target network
+[INFO 22:39:57] my_main Updated target network
+[INFO 22:40:37] my_main Updated target network
+[INFO 22:41:13] my_main t_env: 3102688 / 6000000
+[INFO 22:41:13] my_main Estimated time left: 2 hours, 57 minutes, 33 seconds. Time passed: 3 hours, 20 minutes, 9 seconds
+av test time: 29.661262545031548 (17.031697608541087), av step count 51.0625 (2.74609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:41:18] my_main Recent Stats | t_env:    3102688 | Episode:    43789
+ep_length_mean:           54.2379	epsilon:                   0.0500	grad_norm:                 2.3031	loss:                      0.0661
+q_taken_mean:              0.7905	return_mean:              13.3394	return_std:                1.4972	target_mean:               0.7907
+td_error_abs:              0.1685	test/reached_goal:       100.0000	test/sim_time_mean:       30.1315	test/sim_time_var:        19.6777
+test_ep_length_mean:      51.3250	test_return_mean:         13.9737	test_return_std:           0.8829	
+[INFO 22:41:21] my_main Updated target network
+[INFO 22:42:00] my_main Updated target network
+[INFO 22:42:37] my_main Updated target network
+[INFO 22:43:18] my_main Updated target network
+[INFO 22:43:57] my_main Updated target network
+[INFO 22:44:19] my_main t_env: 3152742 / 6000000
+[INFO 22:44:19] my_main Estimated time left: 2 hours, 56 minutes, 8 seconds. Time passed: 3 hours, 23 minutes, 15 seconds
+av test time: 28.784069885637447 (13.804653387001656), av step count 51.0 (1.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:44:23] my_main Recent Stats | t_env:    3152742 | Episode:    44711
+ep_length_mean:           54.2714	epsilon:                   0.0500	grad_norm:                 3.1435	loss:                      0.0682
+q_taken_mean:              0.8064	return_mean:              13.3629	return_std:                1.4654	target_mean:               0.8038
+td_error_abs:              0.1820	test/reached_goal:       100.0000	test/sim_time_mean:       29.9395	test/sim_time_var:        17.0314
+test_ep_length_mean:      51.2250	test_return_mean:         14.0121	test_return_std:           0.8236	
+[INFO 22:44:38] my_main Updated target network
+[INFO 22:45:19] my_main Updated target network
+[INFO 22:45:57] my_main Updated target network
+[INFO 22:46:38] my_main Updated target network
+[INFO 22:47:16] my_main Updated target network
+[INFO 22:47:22] my_main t_env: 3202764 / 6000000
+[INFO 22:47:22] my_main Estimated time left: 2 hours, 50 minutes, 47 seconds. Time passed: 3 hours, 26 minutes, 18 seconds
+av test time: 27.996657166249843 (15.860304427863843), av step count 51.0 (1.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:47:26] my_main Recent Stats | t_env:    3202764 | Episode:    45636
+ep_length_mean:           54.2631	epsilon:                   0.0500	grad_norm:                 2.2650	loss:                      0.0592
+q_taken_mean:              0.8188	return_mean:              13.3843	return_std:                1.4351	target_mean:               0.8118
+td_error_abs:              0.1608	test/reached_goal:       100.0000	test/sim_time_mean:       29.4788	test/sim_time_var:        16.5735
+test_ep_length_mean:      51.2125	test_return_mean:         14.1042	test_return_std:           0.8124	
+[INFO 22:47:59] my_main Updated target network
+[INFO 22:48:39] my_main Updated target network
+[INFO 22:49:17] my_main Updated target network
+[INFO 22:49:56] my_main Updated target network
+[INFO 22:50:29] my_main t_env: 3252796 / 6000000
+[INFO 22:50:29] my_main Estimated time left: 2 hours, 50 minutes, 44 seconds. Time passed: 3 hours, 29 minutes, 25 seconds
+av test time: 29.80169954209234 (14.341316560970853), av step count 51.1875 (1.46484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:50:33] my_main Recent Stats | t_env:    3252796 | Episode:    46562
+ep_length_mean:           54.2254	epsilon:                   0.0500	grad_norm:                 2.0805	loss:                      0.0548
+q_taken_mean:              0.8193	return_mean:              13.4100	return_std:                1.4343	target_mean:               0.8127
+td_error_abs:              0.1552	test/reached_goal:       100.0000	test/sim_time_mean:       29.3583	test/sim_time_var:        15.3398
+test_ep_length_mean:      51.1000	test_return_mean:         14.1283	test_return_std:           0.7828	
+[INFO 22:50:40] my_main Updated target network
+[INFO 22:51:20] my_main Updated target network
+[INFO 22:51:59] my_main Updated target network
+[INFO 22:52:38] my_main Updated target network
+[INFO 22:53:18] my_main Updated target network
+[INFO 22:53:35] my_main t_env: 3302804 / 6000000
+[INFO 22:53:35] my_main Estimated time left: 2 hours, 47 minutes, 15 seconds. Time passed: 3 hours, 32 minutes, 31 seconds
+av test time: 30.241144963377714 (18.33939695301516), av step count 50.5625 (1.30859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:53:40] my_main Recent Stats | t_env:    3302804 | Episode:    47489
+ep_length_mean:           54.1311	epsilon:                   0.0500	grad_norm:                 1.9082	loss:                      0.0482
+q_taken_mean:              0.8307	return_mean:              13.4383	return_std:                1.4274	target_mean:               0.8250
+td_error_abs:              0.1478	test/reached_goal:       100.0000	test/sim_time_mean:       29.2970	test/sim_time_var:        15.8755
+test_ep_length_mean:      50.9625	test_return_mean:         14.1406	test_return_std:           0.7958	
+[INFO 22:54:00] my_main Updated target network
+[INFO 22:54:40] my_main Updated target network
+[INFO 22:55:18] my_main Updated target network
+[INFO 22:55:58] my_main Updated target network
+[INFO 22:56:36] my_main Updated target network
+[INFO 22:56:40] my_main t_env: 3352826 / 6000000
+[INFO 22:56:40] my_main Estimated time left: 2 hours, 43 minutes, 29 seconds. Time passed: 3 hours, 35 minutes, 36 seconds
+av test time: 29.299972149498938 (23.169324204670474), av step count 51.1875 (3.21484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:56:44] my_main Recent Stats | t_env:    3352826 | Episode:    48422
+ep_length_mean:           53.9914	epsilon:                   0.0500	grad_norm:                 2.4291	loss:                      0.0503
+q_taken_mean:              0.8322	return_mean:              13.4684	return_std:                1.4628	target_mean:               0.8240
+td_error_abs:              0.1555	test/reached_goal:       100.0000	test/sim_time_mean:       29.2247	test/sim_time_var:        17.1030
+test_ep_length_mean:      50.9875	test_return_mean:         14.1551	test_return_std:           0.8232	
+[INFO 22:57:18] my_main Updated target network
+[INFO 22:57:59] my_main Updated target network
+[INFO 22:58:37] my_main Updated target network
+[INFO 22:59:15] my_main Updated target network
+[INFO 22:59:46] my_main t_env: 3402838 / 6000000
+[INFO 22:59:46] my_main Estimated time left: 2 hours, 40 minutes, 50 seconds. Time passed: 3 hours, 38 minutes, 42 seconds
+av test time: 28.92320853614958 (18.174827419625892), av step count 50.9375 (1.49609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 22:59:51] my_main Recent Stats | t_env:    3402838 | Episode:    49354
+ep_length_mean:           53.8658	epsilon:                   0.0500	grad_norm:                 1.6388	loss:                      0.0407
+q_taken_mean:              0.8373	return_mean:              13.4919	return_std:                1.3930	target_mean:               0.8318
+td_error_abs:              0.1358	test/reached_goal:       100.0000	test/sim_time_mean:       29.2525	test/sim_time_var:        17.9770
+test_ep_length_mean:      50.9750	test_return_mean:         14.1495	test_return_std:           0.8451	
+[INFO 22:59:59] my_main Updated target network
+[INFO 23:00:38] my_main Updated target network
+[INFO 23:01:17] my_main Updated target network
+[INFO 23:01:55] my_main Updated target network
+[INFO 23:02:35] my_main Updated target network
+[INFO 23:02:51] my_main t_env: 3452848 / 6000000
+[INFO 23:02:51] my_main Estimated time left: 2 hours, 37 minutes, 29 seconds. Time passed: 3 hours, 41 minutes, 48 seconds
+av test time: 29.692899758392052 (12.630921196522845), av step count 50.6875 (1.15234375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:02:55] my_main Recent Stats | t_env:    3452848 | Episode:    50287
+ep_length_mean:           53.7705	epsilon:                   0.0500	grad_norm:                 1.7458	loss:                      0.0370
+q_taken_mean:              0.8433	return_mean:              13.5187	return_std:                1.3957	target_mean:               0.8372
+td_error_abs:              0.1331	test/reached_goal:       100.0000	test/sim_time_mean:       29.5918	test/sim_time_var:        17.3312
+test_ep_length_mean:      50.9125	test_return_mean:         14.0816	test_return_std:           0.8280	
+[INFO 23:03:18] my_main Updated target network
+[INFO 23:03:55] my_main Updated target network
+[INFO 23:04:35] my_main Updated target network
+[INFO 23:05:13] my_main Updated target network
+[INFO 23:05:47] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/3500458
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/3500458
+[INFO 23:05:56] my_main Updated target network
+[INFO 23:06:00] my_main t_env: 3502884 / 6000000
+[INFO 23:06:00] my_main Estimated time left: 2 hours, 36 minutes, 56 seconds. Time passed: 3 hours, 44 minutes, 56 seconds
+av test time: 28.683933848519317 (15.26578037442198), av step count 50.75 (1.6875), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:06:04] my_main Recent Stats | t_env:    3502884 | Episode:    51218
+ep_length_mean:           53.7134	epsilon:                   0.0500	grad_norm:                 1.7964	loss:                      0.0381
+q_taken_mean:              0.8380	return_mean:              13.5255	return_std:                1.3811	target_mean:               0.8350
+td_error_abs:              0.1363	test/reached_goal:       100.0000	test/sim_time_mean:       29.3682	test/sim_time_var:        17.5161
+test_ep_length_mean:      50.8250	test_return_mean:         14.1264	test_return_std:           0.8328	
+[INFO 23:06:40] my_main Updated target network
+[INFO 23:07:19] my_main Updated target network
+[INFO 23:07:58] my_main Updated target network
+[INFO 23:08:35] my_main Updated target network
+[INFO 23:09:04] my_main t_env: 3552894 / 6000000
+[INFO 23:09:04] my_main Estimated time left: 2 hours, 30 minutes, 7 seconds. Time passed: 3 hours, 48 minutes, 0 seconds
+av test time: 29.87574458402809 (25.327113651301673), av step count 50.5625 (0.80859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:09:09] my_main Recent Stats | t_env:    3552894 | Episode:    52151
+ep_length_mean:           53.6444	epsilon:                   0.0500	grad_norm:                 1.8406	loss:                      0.0385
+q_taken_mean:              0.8270	return_mean:              13.5253	return_std:                1.4072	target_mean:               0.8236
+td_error_abs:              0.1367	test/reached_goal:       100.0000	test/sim_time_mean:       29.2952	test/sim_time_var:        18.9136
+test_ep_length_mean:      50.8250	test_return_mean:         14.1410	test_return_std:           0.8628	
+[INFO 23:09:19] my_main Updated target network
+[INFO 23:09:57] my_main Updated target network
+[INFO 23:10:35] my_main Updated target network
+[INFO 23:11:15] my_main Updated target network
+[INFO 23:11:52] my_main Updated target network
+[INFO 23:12:10] my_main t_env: 3602942 / 6000000
+[INFO 23:12:10] my_main Estimated time left: 2 hours, 28 minutes, 28 seconds. Time passed: 3 hours, 51 minutes, 6 seconds
+av test time: 28.211437311934944 (11.826805164265057), av step count 50.6875 (1.40234375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:12:14] my_main Recent Stats | t_env:    3602942 | Episode:    53088
+ep_length_mean:           53.6042	epsilon:                   0.0500	grad_norm:                 1.4745	loss:                      0.0371
+q_taken_mean:              0.8194	return_mean:              13.5485	return_std:                1.3598	target_mean:               0.8190
+td_error_abs:              0.1309	test/reached_goal:       100.0000	test/sim_time_mean:       29.0774	test/sim_time_var:        16.6451
+test_ep_length_mean:      50.7250	test_return_mean:         14.1845	test_return_std:           0.8078	
+[INFO 23:12:37] my_main Updated target network
+[INFO 23:13:13] my_main Updated target network
+[INFO 23:13:51] my_main Updated target network
+[INFO 23:14:32] my_main Updated target network
+[INFO 23:15:09] my_main Updated target network
+[INFO 23:15:13] my_main t_env: 3652980 / 6000000
+[INFO 23:15:13] my_main Estimated time left: 2 hours, 22 minutes, 57 seconds. Time passed: 3 hours, 54 minutes, 9 seconds
+av test time: 28.83336807904599 (18.633147513687735), av step count 50.875 (1.984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:15:16] my_main Recent Stats | t_env:    3652980 | Episode:    54021
+ep_length_mean:           53.5983	epsilon:                   0.0500	grad_norm:                 1.4327	loss:                      0.0387
+q_taken_mean:              0.8144	return_mean:              13.5634	return_std:                1.3693	target_mean:               0.8142
+td_error_abs:              0.1310	test/reached_goal:       100.0000	test/sim_time_mean:       29.0595	test/sim_time_var:        16.7368
+test_ep_length_mean:      50.7125	test_return_mean:         14.1881	test_return_std:           0.8100	
+[INFO 23:15:53] my_main Updated target network
+[INFO 23:16:31] my_main Updated target network
+[INFO 23:17:11] my_main Updated target network
+[INFO 23:17:50] my_main Updated target network
+[INFO 23:18:19] my_main t_env: 3703006 / 6000000
+[INFO 23:18:19] my_main Estimated time left: 2 hours, 22 minutes, 20 seconds. Time passed: 3 hours, 57 minutes, 15 seconds
+av test time: 28.297963054609237 (17.377870735201434), av step count 51.75 (2.4375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:18:23] my_main Recent Stats | t_env:    3703006 | Episode:    54950
+ep_length_mean:           53.6479	epsilon:                   0.0500	grad_norm:                 1.3377	loss:                      0.0370
+q_taken_mean:              0.8192	return_mean:              13.5536	return_std:                1.4016	target_mean:               0.8210
+td_error_abs:              0.1284	test/reached_goal:       100.0000	test/sim_time_mean:       28.7805	test/sim_time_var:        17.6861
+test_ep_length_mean:      50.9250	test_return_mean:         14.2439	test_return_std:           0.8346	
+[INFO 23:18:32] my_main Updated target network
+[INFO 23:19:13] my_main Updated target network
+[INFO 23:19:51] my_main Updated target network
+[INFO 23:20:29] my_main Updated target network
+[INFO 23:21:10] my_main Updated target network
+[INFO 23:21:24] my_main t_env: 3753016 / 6000000
+[INFO 23:21:24] my_main Estimated time left: 2 hours, 18 minutes, 28 seconds. Time passed: 4 hours, 20 seconds
+av test time: 29.85891965658566 (19.320835352507633), av step count 51.25 (1.9375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:21:29] my_main Recent Stats | t_env:    3753016 | Episode:    55877
+ep_length_mean:           53.6886	epsilon:                   0.0500	grad_norm:                 1.4488	loss:                      0.0358
+q_taken_mean:              0.8208	return_mean:              13.5589	return_std:                1.3893	target_mean:               0.8232
+td_error_abs:              0.1290	test/reached_goal:       100.0000	test/sim_time_mean:       29.0155	test/sim_time_var:        18.4972
+test_ep_length_mean:      51.0250	test_return_mean:         14.1969	test_return_std:           0.8541	
+[INFO 23:21:53] my_main Updated target network
+[INFO 23:22:31] my_main Updated target network
+[INFO 23:23:10] my_main Updated target network
+[INFO 23:23:49] my_main Updated target network
+[INFO 23:24:29] my_main Updated target network
+[INFO 23:24:29] my_main t_env: 3803064 / 6000000
+[INFO 23:24:29] my_main Estimated time left: 2 hours, 15 minutes, 19 seconds. Time passed: 4 hours, 3 minutes, 25 seconds
+av test time: 29.977518459969417 (16.672952691028307), av step count 51.0 (1.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:24:33] my_main Recent Stats | t_env:    3803064 | Episode:    56801
+ep_length_mean:           53.8013	epsilon:                   0.0500	grad_norm:                 1.7740	loss:                      0.0358
+q_taken_mean:              0.8293	return_mean:              13.5560	return_std:                1.3922	target_mean:               0.8339
+td_error_abs:              0.1320	test/reached_goal:       100.0000	test/sim_time_mean:       29.0358	test/sim_time_var:        16.7663
+test_ep_length_mean:      51.1125	test_return_mean:         14.1928	test_return_std:           0.8161	
+[INFO 23:25:10] my_main Updated target network
+[INFO 23:25:51] my_main Updated target network
+[INFO 23:26:29] my_main Updated target network
+[INFO 23:27:07] my_main Updated target network
+[INFO 23:27:32] my_main t_env: 3853100 / 6000000
+[INFO 23:27:32] my_main Estimated time left: 2 hours, 11 minutes, 14 seconds. Time passed: 4 hours, 6 minutes, 29 seconds
+av test time: 27.943626572557623 (11.135977312704878), av step count 50.375 (0.609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:27:37] my_main Recent Stats | t_env:    3853100 | Episode:    57731
+ep_length_mean:           53.8791	epsilon:                   0.0500	grad_norm:                 1.6515	loss:                      0.0354
+q_taken_mean:              0.8303	return_mean:              13.5324	return_std:                1.4541	target_mean:               0.8345
+td_error_abs:              0.1300	test/reached_goal:       100.0000	test/sim_time_mean:       28.9823	test/sim_time_var:        16.6282
+test_ep_length_mean:      51.0500	test_return_mean:         14.2035	test_return_std:           0.8120	
+[INFO 23:27:51] my_main Updated target network
+[INFO 23:28:29] my_main Updated target network
+[INFO 23:29:10] my_main Updated target network
+[INFO 23:29:47] my_main Updated target network
+[INFO 23:30:25] my_main Updated target network
+[INFO 23:30:39] my_main t_env: 3903142 / 6000000
+[INFO 23:30:39] my_main Estimated time left: 2 hours, 10 minutes, 27 seconds. Time passed: 4 hours, 9 minutes, 35 seconds
+av test time: 29.954660789329576 (21.35751039713216), av step count 50.9375 (1.49609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:30:43] my_main Recent Stats | t_env:    3903142 | Episode:    58668
+ep_length_mean:           53.8342	epsilon:                   0.0500	grad_norm:                 1.8801	loss:                      0.0345
+q_taken_mean:              0.8350	return_mean:              13.5390	return_std:                1.4769	target_mean:               0.8426
+td_error_abs:              0.1346	test/reached_goal:       100.0000	test/sim_time_mean:       29.2065	test/sim_time_var:        17.1730
+test_ep_length_mean:      51.0625	test_return_mean:         14.1587	test_return_std:           0.8242	
+[INFO 23:31:09] my_main Updated target network
+[INFO 23:31:48] my_main Updated target network
+[INFO 23:32:26] my_main Updated target network
+[INFO 23:33:05] my_main Updated target network
+[INFO 23:33:44] my_main Updated target network
+[INFO 23:33:44] my_main t_env: 3953166 / 6000000
+[INFO 23:33:44] my_main Estimated time left: 2 hours, 6 minutes, 3 seconds. Time passed: 4 hours, 12 minutes, 40 seconds
+av test time: 28.91637959066128 (23.698447522678336), av step count 51.8125 (1.33984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:33:49] my_main Recent Stats | t_env:    3953166 | Episode:    59603
+ep_length_mean:           53.7646	epsilon:                   0.0500	grad_norm:                 1.9772	loss:                      0.0413
+q_taken_mean:              0.8311	return_mean:              13.5467	return_std:                1.4537	target_mean:               0.8389
+td_error_abs:              0.1399	test/reached_goal:       100.0000	test/sim_time_mean:       29.3302	test/sim_time_var:        18.4371
+test_ep_length_mean:      51.0750	test_return_mean:         14.1340	test_return_std:           0.8522	
+[INFO 23:34:27] my_main Updated target network
+[INFO 23:35:05] my_main Updated target network
+[INFO 23:35:44] my_main Updated target network
+[INFO 23:36:24] my_main Updated target network
+[INFO 23:36:39] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/4000492
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/4000492
+[INFO 23:36:54] my_main t_env: 4003204 / 6000000
+[INFO 23:36:54] my_main Estimated time left: 2 hours, 6 minutes, 8 seconds. Time passed: 4 hours, 15 minutes, 50 seconds
+av test time: 29.33270132973658 (29.758004033200557), av step count 50.4375 (0.68359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:36:58] my_main Recent Stats | t_env:    4003204 | Episode:    60540
+ep_length_mean:           53.6554	epsilon:                   0.0500	grad_norm:                 1.7395	loss:                      0.0409
+q_taken_mean:              0.8461	return_mean:              13.5588	return_std:                1.4894	target_mean:               0.8506
+td_error_abs:              0.1346	test/reached_goal:       100.0000	test/sim_time_mean:       29.2250	test/sim_time_var:        20.5246
+test_ep_length_mean:      50.9125	test_return_mean:         14.1550	test_return_std:           0.8946	
+[INFO 23:37:10] my_main Updated target network
+[INFO 23:37:49] my_main Updated target network
+[INFO 23:38:27] my_main Updated target network
+[INFO 23:39:06] my_main Updated target network
+[INFO 23:39:45] my_main Updated target network
+[INFO 23:39:59] my_main t_env: 4053246 / 6000000
+[INFO 23:39:59] my_main Estimated time left: 2 hours, 16 seconds. Time passed: 4 hours, 18 minutes, 55 seconds
+av test time: 31.979422187607828 (32.972670275420434), av step count 50.875 (1.484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:40:04] my_main Recent Stats | t_env:    4053246 | Episode:    61473
+ep_length_mean:           53.5497	epsilon:                   0.0500	grad_norm:                 1.7693	loss:                      0.0402
+q_taken_mean:              0.8601	return_mean:              13.5725	return_std:                1.5001	target_mean:               0.8610
+td_error_abs:              0.1350	test/reached_goal:       100.0000	test/sim_time_mean:       29.6254	test/sim_time_var:        23.7845
+test_ep_length_mean:      50.8875	test_return_mean:         14.0749	test_return_std:           0.9610	
+[INFO 23:40:29] my_main Updated target network
+[INFO 23:41:08] my_main Updated target network
+[INFO 23:41:45] my_main Updated target network
+[INFO 23:42:25] my_main Updated target network
+[INFO 23:43:03] my_main Updated target network
+[INFO 23:43:03] my_main t_env: 4103300 / 6000000
+[INFO 23:43:03] my_main Estimated time left: 1 hours, 56 minutes, 18 seconds. Time passed: 4 hours, 22 minutes, 0 seconds
+av test time: 29.15765753779225 (23.484152240024546), av step count 50.9375 (1.74609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:43:07] my_main Recent Stats | t_env:    4103300 | Episode:    62401
+ep_length_mean:           53.5767	epsilon:                   0.0500	grad_norm:                 1.8018	loss:                      0.0400
+q_taken_mean:              0.8808	return_mean:              13.5785	return_std:                1.4762	target_mean:               0.8808
+td_error_abs:              0.1337	test/reached_goal:       100.0000	test/sim_time_mean:       29.8682	test/sim_time_var:        26.2542
+test_ep_length_mean:      51.0000	test_return_mean:         14.0264	test_return_std:           1.0213	
+[INFO 23:43:46] my_main Updated target network
+[INFO 23:44:25] my_main Updated target network
+[INFO 23:45:03] my_main Updated target network
+[INFO 23:45:44] my_main Updated target network
+[INFO 23:46:07] my_main t_env: 4153322 / 6000000
+[INFO 23:46:07] my_main Estimated time left: 1 hours, 52 minutes, 43 seconds. Time passed: 4 hours, 25 minutes, 3 seconds
+av test time: 29.35364808370823 (24.19476655963217), av step count 50.5625 (1.80859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:46:12] my_main Recent Stats | t_env:    4153322 | Episode:    63334
+ep_length_mean:           53.6182	epsilon:                   0.0500	grad_norm:                 1.3200	loss:                      0.0392
+q_taken_mean:              0.8849	return_mean:              13.5712	return_std:                1.4867	target_mean:               0.8824
+td_error_abs:              0.1247	test/reached_goal:       100.0000	test/sim_time_mean:       29.7480	test/sim_time_var:        26.8216
+test_ep_length_mean:      50.9250	test_return_mean:         14.0504	test_return_std:           1.0332	
+[INFO 23:46:25] my_main Updated target network
+[INFO 23:47:04] my_main Updated target network
+[INFO 23:47:44] my_main Updated target network
+[INFO 23:48:22] my_main Updated target network
+[INFO 23:49:00] my_main Updated target network
+[INFO 23:49:14] my_main t_env: 4203348 / 6000000
+[INFO 23:49:14] my_main Estimated time left: 1 hours, 51 minutes, 54 seconds. Time passed: 4 hours, 28 minutes, 10 seconds
+av test time: 29.44435394467257 (75.22263650896898), av step count 50.5 (1.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:49:17] my_main Recent Stats | t_env:    4203348 | Episode:    64267
+ep_length_mean:           53.6416	epsilon:                   0.0500	grad_norm:                 1.2986	loss:                      0.0377
+q_taken_mean:              0.8932	return_mean:              13.5782	return_std:                1.4846	target_mean:               0.8908
+td_error_abs:              0.1235	test/reached_goal:       100.0000	test/sim_time_mean:       29.8536	test/sim_time_var:        37.1264
+test_ep_length_mean:      50.6625	test_return_mean:         14.0293	test_return_std:           1.1854	
+[INFO 23:49:44] my_main Updated target network
+[INFO 23:50:23] my_main Updated target network
+[INFO 23:51:02] my_main Updated target network
+[INFO 23:51:40] my_main Updated target network
+[INFO 23:52:19] my_main t_env: 4253380 / 6000000
+[INFO 23:52:19] my_main Estimated time left: 1 hours, 47 minutes, 54 seconds. Time passed: 4 hours, 31 minutes, 15 seconds
+av test time: 29.165582487035948 (16.366080567854528), av step count 50.9375 (1.24609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:52:24] my_main Recent Stats | t_env:    4253380 | Episode:    65200
+ep_length_mean:           53.6861	epsilon:                   0.0500	grad_norm:                 1.1002	loss:                      0.0368
+q_taken_mean:              0.9008	return_mean:              13.5858	return_std:                1.4372	target_mean:               0.8998
+td_error_abs:              0.1217	test/reached_goal:       100.0000	test/sim_time_mean:       29.8201	test/sim_time_var:        34.4481
+test_ep_length_mean:      50.7625	test_return_mean:         14.0360	test_return_std:           1.1290	
+[INFO 23:52:24] my_main Updated target network
+[INFO 23:53:02] my_main Updated target network
+[INFO 23:53:40] my_main Updated target network
+[INFO 23:54:20] my_main Updated target network
+[INFO 23:54:58] my_main Updated target network
+[INFO 23:55:24] my_main t_env: 4303388 / 6000000
+[INFO 23:55:24] my_main Estimated time left: 1 hours, 44 minutes, 35 seconds. Time passed: 4 hours, 34 minutes, 20 seconds
+av test time: 28.993344170829197 (18.72055906543882), av step count 50.5 (0.75), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:55:28] my_main Recent Stats | t_env:    4303388 | Episode:    66132
+ep_length_mean:           53.6903	epsilon:                   0.0500	grad_norm:                 0.8366	loss:                      0.0359
+q_taken_mean:              0.8960	return_mean:              13.5959	return_std:                1.4193	target_mean:               0.8976
+td_error_abs:              0.1182	test/reached_goal:       100.0000	test/sim_time_mean:       29.2229	test/sim_time_var:        31.5976
+test_ep_length_mean:      50.6875	test_return_mean:         14.1554	test_return_std:           1.0724	
+[INFO 23:55:41] my_main Updated target network
+[INFO 23:56:20] my_main Updated target network
+[INFO 23:56:59] my_main Updated target network
+[INFO 23:57:39] my_main Updated target network
+[INFO 23:58:16] my_main Updated target network
+[INFO 23:58:29] my_main t_env: 4353402 / 6000000
+[INFO 23:58:29] my_main Estimated time left: 1 hours, 41 minutes, 36 seconds. Time passed: 4 hours, 37 minutes, 25 seconds
+av test time: 28.298307905791738 (15.102243486454078), av step count 50.6875 (1.15234375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 23:58:34] my_main Recent Stats | t_env:    4353402 | Episode:    67065
+ep_length_mean:           53.6239	epsilon:                   0.0500	grad_norm:                 1.3685	loss:                      0.0412
+q_taken_mean:              0.8905	return_mean:              13.6043	return_std:                1.4080	target_mean:               0.8898
+td_error_abs:              0.1315	test/reached_goal:       100.0000	test/sim_time_mean:       29.0510	test/sim_time_var:        29.9213
+test_ep_length_mean:      50.6375	test_return_mean:         14.1898	test_return_std:           1.0340	
+[INFO 23:59:01] my_main Updated target network
+[INFO 23:59:39] my_main Updated target network
+[INFO 00:00:17] my_main Updated target network
+[INFO 00:00:58] my_main Updated target network
+[INFO 00:01:35] my_main t_env: 4403446 / 6000000
+[INFO 00:01:35] my_main Estimated time left: 1 hours, 38 minutes, 37 seconds. Time passed: 4 hours, 40 minutes, 31 seconds
+av test time: 28.998530234586607 (22.00000165389642), av step count 51.125 (2.484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:01:39] my_main Recent Stats | t_env:    4403446 | Episode:    67994
+ep_length_mean:           53.6748	epsilon:                   0.0500	grad_norm:                 1.8456	loss:                      0.0439
+q_taken_mean:              0.8935	return_mean:              13.6491	return_std:                1.3321	target_mean:               0.8951
+td_error_abs:              0.1420	test/reached_goal:       100.0000	test/sim_time_mean:       28.9800	test/sim_time_var:        29.4823
+test_ep_length_mean:      50.7500	test_return_mean:         14.2040	test_return_std:           1.0249	
+[INFO 00:01:41] my_main Updated target network
+[INFO 00:02:21] my_main Updated target network
+[INFO 00:02:58] my_main Updated target network
+[INFO 00:03:38] my_main Updated target network
+[INFO 00:04:17] my_main Updated target network
+[INFO 00:04:41] my_main t_env: 4453470 / 6000000
+[INFO 00:04:41] my_main Estimated time left: 1 hours, 36 minutes, 9 seconds. Time passed: 4 hours, 43 minutes, 37 seconds
+av test time: 28.057758502165797 (17.890707423589866), av step count 50.875 (1.984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:04:45] my_main Recent Stats | t_env:    4453470 | Episode:    68923
+ep_length_mean:           53.7206	epsilon:                   0.0500	grad_norm:                 2.4223	loss:                      0.0459
+q_taken_mean:              0.9014	return_mean:              13.6603	return_std:                1.3273	target_mean:               0.8985
+td_error_abs:              0.1560	test/reached_goal:       100.0000	test/sim_time_mean:       28.7027	test/sim_time_var:        18.0159
+test_ep_length_mean:      50.8250	test_return_mean:         14.2595	test_return_std:           0.8471	
+[INFO 00:04:59] my_main Updated target network
+[INFO 00:05:39] my_main Updated target network
+[INFO 00:06:17] my_main Updated target network
+[INFO 00:06:57] my_main Updated target network
+[INFO 00:07:35] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/4500504
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/4500504
+[INFO 00:07:40] my_main Updated target network
+[INFO 00:07:50] my_main t_env: 4503512 / 6000000
+[INFO 00:07:50] my_main Estimated time left: 1 hours, 34 minutes, 15 seconds. Time passed: 4 hours, 46 minutes, 47 seconds
+av test time: 29.85854333514689 (22.529851340847223), av step count 50.8125 (1.46484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:07:56] my_main Recent Stats | t_env:    4503512 | Episode:    69855
+ep_length_mean:           53.7342	epsilon:                   0.0500	grad_norm:                 2.3628	loss:                      0.0446
+q_taken_mean:              0.9075	return_mean:              13.6790	return_std:                1.3197	target_mean:               0.9040
+td_error_abs:              0.1533	test/reached_goal:       100.0000	test/sim_time_mean:       28.8413	test/sim_time_var:        19.2487
+test_ep_length_mean:      50.8000	test_return_mean:         14.2317	test_return_std:           0.8752	
+[INFO 00:08:24] my_main Updated target network
+[INFO 00:09:03] my_main Updated target network
+[INFO 00:09:41] my_main Updated target network
+[INFO 00:10:21] my_main Updated target network
+[INFO 00:10:57] my_main t_env: 4553562 / 6000000
+[INFO 00:10:57] my_main Estimated time left: 1 hours, 29 minutes, 56 seconds. Time passed: 4 hours, 49 minutes, 53 seconds
+av test time: 27.57924634570854 (8.578945718332443), av step count 50.9375 (0.99609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:11:01] my_main Recent Stats | t_env:    4553562 | Episode:    70791
+ep_length_mean:           53.6974	epsilon:                   0.0500	grad_norm:                 2.5171	loss:                      0.0457
+q_taken_mean:              0.9192	return_mean:              13.6789	return_std:                1.3092	target_mean:               0.9163
+td_error_abs:              0.1552	test/reached_goal:       100.0000	test/sim_time_mean:       28.5585	test/sim_time_var:        17.2203
+test_ep_length_mean:      50.8875	test_return_mean:         14.2883	test_return_std:           0.8193	
+[INFO 00:11:03] my_main Updated target network
+[INFO 00:11:43] my_main Updated target network
+[INFO 00:12:20] my_main Updated target network
+[INFO 00:12:59] my_main Updated target network
+[INFO 00:13:39] my_main Updated target network
+[INFO 00:14:02] my_main t_env: 4603580 / 6000000
+[INFO 00:14:02] my_main Estimated time left: 1 hours, 26 minutes, 11 seconds. Time passed: 4 hours, 52 minutes, 59 seconds
+av test time: 29.01938195531809 (21.1592165127442), av step count 50.9375 (1.24609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:14:08] my_main Recent Stats | t_env:    4603580 | Episode:    71723
+ep_length_mean:           53.7097	epsilon:                   0.0500	grad_norm:                 2.4807	loss:                      0.0416
+q_taken_mean:              0.9293	return_mean:              13.6985	return_std:                1.3008	target_mean:               0.9266
+td_error_abs:              0.1511	test/reached_goal:       100.0000	test/sim_time_mean:       28.7027	test/sim_time_var:        18.4317
+test_ep_length_mean:      50.9375	test_return_mean:         14.2595	test_return_std:           0.8478	
+[INFO 00:14:21] my_main Updated target network
+[INFO 00:15:00] my_main Updated target network
+[INFO 00:15:39] my_main Updated target network
+[INFO 00:16:17] my_main Updated target network
+[INFO 00:16:55] my_main Updated target network
+[INFO 00:17:07] my_main t_env: 4653618 / 6000000
+[INFO 00:17:07] my_main Estimated time left: 1 hours, 22 minutes, 40 seconds. Time passed: 4 hours, 56 minutes, 3 seconds
+av test time: 29.01754632571773 (19.708504686310945), av step count 51.125 (1.984375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:17:11] my_main Recent Stats | t_env:    4653618 | Episode:    72657
+ep_length_mean:           53.6508	epsilon:                   0.0500	grad_norm:                 2.2079	loss:                      0.0371
+q_taken_mean:              0.9383	return_mean:              13.6859	return_std:                1.3207	target_mean:               0.9324
+td_error_abs:              0.1413	test/reached_goal:       100.0000	test/sim_time_mean:       28.7065	test/sim_time_var:        17.9734
+test_ep_length_mean:      50.9375	test_return_mean:         14.2587	test_return_std:           0.8378	
+[INFO 00:17:39] my_main Updated target network
+[INFO 00:18:18] my_main Updated target network
+[INFO 00:18:58] my_main Updated target network
+[INFO 00:19:35] my_main Updated target network
+[INFO 00:20:11] my_main t_env: 4703630 / 6000000
+[INFO 00:20:11] my_main Estimated time left: 1 hours, 19 minutes, 45 seconds. Time passed: 4 hours, 59 minutes, 8 seconds
+av test time: 27.68462856239031 (18.018998839338593), av step count 50.8125 (1.71484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:20:17] my_main Recent Stats | t_env:    4703630 | Episode:    73590
+ep_length_mean:           53.6020	epsilon:                   0.0500	grad_norm:                 1.5903	loss:                      0.0304
+q_taken_mean:              0.9447	return_mean:              13.6971	return_std:                1.2972	target_mean:               0.9413
+td_error_abs:              0.1237	test/reached_goal:       100.0000	test/sim_time_mean:       28.6319	test/sim_time_var:        17.9991
+test_ep_length_mean:      50.9250	test_return_mean:         14.2736	test_return_std:           0.8384	
+[INFO 00:20:19] my_main Updated target network
+[INFO 00:20:58] my_main Updated target network
+[INFO 00:21:35] my_main Updated target network
+[INFO 00:22:15] my_main Updated target network
+[INFO 00:22:54] my_main Updated target network
+[INFO 00:23:18] my_main t_env: 4753660 / 6000000
+[INFO 00:23:18] my_main Estimated time left: 1 hours, 17 minutes, 29 seconds. Time passed: 5 hours, 2 minutes, 14 seconds
+av test time: 29.156450178624787 (12.296169181777213), av step count 51.125 (3.234375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:23:22] my_main Recent Stats | t_env:    4753660 | Episode:    74522
+ep_length_mean:           53.5994	epsilon:                   0.0500	grad_norm:                 2.1443	loss:                      0.0352
+q_taken_mean:              0.9362	return_mean:              13.6870	return_std:                1.3292	target_mean:               0.9355
+td_error_abs:              0.1363	test/reached_goal:       100.0000	test/sim_time_mean:       28.4915	test/sim_time_var:        15.9524
+test_ep_length_mean:      50.9875	test_return_mean:         14.3017	test_return_std:           0.7888	
+[INFO 00:23:38] my_main Updated target network
+[INFO 00:24:16] my_main Updated target network
+[INFO 00:24:54] my_main Updated target network
+[INFO 00:25:35] my_main Updated target network
+[INFO 00:26:13] my_main Updated target network
+[INFO 00:26:22] my_main t_env: 4803660 / 6000000
+[INFO 00:26:22] my_main Estimated time left: 1 hours, 13 minutes, 12 seconds. Time passed: 5 hours, 5 minutes, 18 seconds
+av test time: 29.503586001719135 (16.822852572265923), av step count 50.75 (0.9375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:26:27] my_main Recent Stats | t_env:    4803660 | Episode:    75455
+ep_length_mean:           53.6231	epsilon:                   0.0500	grad_norm:                 1.9116	loss:                      0.0339
+q_taken_mean:              0.9320	return_mean:              13.6869	return_std:                1.3210	target_mean:               0.9303
+td_error_abs:              0.1319	test/reached_goal:       100.0000	test/sim_time_mean:       28.8763	test/sim_time_var:        17.6011
+test_ep_length_mean:      50.9500	test_return_mean:         14.2247	test_return_std:           0.8357	
+[INFO 00:26:56] my_main Updated target network
+[INFO 00:27:35] my_main Updated target network
+[INFO 00:28:14] my_main Updated target network
+[INFO 00:28:52] my_main Updated target network
+[INFO 00:29:28] my_main t_env: 4853700 / 6000000
+[INFO 00:29:28] my_main Estimated time left: 1 hours, 11 minutes, 23 seconds. Time passed: 5 hours, 8 minutes, 25 seconds
+av test time: 29.927070181005252 (26.788521358075755), av step count 51.0 (2.0), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:29:33] my_main Recent Stats | t_env:    4853700 | Episode:    76385
+ep_length_mean:           53.6509	epsilon:                   0.0500	grad_norm:                 1.6328	loss:                      0.0325
+q_taken_mean:              0.9148	return_mean:              13.6765	return_std:                1.3395	target_mean:               0.9171
+td_error_abs:              0.1267	test/reached_goal:       100.0000	test/sim_time_mean:       29.0579	test/sim_time_var:        18.7270
+test_ep_length_mean:      50.9625	test_return_mean:         14.1884	test_return_std:           0.8587	
+[INFO 00:29:35] my_main Updated target network
+[INFO 00:30:15] my_main Updated target network
+[INFO 00:30:54] my_main Updated target network
+[INFO 00:31:31] my_main Updated target network
+[INFO 00:32:11] my_main Updated target network
+[INFO 00:32:33] my_main t_env: 4903750 / 6000000
+[INFO 00:32:33] my_main Estimated time left: 1 hours, 7 minutes, 26 seconds. Time passed: 5 hours, 11 minutes, 29 seconds
+av test time: 29.680200386609222 (25.558706457524124), av step count 50.9375 (1.74609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:32:38] my_main Recent Stats | t_env:    4903750 | Episode:    77314
+ep_length_mean:           53.7112	epsilon:                   0.0500	grad_norm:                 1.6959	loss:                      0.0322
+q_taken_mean:              0.8985	return_mean:              13.6609	return_std:                1.3364	target_mean:               0.9035
+td_error_abs:              0.1285	test/reached_goal:       100.0000	test/sim_time_mean:       29.1904	test/sim_time_var:        19.8970
+test_ep_length_mean:      50.9250	test_return_mean:         14.1619	test_return_std:           0.8834	
+[INFO 00:32:55] my_main Updated target network
+[INFO 00:33:33] my_main Updated target network
+[INFO 00:34:13] my_main Updated target network
+[INFO 00:34:51] my_main Updated target network
+[INFO 00:35:32] my_main Updated target network
+[INFO 00:35:40] my_main t_env: 4953788 / 6000000
+[INFO 00:35:40] my_main Estimated time left: 1 hours, 4 minutes, 58 seconds. Time passed: 5 hours, 14 minutes, 36 seconds
+av test time: 29.681002833835556 (25.252505406523927), av step count 50.8125 (1.21484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:35:44] my_main Recent Stats | t_env:    4953788 | Episode:    78244
+ep_length_mean:           53.7513	epsilon:                   0.0500	grad_norm:                 1.5394	loss:                      0.0327
+q_taken_mean:              0.8795	return_mean:              13.6683	return_std:                1.3661	target_mean:               0.8856
+td_error_abs:              0.1280	test/reached_goal:       100.0000	test/sim_time_mean:       29.5897	test/sim_time_var:        21.3438
+test_ep_length_mean:      50.9250	test_return_mean:         14.0821	test_return_std:           0.9146	
+[INFO 00:36:13] my_main Updated target network
+[INFO 00:36:53] my_main Updated target network
+[INFO 00:37:32] my_main Updated target network
+[INFO 00:38:10] my_main Updated target network
+[INFO 00:38:32] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/5000540
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/5000540
+[INFO 00:38:51] my_main t_env: 5003810 / 6000000
+[INFO 00:38:51] my_main Estimated time left: 1 hours, 3 minutes, 37 seconds. Time passed: 5 hours, 17 minutes, 48 seconds
+av test time: 28.064627634271847 (19.21281592006873), av step count 51.0625 (1.49609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:38:56] my_main Recent Stats | t_env:    5003810 | Episode:    79176
+ep_length_mean:           53.7496	epsilon:                   0.0500	grad_norm:                 1.2754	loss:                      0.0297
+q_taken_mean:              0.8740	return_mean:              13.6661	return_std:                1.3545	target_mean:               0.8762
+td_error_abs:              0.1200	test/reached_goal:       100.0000	test/sim_time_mean:       29.3713	test/sim_time_var:        22.7271
+test_ep_length_mean:      50.9125	test_return_mean:         14.1257	test_return_std:           0.9497	
+[INFO 00:39:00] my_main Updated target network
+[INFO 00:39:39] my_main Updated target network
+[INFO 00:40:19] my_main Updated target network
+[INFO 00:40:57] my_main Updated target network
+[INFO 00:41:36] my_main Updated target network
+[INFO 00:41:57] my_main t_env: 5053838 / 6000000
+[INFO 00:41:57] my_main Estimated time left: 58 minutes, 25 seconds. Time passed: 5 hours, 20 minutes, 53 seconds
+av test time: 28.431047850979933 (15.059772427718674), av step count 50.5625 (1.05859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:42:02] my_main Recent Stats | t_env:    5053838 | Episode:    80109
+ep_length_mean:           53.7556	epsilon:                   0.0500	grad_norm:                 1.4001	loss:                      0.0309
+q_taken_mean:              0.8625	return_mean:              13.6968	return_std:                1.3381	target_mean:               0.8653
+td_error_abs:              0.1244	test/reached_goal:       100.0000	test/sim_time_mean:       29.1568	test/sim_time_var:        22.3745
+test_ep_length_mean:      50.8750	test_return_mean:         14.1686	test_return_std:           0.9408	
+[INFO 00:42:20] my_main Updated target network
+[INFO 00:42:57] my_main Updated target network
+[INFO 00:43:37] my_main Updated target network
+[INFO 00:44:16] my_main Updated target network
+[INFO 00:44:55] my_main Updated target network
+[INFO 00:45:03] my_main t_env: 5103852 / 6000000
+[INFO 00:45:03] my_main Estimated time left: 55 minutes, 40 seconds. Time passed: 5 hours, 23 minutes, 59 seconds
+av test time: 29.54693761894368 (14.495166149762314), av step count 50.9375 (1.99609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:45:07] my_main Recent Stats | t_env:    5103852 | Episode:    81040
+ep_length_mean:           53.7385	epsilon:                   0.0500	grad_norm:                 1.5445	loss:                      0.0321
+q_taken_mean:              0.8726	return_mean:              13.7055	return_std:                1.3229	target_mean:               0.8717
+td_error_abs:              0.1269	test/reached_goal:       100.0000	test/sim_time_mean:       29.0808	test/sim_time_var:        19.9158
+test_ep_length_mean:      50.8625	test_return_mean:         14.1838	test_return_std:           0.8861	
+[INFO 00:45:38] my_main Updated target network
+[INFO 00:46:16] my_main Updated target network
+[INFO 00:46:56] my_main Updated target network
+[INFO 00:47:34] my_main Updated target network
+[INFO 00:48:07] my_main t_env: 5153856 / 6000000
+[INFO 00:48:07] my_main Estimated time left: 51 minutes, 46 seconds. Time passed: 5 hours, 27 minutes, 3 seconds
+av test time: 29.11097256291297 (21.113525824191644), av step count 50.5 (1.0), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:48:11] my_main Recent Stats | t_env:    5153856 | Episode:    81974
+ep_length_mean:           53.6710	epsilon:                   0.0500	grad_norm:                 1.6624	loss:                      0.0333
+q_taken_mean:              0.8753	return_mean:              13.7140	return_std:                1.3435	target_mean:               0.8711
+td_error_abs:              0.1302	test/reached_goal:       100.0000	test/sim_time_mean:       28.9669	test/sim_time_var:        19.0268
+test_ep_length_mean:      50.7750	test_return_mean:         14.2066	test_return_std:           0.8677	
+[INFO 00:48:17] my_main Updated target network
+[INFO 00:48:56] my_main Updated target network
+[INFO 00:49:34] my_main Updated target network
+[INFO 00:50:13] my_main Updated target network
+[INFO 00:50:52] my_main Updated target network
+[INFO 00:51:14] my_main t_env: 5203902 / 6000000
+[INFO 00:51:14] my_main Estimated time left: 49 minutes, 30 seconds. Time passed: 5 hours, 30 minutes, 10 seconds
+av test time: 29.26893428027995 (20.551149808811374), av step count 50.8125 (1.71484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:51:17] my_main Recent Stats | t_env:    5203902 | Episode:    82907
+ep_length_mean:           53.6381	epsilon:                   0.0500	grad_norm:                 1.9336	loss:                      0.0357
+q_taken_mean:              0.8778	return_mean:              13.7050	return_std:                1.3274	target_mean:               0.8750
+td_error_abs:              0.1365	test/reached_goal:       100.0000	test/sim_time_mean:       28.8845	test/sim_time_var:        18.0865
+test_ep_length_mean:      50.7750	test_return_mean:         14.2231	test_return_std:           0.8480	
+[INFO 00:51:36] my_main Updated target network
+[INFO 00:52:15] my_main Updated target network
+[INFO 00:52:52] my_main Updated target network
+[INFO 00:53:33] my_main Updated target network
+[INFO 00:54:11] my_main Updated target network
+[INFO 00:54:19] my_main t_env: 5253902 / 6000000
+[INFO 00:54:19] my_main Estimated time left: 46 minutes, 3 seconds. Time passed: 5 hours, 33 minutes, 15 seconds
+av test time: 31.270484322375346 (53.69339391641504), av step count 51.0625 (1.49609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:54:24] my_main Recent Stats | t_env:    5253902 | Episode:    83840
+ep_length_mean:           53.6218	epsilon:                   0.0500	grad_norm:                 1.7454	loss:                      0.0342
+q_taken_mean:              0.8734	return_mean:              13.7330	return_std:                1.3287	target_mean:               0.8728
+td_error_abs:              0.1328	test/reached_goal:       100.0000	test/sim_time_mean:       29.5257	test/sim_time_var:        24.9826
+test_ep_length_mean:      50.7750	test_return_mean:         14.0949	test_return_std:           0.9658	
+[INFO 00:54:53] my_main Updated target network
+[INFO 00:55:33] my_main Updated target network
+[INFO 00:56:10] my_main Updated target network
+[INFO 00:56:50] my_main Updated target network
+[INFO 00:57:23] my_main t_env: 5303910 / 6000000
+[INFO 00:57:23] my_main Estimated time left: 42 minutes, 43 seconds. Time passed: 5 hours, 36 minutes, 19 seconds
+av test time: 28.400057504817717 (22.99224667685509), av step count 50.625 (1.109375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 00:57:28] my_main Recent Stats | t_env:    5303910 | Episode:    84775
+ep_length_mean:           53.5946	epsilon:                   0.0500	grad_norm:                 1.5438	loss:                      0.0319
+q_taken_mean:              0.8795	return_mean:              13.7203	return_std:                1.3403	target_mean:               0.8778
+td_error_abs:              0.1276	test/reached_goal:       100.0000	test/sim_time_mean:       29.5195	test/sim_time_var:        26.5691
+test_ep_length_mean:      50.7875	test_return_mean:         14.0961	test_return_std:           1.0023	
+[INFO 00:57:32] my_main Updated target network
+[INFO 00:58:11] my_main Updated target network
+[INFO 00:58:51] my_main Updated target network
+[INFO 00:59:29] my_main Updated target network
+[INFO 01:00:07] my_main Updated target network
+[INFO 01:00:29] my_main t_env: 5353936 / 6000000
+[INFO 01:00:29] my_main Estimated time left: 40 minutes, 2 seconds. Time passed: 5 hours, 39 minutes, 25 seconds
+av test time: 26.143006680901664 (15.465097095189966), av step count 50.75 (1.1875), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:00:34] my_main Recent Stats | t_env:    5353936 | Episode:    85712
+ep_length_mean:           53.5284	epsilon:                   0.0500	grad_norm:                 1.2478	loss:                      0.0296
+q_taken_mean:              0.8668	return_mean:              13.7736	return_std:                1.3222	target_mean:               0.8684
+td_error_abs:              0.1207	test/reached_goal:       100.0000	test/sim_time_mean:       28.8387	test/sim_time_var:        26.7631
+test_ep_length_mean:      50.7500	test_return_mean:         14.2323	test_return_std:           1.0073	
+[INFO 01:00:51] my_main Updated target network
+[INFO 01:01:31] my_main Updated target network
+[INFO 01:02:09] my_main Updated target network
+[INFO 01:02:48] my_main Updated target network
+[INFO 01:03:27] my_main Updated target network
+[INFO 01:03:36] my_main t_env: 5403946 / 6000000
+[INFO 01:03:36] my_main Estimated time left: 37 minutes, 14 seconds. Time passed: 5 hours, 42 minutes, 33 seconds
+av test time: 26.750559150351954 (20.877604346448628), av step count 50.9375 (1.99609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:03:40] my_main Recent Stats | t_env:    5403946 | Episode:    86647
+ep_length_mean:           53.5182	epsilon:                   0.0500	grad_norm:                 0.8985	loss:                      0.0269
+q_taken_mean:              0.8654	return_mean:              13.8160	return_std:                1.3161	target_mean:               0.8692
+td_error_abs:              0.1123	test/reached_goal:       100.0000	test/sim_time_mean:       28.3666	test/sim_time_var:        26.7159
+test_ep_length_mean:      50.8375	test_return_mean:         14.3267	test_return_std:           1.0063	
+[INFO 01:04:10] my_main Updated target network
+[INFO 01:04:48] my_main Updated target network
+[INFO 01:05:29] my_main Updated target network
+[INFO 01:06:07] my_main Updated target network
+[INFO 01:06:41] my_main t_env: 5453946 / 6000000
+[INFO 01:06:41] my_main Estimated time left: 33 minutes, 37 seconds. Time passed: 5 hours, 45 minutes, 37 seconds
+av test time: 24.444757161982515 (11.840515086755696), av step count 50.4375 (0.68359375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:06:46] my_main Recent Stats | t_env:    5453946 | Episode:    87581
+ep_length_mean:           53.4969	epsilon:                   0.0500	grad_norm:                 0.5836	loss:                      0.0238
+q_taken_mean:              0.8641	return_mean:              13.8901	return_std:                1.3254	target_mean:               0.8660
+td_error_abs:              0.1046	test/reached_goal:       100.0000	test/sim_time_mean:       27.4018	test/sim_time_var:        24.9738
+test_ep_length_mean:      50.7625	test_return_mean:         14.5196	test_return_std:           0.9626	
+[INFO 01:06:50] my_main Updated target network
+[INFO 01:07:29] my_main Updated target network
+[INFO 01:08:09] my_main Updated target network
+[INFO 01:08:49] my_main Updated target network
+[INFO 01:09:26] my_main Updated target network
+[INFO 01:09:36] my_main Saving models to results/models/qmix__2022-05-05_19-21-02/5500558
+saving buffer (not PER) objects to results/models/qmix__2022-05-05_19-21-02/5500558
+[INFO 01:09:54] my_main t_env: 5503976 / 6000000
+[INFO 01:09:54] my_main Estimated time left: 31 minutes, 55 seconds. Time passed: 5 hours, 48 minutes, 51 seconds
+av test time: 27.43927387348253 (12.45341187884021), av step count 50.625 (0.859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:09:58] my_main Recent Stats | t_env:    5503976 | Episode:    88516
+ep_length_mean:           53.4804	epsilon:                   0.0500	grad_norm:                 0.5807	loss:                      0.0238
+q_taken_mean:              0.8715	return_mean:              13.9401	return_std:                1.3086	target_mean:               0.8722
+td_error_abs:              0.1045	test/reached_goal:       100.0000	test/sim_time_mean:       26.6355	test/sim_time_var:        16.7258
+test_ep_length_mean:      50.6750	test_return_mean:         14.6729	test_return_std:           0.8107	
+[INFO 01:10:16] my_main Updated target network
+[INFO 01:10:54] my_main Updated target network
+[INFO 01:11:32] my_main Updated target network
+[INFO 01:12:11] my_main Updated target network
+[INFO 01:12:49] my_main Updated target network
+[INFO 01:13:02] my_main t_env: 5554016 / 6000000
+[INFO 01:13:02] my_main Estimated time left: 27 minutes, 48 seconds. Time passed: 5 hours, 51 minutes, 58 seconds
+av test time: 27.429475451592708 (9.802026884100524), av step count 50.75 (1.4375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:13:06] my_main Recent Stats | t_env:    5554016 | Episode:    89456
+ep_length_mean:           53.4303	epsilon:                   0.0500	grad_norm:                 0.7926	loss:                      0.0250
+q_taken_mean:              0.8785	return_mean:              13.9396	return_std:                1.3049	target_mean:               0.8780
+td_error_abs:              0.1072	test/reached_goal:       100.0000	test/sim_time_mean:       26.4414	test/sim_time_var:        14.0877
+test_ep_length_mean:      50.7000	test_return_mean:         14.7117	test_return_std:           0.7441	
+[INFO 01:13:34] my_main Updated target network
+[INFO 01:14:11] my_main Updated target network
+[INFO 01:14:51] my_main Updated target network
+[INFO 01:15:30] my_main Updated target network
+[INFO 01:16:06] my_main t_env: 5604058 / 6000000
+[INFO 01:16:06] my_main Estimated time left: 24 minutes, 23 seconds. Time passed: 5 hours, 55 minutes, 3 seconds
+av test time: 28.206755433490223 (26.235590399419483), av step count 51.0625 (2.24609375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:16:10] my_main Recent Stats | t_env:    5604058 | Episode:    90389
+ep_length_mean:           53.4795	epsilon:                   0.0500	grad_norm:                 0.8970	loss:                      0.0276
+q_taken_mean:              0.8937	return_mean:              13.8786	return_std:                1.3740	target_mean:               0.8933
+td_error_abs:              0.1120	test/reached_goal:       100.0000	test/sim_time_mean:       26.8542	test/sim_time_var:        16.2418
+test_ep_length_mean:      50.7625	test_return_mean:         14.6292	test_return_std:           0.7917	
+[INFO 01:16:12] my_main Updated target network
+[INFO 01:16:52] my_main Updated target network
+[INFO 01:17:30] my_main Updated target network
+[INFO 01:18:09] my_main Updated target network
+[INFO 01:18:48] my_main Updated target network
+[INFO 01:19:13] my_main t_env: 5654088 / 6000000
+[INFO 01:19:13] my_main Estimated time left: 21 minutes, 26 seconds. Time passed: 5 hours, 58 minutes, 9 seconds
+av test time: 28.456602698148536 (22.001924076697403), av step count 50.8125 (1.71484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:19:17] my_main Recent Stats | t_env:    5654088 | Episode:    91328
+ep_length_mean:           53.4382	epsilon:                   0.0500	grad_norm:                 1.2881	loss:                      0.0347
+q_taken_mean:              0.8998	return_mean:              13.8427	return_std:                1.3835	target_mean:               0.8968
+td_error_abs:              0.1235	test/reached_goal:       100.0000	test/sim_time_mean:       27.1954	test/sim_time_var:        16.4667
+test_ep_length_mean:      50.7375	test_return_mean:         14.5609	test_return_std:           0.7965	
+[INFO 01:19:30] my_main Updated target network
+[INFO 01:20:10] my_main Updated target network
+[INFO 01:20:49] my_main Updated target network
+[INFO 01:21:26] my_main Updated target network
+[INFO 01:22:06] my_main Updated target network
+[INFO 01:22:17] my_main t_env: 5704098 / 6000000
+[INFO 01:22:17] my_main Estimated time left: 18 minutes, 12 seconds. Time passed: 6 hours, 1 minutes, 13 seconds
+av test time: 28.69573353695929 (21.45214803263916), av step count 50.5625 (1.30859375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:22:21] my_main Recent Stats | t_env:    5704098 | Episode:    92263
+ep_length_mean:           53.4289	epsilon:                   0.0500	grad_norm:                 1.2945	loss:                      0.0352
+q_taken_mean:              0.9151	return_mean:              13.7664	return_std:                1.4058	target_mean:               0.9125
+td_error_abs:              0.1222	test/reached_goal:       100.0000	test/sim_time_mean:       28.0456	test/sim_time_var:        18.3890
+test_ep_length_mean:      50.7625	test_return_mean:         14.3909	test_return_std:           0.8442	
+[INFO 01:22:49] my_main Updated target network
+[INFO 01:23:27] my_main Updated target network
+[INFO 01:24:07] my_main Updated target network
+[INFO 01:24:46] my_main Updated target network
+[INFO 01:25:25] my_main t_env: 5754126 / 6000000
+[INFO 01:25:25] my_main Estimated time left: 15 minutes, 23 seconds. Time passed: 6 hours, 4 minutes, 21 seconds
+av test time: 27.33357467204081 (12.960598581917274), av step count 51.1875 (1.71484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:25:29] my_main Recent Stats | t_env:    5754126 | Episode:    93198
+ep_length_mean:           53.4284	epsilon:                   0.0500	grad_norm:                 1.3567	loss:                      0.0358
+q_taken_mean:              0.9198	return_mean:              13.7120	return_std:                1.3867	target_mean:               0.9188
+td_error_abs:              0.1243	test/reached_goal:       100.0000	test/sim_time_mean:       28.0244	test/sim_time_var:        18.4905
+test_ep_length_mean:      50.8750	test_return_mean:         14.3951	test_return_std:           0.8470	
+[INFO 01:25:30] my_main Updated target network
+[INFO 01:26:07] my_main Updated target network
+[INFO 01:26:46] my_main Updated target network
+[INFO 01:27:25] my_main Updated target network
+[INFO 01:28:03] my_main Updated target network
+[INFO 01:28:28] my_main t_env: 5804128 / 6000000
+[INFO 01:28:28] my_main Estimated time left: 11 minutes, 56 seconds. Time passed: 6 hours, 7 minutes, 24 seconds
+av test time: 28.211323633147487 (16.384160653724727), av step count 51.25 (2.9375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:28:32] my_main Recent Stats | t_env:    5804128 | Episode:    94128
+ep_length_mean:           53.5348	epsilon:                   0.0500	grad_norm:                 1.4821	loss:                      0.0414
+q_taken_mean:              0.9117	return_mean:              13.6975	return_std:                1.4038	target_mean:               0.9134
+td_error_abs:              0.1302	test/reached_goal:       100.0000	test/sim_time_mean:       28.1808	test/sim_time_var:        19.8069
+test_ep_length_mean:      50.9750	test_return_mean:         14.3638	test_return_std:           0.8837	
+[INFO 01:28:48] my_main Updated target network
+[INFO 01:29:26] my_main Updated target network
+[INFO 01:30:07] my_main Updated target network
+[INFO 01:30:44] my_main Updated target network
+[INFO 01:31:23] my_main Updated target network
+[INFO 01:31:35] my_main t_env: 5854130 / 6000000
+[INFO 01:31:35] my_main Estimated time left: 9 minutes, 4 seconds. Time passed: 6 hours, 10 minutes, 31 seconds
+av test time: 28.081640283707483 (14.610711433895341), av step count 51.125 (1.484375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:31:39] my_main Recent Stats | t_env:    5854130 | Episode:    95057
+ep_length_mean:           53.5723	epsilon:                   0.0500	grad_norm:                 1.7833	loss:                      0.0437
+q_taken_mean:              0.8992	return_mean:              13.7068	return_std:                1.4190	target_mean:               0.9027
+td_error_abs:              0.1396	test/reached_goal:       100.0000	test/sim_time_mean:       28.1558	test/sim_time_var:        17.4819
+test_ep_length_mean:      50.9875	test_return_mean:         14.3688	test_return_std:           0.8317	
+[INFO 01:32:08] my_main Updated target network
+[INFO 01:32:46] my_main Updated target network
+[INFO 01:33:24] my_main Updated target network
+[INFO 01:34:05] my_main Updated target network
+[INFO 01:34:40] my_main t_env: 5904132 / 6000000
+[INFO 01:34:40] my_main Estimated time left: 5 minutes, 54 seconds. Time passed: 6 hours, 13 minutes, 36 seconds
+av test time: 28.980429006616912 (11.487236770566398), av step count 51.0 (2.0), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:34:44] my_main Recent Stats | t_env:    5904132 | Episode:    95984
+ep_length_mean:           53.7042	epsilon:                   0.0500	grad_norm:                 1.5563	loss:                      0.0390
+q_taken_mean:              0.9010	return_mean:              13.7256	return_std:                1.4266	target_mean:               0.9078
+td_error_abs:              0.1337	test/reached_goal:       100.0000	test/sim_time_mean:       28.2605	test/sim_time_var:        15.3790
+test_ep_length_mean:      51.0250	test_return_mean:         14.3479	test_return_std:           0.7796	
+[INFO 01:34:48] my_main Updated target network
+[INFO 01:35:26] my_main Updated target network
+[INFO 01:36:05] my_main Updated target network
+[INFO 01:36:44] my_main Updated target network
+[INFO 01:37:24] my_main Updated target network
+[INFO 01:37:44] my_main t_env: 5954182 / 6000000
+[INFO 01:37:44] my_main Estimated time left: 2 minutes, 49 seconds. Time passed: 6 hours, 16 minutes, 41 seconds
+av test time: 27.754075625198922 (15.48932341072588), av step count 50.875 (1.734375), percentage at goal 100.0 (0.0) 32 episodes
+[INFO 01:37:50] my_main Recent Stats | t_env:    5954182 | Episode:    96915
+ep_length_mean:           53.7588	epsilon:                   0.0500	grad_norm:                 1.7648	loss:                      0.0378
+q_taken_mean:              0.8963	return_mean:              13.7597	return_std:                1.3903	target_mean:               0.9017
+td_error_abs:              0.1366	test/reached_goal:       100.0000	test/sim_time_mean:       28.0722	test/sim_time_var:        14.1864
+test_ep_length_mean:      51.0875	test_return_mean:         14.3856	test_return_std:           0.7518	
+[INFO 01:38:06] my_main Updated target network
+[INFO 01:38:46] my_main Updated target network
+[INFO 01:39:25] my_main Updated target network
+[INFO 01:40:02] my_main Updated target network
